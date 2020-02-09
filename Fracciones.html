@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rodrigo Zepeda" />
+
+
+<title>Fracciones</title>
+
+<script src="Fracciones_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Fracciones_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="Fracciones_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Fracciones_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Fracciones_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="Fracciones_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="Fracciones_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="Fracciones_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="Fracciones_files/navigation-1.1/tabsets.js"></script>
+<link href="Fracciones_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Fracciones_files/highlightjs-9.12.0/highlight.js"></script>
+<!-- Meta characteristics -->
+<meta name="description" content="Random Math Notes">
+<meta name="keywords" content="Probability, Markov Chains, Markov Processes, Stochastic Processes">
+<meta name="author" content="Rodrigo Zepeda Tello">
+
+<!-- Add d3js -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!-- Nice mathjax format -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true, }, TeX: { equationNumbers: { autoNumber: "AMS" } } });
+</script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<!--Navigation menu-->
+<link href="css/custom.css" rel="stylesheet">
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+            <a class="navbar-brand" href="https://rodrigozepeda.github.io/GuiaINSP">Guía no oficial de estudio para el examen de matemáticas del INSP</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="https://github.com/RodrigoZepeda/GuiaINSP"><img src="images/GitHub-Mark-Light-32px.png"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Fracciones</h1>
+<h4 class="author">Rodrigo Zepeda</h4>
+
+</div>
+
+
+<div id="operaciones-con-fracciones" class="section level1">
+<h1><span class="header-section-number">1</span> Operaciones con fracciones</h1>
+<p>Antes de hablar de las reglas de las operaciones con fracciones vale la pena analizar qué es lo que se hace cuando se tienen fracciones. La idea de una fracción es que éstas representan un todo que se dividió en partes (el denominador de la fracción) y del cual se tienen tantas partes como el numerador. Es decir, si se tiene: <span class="math display">\[
+\dfrac{4}{5}
+\]</span> se supone que un objeto unidad fue dividido en <span class="math inline">\(5\)</span> partes y por ahora se tienen <span class="math inline">\(4\)</span> de ellas. Esto es representado con el siguiente dibujo:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-1-1.png" alt="De un objeto dividido en $5$ partes se tienen $4$" width="288" />
+<p class="caption">
+De un objeto dividido en <span class="math inline">\(5\)</span> partes se tienen <span class="math inline">\(4\)</span>
+</p>
+</div>
+<p>Los nombres de cada una de las partes, como recordarás, son: <span class="math display">\[
+\dfrac{\text{Numerador}}{\text{Denominador}}
+\]</span> y buscan representar una divisiòn. Por ejemplo, si se tiene: <span class="math display">\[
+\dfrac{21}{7}
+\]</span> esto se interpreta como <span class="math inline">\(21 \div 7 = 3\)</span>. Lo podemos ver también en el dibujo:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-2-1.png" alt="De un objeto dividido en $7$ partes se tienen $3$: en total hay $21$ de estos séptimos." width="864" />
+<p class="caption">
+De un objeto dividido en <span class="math inline">\(7\)</span> partes se tienen <span class="math inline">\(3\)</span>: en total hay <span class="math inline">\(21\)</span> de estos séptimos.
+</p>
+</div>
+<p>Comencemos, entonces a hacer operaciones con fracciones.</p>
+<div id="equivalencia-de-fracciones" class="section level2">
+<h2><span class="header-section-number">1.1</span> Equivalencia de fracciones</h2>
+<p>El concepto de equivalencia de fracciones es primordial para entender qué es lo que ocurre con ellas. ¡No te distraigas! La forma más fácil de ver esto es con un ejemplo. Imagina que dividimos un objeto en <span class="math inline">\(6\)</span> partes de las cuales tenemos <span class="math inline">\(4\)</span>:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-3-1.png" alt="De un objeto dividido en $6$ partes tenemos $4$." width="288" />
+<p class="caption">
+De un objeto dividido en <span class="math inline">\(6\)</span> partes tenemos <span class="math inline">\(4\)</span>.
+</p>
+</div>
+<p>Observa que el <em>total</em> de las partes es lo mismo que si hubiéramos dividido en <span class="math inline">\(3\)</span> el objeto y tuviéramos <span class="math inline">\(2\)</span> partes:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-4-1.png" alt="De un objeto dividido en $6$ partes tenemos $4$." width="288" />
+<p class="caption">
+De un objeto dividido en <span class="math inline">\(6\)</span> partes tenemos <span class="math inline">\(4\)</span>.
+</p>
+</div>
+<p>Para que lo veas mejor, los pongo lado a lado:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-5-1.png" alt="$\frac{4}{6}\equiv\frac{2}{3}$." width="864" />
+<p class="caption">
+<span class="math inline">\(\frac{4}{6}\equiv\frac{2}{3}\)</span>.
+</p>
+</div>
+<p>En este caso decimos que <span class="math inline">\(\frac{4}{6}\)</span> es equivalente a <span class="math inline">\(\frac{2}{3}\)</span> y si fuéramos muy quisquillosos lo escribiríamos con el signo <span class="math inline">\(\equiv\)</span> de equivalencia:</p>
+<p><span class="math display">\[
+\frac{4}{6}\equiv\frac{2}{3}
+\]</span></p>
+<p>Como no somos tan quisquillosos, lo escribiremos con un igual: <span class="math display">\[
+\frac{4}{6}=\frac{2}{3}
+\]</span></p>
+<p>Armados con esta idea de que dos fracciones son equivalentes si representan lo mismo, veamos otros ejemplos:</p>
+<p><strong>Ejemplo 1:</strong></p>
+<p><span class="math display">\[
+\frac{3}{2} = \frac{18}{12}
+\]</span></p>
+<p>Como podemos ver en el dibujo:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-6-1.png" alt="$\frac{3}{2} = \frac{18}{12}$." width="1152" />
+<p class="caption">
+<span class="math inline">\(\frac{3}{2} = \frac{18}{12}\)</span>.
+</p>
+</div>
+<p>Observa que la forma de pasar del <span class="math inline">\(\frac{3}{2}\)</span> al <span class="math inline">\(\frac{18}{12}\)</span> es multiplicando tanto numerador como denominador por <span class="math inline">\(6\)</span>:</p>
+<p><span class="math display">\[
+\frac{3}{2} =  \frac{3 \times 6}{2 \times 6} = \frac{18}{12}
+\]</span></p>
+<p>Esto nos lleva a la siguiente conclusión:</p>
+
+<div class="panel panel-primary">
+	<div id =  Propiedades0.0177262076176703Fracciones equivalentes class="panel-heading">
+		<h4> Propiedades 1 [ Fracciones equivalentes ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dos fracciones son equivalentes si al multiplicar (o dividir) el numerador y denominador <i>por el mismo número</i> obtienes la otra fracción. 
+</i>	</div>
+</div>
+
+<p><strong>Ejemplo 2:</strong></p>
+<p><span class="math display">\[
+\frac{4}{2} = 2
+\]</span></p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-8-1.png" alt="$\frac{4}{2} = 2$." width="1152" />
+<p class="caption">
+<span class="math inline">\(\frac{4}{2} = 2\)</span>.
+</p>
+</div>
+<p>En este caso, si quisieras argumentar que las fracciones son equivalentes, de acuerdo a la propiedad anterior, quizá me dirías “hey, Rodrigo, qué te pasa si aquí, en el <span class="math inline">\(2\)</span>, no tengo denominador, ¿cómo puedo saber que son equivalentes?” Resulta que sí tienes denominador, y ese <span class="math inline">\(2\)</span> es en realidad un <span class="math inline">\(\frac{2}{1}\)</span> lo que pasa es que usualmente no escribimos el <span class="math inline">\(1\)</span> (pero piénsalo, tiene sentido decir que se tienen <span class="math inline">\(2\)</span> de <span class="math inline">\(1\)</span> pieza que no fue dividida). Y ésta es la esencia del ejemplo 3:</p>
+<p><strong>Ejemplo 3:</strong></p>
+<p><span class="math display">\[
+\frac{3}{1} = 3
+\]</span></p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-9-1.png" alt="$\frac{3}{1} = 3$." width="864" />
+<p class="caption">
+<span class="math inline">\(\frac{3}{1} = 3\)</span>.
+</p>
+</div>
+<p>Podemos entonces hallar varias fracciones equivalentes al <span class="math inline">\(3\)</span> por ejemplo:</p>
+<p><span class="math display">\[
+3 = \frac{3}{1} = \frac{15}{5} = \frac{300}{100} = \frac{18}{6}
+\]</span></p>
+<p>Usualmente el acuerdo con las fracciones (acuerdo que mantendremos a lo largo de estas notas) es intentar <em>simplificarlas</em> hasta el punto en el que no haya divisores en común entre el numerador y el denominador. De esta manera simplificamos, por ejemplo, <span class="math display">\[
+\frac{28}{16} = \frac{7 \times 4}{4 \times 4} = \frac{7}{4}
+\]</span> Pues dentro de los factores que componen tanto al <span class="math inline">\(28\)</span> como al <span class="math inline">\(16\)</span> está el <span class="math inline">\(4\)</span>. La fracción <span class="math inline">\(\frac{7}{4}\)</span> ya no se puede simplificar más porque no existe ningún número entero positivo que al ser multiplicado por algo dé <span class="math inline">\(7\)</span> y por otra cosa dé <span class="math inline">\(4\)</span>.</p>
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.345975321251899Simplificación de fracciones class="panel-heading">
+		<h4> Ejercicio 1 [ Simplificación de fracciones ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Simplificar 
+\begin{equation}\nonumber
+\dfrac{180}{99}
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{180}{99} = \dfrac{60 \times 3}{33 \times 3}  = \dfrac{60}{33}  = \dfrac{20 \times 3}{11 \times 3}
+ = \dfrac{20}{11} 
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.947488561505452Simplificación de fracciones class="panel-heading">
+		<h4> Ejercicio 2 [ Simplificación de fracciones ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Simplificar 
+\begin{equation}\nonumber
+\dfrac{5040}{720}
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{5040}{720} = \dfrac{504 \times 10}{72 \times 10}  = \dfrac{504}{72}  = \dfrac{63 \times 8}{9 \times 8}
+ = \dfrac{63}{9} = \dfrac{7 \times 9}{1 \times 9} 
+ = \dfrac{7}{1} 
+ = 7
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+<div id="ejercicios" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Ejercicios</h3>
+<p>Los ejercicios son <strong>SIN CALCULADORA</strong>, esto para que cuando lleguemos a ejercicios más complejos (con letras en álgebra) puedas tener la práctica de ejercicios numéricos y te sea más fácil hacerlo.</p>
+<ol style="list-style-type: decimal">
+<li><p><i class="em em-pencil2"></i> Simplifica las siguientes fracciones a su mínima expresión (<em>i.e.</em> cuando numerador y denominador ya no comparten divisores):</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\frac{144}{48}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{800}{45}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{1680}{280}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{169}{13}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{17}{11}\)</span></p></li>
+</ol></li>
+<li><p><i class="em em-pencil2"></i> Determina cuáles de las siguientes fracciones son equivalentes entre sí.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\frac{32}{84}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{105}{35}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{9}{3}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{8}{21}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{240}{630}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{432}{1024}\)</span></p></li>
+</ol></li>
+<li><p>Hallar el numerador ó denominador (representado por <span class="math inline">\(\text{?}\)</span>) que permite la igualdad:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\frac{\text{?}}{15} = \frac{2}{5}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{63}{\text{?}} = 7\)</span></p></li>
+<li><p><span class="math inline">\(\frac{\text{?}}{144} = \frac{5}{12}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{\text{?}}{8} = 20\)</span></p></li>
+<li><p><span class="math inline">\(\frac{\text{?}}{8} = \frac{5}{4}\)</span></p></li>
+</ol></li>
+<li><p><i class="em em-thinking_face"></i> Justifica explicando claramente la siguiente propiedad:</p></li>
+</ol>
+
+<div class="panel panel-primary">
+	<div id =  Propiedades0.641120704589412Transitividad class="panel-heading">
+		<h4> Propiedades 2 [ Transitividad ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Si una fracción $A$ es equivalente a una fracción $B$ y dicha fracción $B$ es equivalente a una tercera fracción $C$ entonces $A$ y $C$ son equivalentes. Escrito con álgebra esto es:
+\begin{equation}\nonumber
+\dfrac{a}{b} \equiv \dfrac{c}{d} \quad \text{y} \quad
+\dfrac{c}{d}  \equiv \dfrac{e}{f}
+\end{equation}
+entonces:
+\begin{equation}\nonumber
+\dfrac{a}{b} \equiv  \dfrac{e}{f}
+\end{equation}
+</i>	</div>
+</div>
+
+<ol start="5" style="list-style-type: decimal">
+<li><i class="em em-thinking_face"></i> Un truco usual para determinar si dos fracciones <span class="math inline">\(\frac{a}{b}\)</span> y <span class="math inline">\(\frac{c}{d}\)</span> son equivalentes entre sí es calcular <span class="math inline">\(ad\)</span> y <span class="math inline">\(bc\)</span>. Si <span class="math inline">\(ad = bc\)</span> entonces las fracciones son equivalentes. Justifica, claramente por qué el truco funciona.</li>
+</ol>
+</div>
+</div>
+<div id="suma-y-resta" class="section level2">
+<h2><span class="header-section-number">1.2</span> Suma y resta</h2>
+<p>Comencemos con el ejemplo más tranquilo: cuando el denominador es el mismo. Pensemos que tenemos <span class="math inline">\(\frac{3}{5}\)</span> y <span class="math inline">\(\frac{1}{5}\)</span>. Esto nos da un total de <span class="math inline">\(\frac{4}{5}\)</span>. Gráficamente esto se ve así:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-13-1.png" alt="Los $\frac{3}{5}$ unidos con el otro $\frac{1}{5}$ nos dan un total de $\frac{4}{5}$." width="1152" />
+<p class="caption">
+Los <span class="math inline">\(\frac{3}{5}\)</span> unidos con el otro <span class="math inline">\(\frac{1}{5}\)</span> nos dan un total de <span class="math inline">\(\frac{4}{5}\)</span>.
+</p>
+</div>
+<p>Lo mismo ocurriría en el caso de la resta: <span class="math display">\[
+\dfrac{7}{6} - \dfrac{2}{6} = \dfrac{5}{6}
+\]</span> pues de los siete sextos que se tienen inicialmente se retiran dos. Gráficamente, esto se vería así:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-14-1.png" alt="Si a los $\frac{7}{6}$ les quitamos $\frac{2}{6}$ nos dan un total de $\frac{5}{6}$." width="1152" />
+<p class="caption">
+Si a los <span class="math inline">\(\frac{7}{6}\)</span> les quitamos <span class="math inline">\(\frac{2}{6}\)</span> nos dan un total de <span class="math inline">\(\frac{5}{6}\)</span>.
+</p>
+</div>
+<p>Las cosas pueden complicarse en cuanto el denominador no es el mismo, por ejemplo: <span class="math display">\[
+\dfrac{2}{3} + \dfrac{1}{2}
+\]</span></p>
+<p>Aquí la suma no puede hacerse directo: <span class="math display">\[
+\text{MAL} \quad \dfrac{2}{3} + \dfrac{1}{2} = \dfrac{2 + 1}{3} = \dfrac{3}{3} 
+\]</span> Podemos ver gráficamente que la igualdad no se cumple:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-15-1.png" alt="Cosas que no hay que hacer: Sumar sólo denominadores" width="1152" />
+<p class="caption">
+Cosas que no hay que hacer: Sumar sólo denominadores
+</p>
+</div>
+<p>Tampoco tiene sentido sumar numerador y denominador por aparte, como lo desearía nuestro corazón:</p>
+<p><span class="math display">\[
+\text{MAL} \quad \dfrac{2}{3} + \dfrac{1}{2} = \dfrac{2 + 1}{3 + 2} = \dfrac{3}{5} 
+\]</span></p>
+<p>Pues gráficamente se ve que fallamos, aunque por menos:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-16-1.png" alt="Cosas que no hay que hacer: Sumar numeradores con numeradores y denominadores con denominadores" width="1152" />
+<p class="caption">
+Cosas que no hay que hacer: Sumar numeradores con numeradores y denominadores con denominadores
+</p>
+</div>
+<p><em>¿Qué podemos hacer entonces?</em> La idea es simple: utilizar fracciones equivalentes para hacer que ambas fracciones tengan el mismo denominador y una vez que se logra eso sumamos como lo estábamos haciendo antes. Una opción de fracciones equivalentes es si, por ejemplo, ponemos en el denominador un <span class="math inline">\(18\)</span> pues éste tiene en común el <span class="math inline">\(2\)</span> y el <span class="math inline">\(3\)</span>. Podemos entonces transformar nuestras fracciones (ambas) a <span class="math inline">\(18\)</span>avos:</p>
+<p><span class="math display">\[
+\dfrac{2}{3} = \dfrac{2\times 6}{3 \times 6} = \dfrac{12}{18} \quad \text{y} \quad \dfrac{1}{2} = \dfrac{1\times 9}{2 \times 9} = \dfrac{9}{18}
+\]</span> Gráficamente podemos ver las equivalencias en <span class="math inline">\(18\)</span> avos:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-17-1.png" alt="Equivalencias a 18vos" width="864" />
+<p class="caption">
+Equivalencias a 18vos
+</p>
+</div>
+<p>Por lo que sumar los <span class="math inline">\(18\)</span>avos es lo mismo que sumar los originales (son equivalentes). Sumamos entonces:</p>
+<p><span class="math display">\[
+\dfrac{2}{3} + \dfrac{1}{2} = \dfrac{12}{18} + \dfrac{9}{18} = \dfrac{21}{18} = \dfrac{7}{6}
+\]</span> Podemos ver este ejercicio gráficamente:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-18-1.png" alt="Equivalencias a 18vos" width="1152" />
+<p class="caption">
+Equivalencias a 18vos
+</p>
+</div>
+<p>Por supuesto que no hay nada especial en los <span class="math inline">\(18\)</span>avos y pudimos haber elegido otro número, por ejemplo con sextos:</p>
+<p><span class="math display">\[
+\dfrac{2}{3} + \dfrac{1}{2} = \dfrac{2\times 2}{3\times 2} + \dfrac{1\times 3}{2\times 3} = \dfrac{4}{6} + \dfrac{3}{6} = \dfrac{7}{6}
+\]</span></p>
+<p>O bien con <span class="math inline">\(36\)</span>avos:</p>
+<p><span class="math display">\[
+\dfrac{2}{3} + \dfrac{1}{2} = \dfrac{2\times 12}{3\times 12} + \dfrac{1\times 18}{2\times 18} = \dfrac{24}{36} + \dfrac{18}{36} = \dfrac{42}{36} = \dfrac{7 \times 6}{6 \times 6} = \dfrac{7}{6}
+\]</span></p>
+<p>Es decir, sin importar cuál número se elija, siempre se llega al mismo resultado. Usualmente lo que se hace para elegir el denominador para la suma es multiplicar los denominadores que se tienen. Por ejemplo, para sumar:</p>
+<p><span class="math display">\[
+\dfrac{2}{5} + \dfrac{8}{7}
+\]</span> en lugar de buscarse un número que pueda factorizarse tanto con <span class="math inline">\(5\)</span> como con <span class="math inline">\(7\)</span> entre todos los números que se te ocurran, lo más sencillo es crear el más fácil: el producto de ambos. Es decir, se escribe todo en <span class="math inline">\(35\)</span>avos pues <span class="math inline">\(5\times 7 = 35\)</span>:</p>
+<p><span class="math display">\[
+\dfrac{2}{5} + \dfrac{8}{7} = \dfrac{2\times 7}{5 \times 7} + \dfrac{8 \times 5}{7\times 5} = \dfrac{14}{35} + \dfrac{40}{35} = \frac{54}{35}
+\]</span></p>
+<p>Gráficamente:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-19-1.png" alt="Equivalencias a 35vos" width="1152" />
+<p class="caption">
+Equivalencias a 35vos
+</p>
+</div>
+
+<div class="panel panel-success">
+	<div id =  Ejemplo0.716591941658407Simplificación de fracciones class="panel-heading">
+		<h4> Ejemplo 1 [ Simplificación de fracciones ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Sumar 
+\begin{equation}\nonumber
+\dfrac{3}{4} + \dfrac{1}{5} + \dfrac{7}{8}
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Demostración:</b> 
+Lo resolvemos por partes siguiendo el orden de las operaciones primero sumamos $\dfrac{3}{4} + \dfrac{1}{5}$ y luego al resultado le sumamos $\dfrac{7}{8}$:
+
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{3}{4} + \dfrac{1}{5} = \dfrac{15}{20} + \dfrac{4}{20} = \dfrac{19}{20},
+\end{aligned}
+\end{equation}
+luego:
+\begin{equation}\nonumber
+\begin{aligned}
+\underbrace{\dfrac{3}{4} + \dfrac{1}{5}}_{19/20} + \dfrac{7}{8}  = \dfrac{19}{20} + \dfrac{7}{8} = \dfrac{152}{160} + \dfrac{140}{160} = \dfrac{292}{160} = \dfrac{73}{40}.
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+<div id="ejercicios-1" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Ejercicios</h3>
+<ol style="list-style-type: decimal">
+<li><p><i class="em em-pencil2"></i> Evalúa las siguientes expresiones dando el resultado de las operaciones en su mínima expresión (lo más simplificado posible):</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\frac{6}{8} + \frac{14}{8}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{1}{5} + \frac{1}{4}\)</span></p></li>
+<li><p><span class="math inline">\(4 + \frac{1}{4}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{6}{7} + \frac{1}{4}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{5}{2} + \frac{8}{3} + 10\)</span></p></li>
+<li><p><span class="math inline">\(\frac{5}{2} + \frac{5}{4}\)</span></p></li>
+</ol></li>
+<li><p>Determina si los siguientes ejercicios fueron resueltos de manera correcta o no. En caso de que no, corrígelos señalando el error.</p></li>
+</ol>
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.613823062973097Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 3 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Sumar 
+\begin{equation}\nonumber
+\dfrac{2}{4} + \dfrac{5}{4} 
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{2}{4} + \dfrac{5}{4}  = \dfrac{7}{8}
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.184431927045807Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 4 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Sumar 
+\begin{equation}\nonumber
+\dfrac{1}{3} + 2 
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{1}{3} + \dfrac{2}{3}  = \dfrac{3}{3} = 1
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.763825419126078Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 5 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Sumar 
+\begin{equation}\nonumber
+\dfrac{1}{3} + \dfrac{1}{5} 
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{1}{3} + \dfrac{1}{5}  = \dfrac{2}{8} = \dfrac{1}{4}
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+<ol start="3" style="list-style-type: decimal">
+<li><p><i class="em em-thinking_face"></i> Utilizando todo el desarrollo teórico que tuvimos para sumas explica claramente con dibujos y ejemplos cómo realizar restas de fracciones. En particular, utiliza los siguientes resultados como ejemplos:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\frac{4}{3} - \frac{2}{3} = \frac{2}{3}\)</span></p></li>
+<li><p><span class="math inline">\(2 - \frac{1}{7} = \frac{13}{7}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{3}{4} - \frac{1}{7} = \frac{17}{28}\)</span></p></li>
+</ol></li>
+<li><p><i class="em em-pencil2"></i> Realiza las siguientes operaciones de fracciones:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\frac{1}{5} - \frac{2}{6} + \frac{1}{3}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{7}{10} + (1 - \frac{1}{3})\)</span></p></li>
+<li><p><span class="math inline">\((\frac{79}{10} - 5) - (\frac{7}{8} + \frac{5}{9})\)</span></p></li>
+</ol></li>
+<li><p><i class="em em-thinking_face"></i> Recordando que multiplicar por un número entero significa sumarlo tantas veces como el número, (por ejemplo: <span class="math inline">\(7 \times 4 = \underbrace{4 + 4 + 4 + 4 + 4 + 4 + 4}_{7 \text{ veces}} = 28\)</span> ), resuelve los siguientes productos que involucran fracciones:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(7 \times \frac{1}{4}\)</span></p></li>
+<li><p><span class="math inline">\(3 \times \frac{2}{5}\)</span></p></li>
+<li><p><span class="math inline">\(8 \times \frac{10}{8}\)</span></p></li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="multiplicación-de-fracciones" class="section level2">
+<h2><span class="header-section-number">1.3</span> Multiplicación de fracciones</h2>
+<p>Para explicar el producto de fracciones analizaremos dos casos por separado: la multiplicación de una fracción por un entero y la multiplicación de una fracción por otra donde una de ellas tiene numerador uno. Finalmente combinaremos la información para tratar fracciones arbitrarias y poder explicar cómo funciona todo el proceso.</p>
+<div id="multiplicación-por-un-número-entero" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Multiplicación por un número entero</h3>
+<p>Pensemos en la siguiente multiplicación:</p>
+<p><span class="math display">\[
+5 \times \frac{1}{3}
+\]</span></p>
+<p>Si recordamos la interpretación con la que se enseña la multiplicación esto significa tener <span class="math inline">\(5\)</span> pedazos de tamaño <span class="math inline">\(\frac{1}{3}\)</span>, como en la imagen:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-24-1.png" alt="Muchos tercios." width="1152" />
+<p class="caption">
+Muchos tercios.
+</p>
+</div>
+<p>En símbolos esto puede escribirse como: <span class="math display">\[
+5 \times \frac{1}{3} = \frac{1}{3} + \frac{1}{3} + \frac{1}{3} + \frac{1}{3} + \frac{1}{3} = \frac{5}{3}
+\]</span></p>
+<p>Que en diagrama equivale a:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-25-1.png" alt="$\frac{5}{3}$" width="288" />
+<p class="caption">
+<span class="math inline">\(\frac{5}{3}\)</span>
+</p>
+</div>
+<p>Ésta es una forma de verlo, desde <em>la perspectiva del <span class="math inline">\(5\)</span></em>. Veámoslo ahora desde <em>la perspectiva del <span class="math inline">\(1/3\)</span></em>. Desde ésta perspectiva, consideremos que tenemos <span class="math inline">\(5\)</span> objetos:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-26-1.png" alt="$\frac{15}{3}$" width="864" />
+<p class="caption">
+<span class="math inline">\(\frac{15}{3}\)</span>
+</p>
+</div>
+<p>Al momento de hacer el producto <span class="math display">\[
+5 \times \frac{1}{3}
+\]</span> lo que estamos haciendo en realidad es tomar una tercera parte de esos <span class="math inline">\(5\)</span> objetos:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-27-1.png" alt="$\frac{5}{3}$ y otras cosas" width="864" />
+<p class="caption">
+<span class="math inline">\(\frac{5}{3}\)</span> y otras cosas
+</p>
+</div>
+<p>Es decir, lo que hace el producto por una fracción es tomar sólo una parte del todo. Por ejemplo al hacer:</p>
+<p><span class="math display">\[
+\frac{4}{7} \times 8
+\]</span></p>
+<p>Se dividen los <span class="math inline">\(8\)</span> objetos cada uno en séptimos:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-28-1.png" alt="Muchos séptimos. No los colorees a mano." width="864" />
+<p class="caption">
+Muchos séptimos. No los colorees a mano.
+</p>
+</div>
+<p>Y ahora, de cada uno de los séptimos se toman <span class="math inline">\(4\)</span>:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-29-1.png" alt="Muchos séptimos. ¿Los cuentas?" width="864" />
+<p class="caption">
+Muchos séptimos. ¿Los cuentas?
+</p>
+</div>
+<p>Si acabas sumando todos los séptimos, al final tienes <span class="math inline">\(32\)</span> de ellos: <span class="math display">\[
+\frac{4}{7} + \frac{4}{7} + \frac{4}{7} + \frac{4}{7} + \frac{4}{7} + \frac{4}{7} + \frac{4}{7} + \frac{4}{7} = \frac{32}{7} 
+\]</span></p>
+<p>Observa que se llega al mismo resultado haciendo: <span class="math display">\[
+\frac{4 \times 8}{7} = \frac{32}{7} 
+\]</span></p>
+<p>En resumen, la lógica del proceso consiste en dividir el entero (digamos el <span class="math inline">\(8\)</span>) en tantas partes como el denominador (<span class="math inline">\(7\)</span>) y luego tomar de esas partes tantas como lo requiera el numerador (<span class="math inline">\(4\)</span>). Veamos ahora qué pasa cuando tenemos el producto de dos fracciones:</p>
+</div>
+<div id="multiplicación-de-dos-fracciones-entre-sí" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Multiplicación de dos fracciones entre sí</h3>
+<p>Considera el siguiente ejemplo:</p>
+<p><span class="math display">\[
+\frac{2}{3} \times \frac{1}{5}
+\]</span></p>
+<p>E intentemos seguir la lógica del proceso anterior. En este caso, cada uno de los tercios que tenemos los vamos a subdividir en <span class="math inline">\(5\)</span>os y luego tomar dos de ellos (de la misma manera que anteriormente a nuestros <span class="math inline">\(8\)</span> rectángulos los dividíamos en séptimos y tomábamos cuatro de cada séptimo). Gráficamente:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-30-1.png" alt="Rectángulos subdivididos en séptimos" width="864" />
+<p class="caption">
+Rectángulos subdivididos en séptimos
+</p>
+</div>
+<p>Ese <span class="math inline">\(1/5\)</span> de los <span class="math inline">\(2/3\)</span> corresponde a haber dividido en <span class="math inline">\(15\)</span> el rectángulo y tomar <span class="math inline">\(2\)</span> de esos <span class="math inline">\(15\)</span>avos. Es decir:</p>
+<p><span class="math display">\[
+\frac{2}{3} \times \frac{1}{5} = \frac{2}{15}
+\]</span></p>
+<p>Veamos otro ejemplo:</p>
+<p><span class="math display">\[
+\frac{3}{7} \times \frac{4}{11} 
+\]</span></p>
+<p>En este caso vamos a tomar un objeto que está dividido en séptimos de los cuales tenemos <span class="math inline">\(3\)</span>; después a cada uno de esos séptimos los dividimos en <span class="math inline">\(11\)</span>avos y de cada <span class="math inline">\(11\)</span> avo de su respectivo séptimo tomamos <span class="math inline">\(4\)</span>. Algo como en la figura:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-31-1.png" alt="Setenta y siete cuadrados" width="864" />
+<p class="caption">
+Setenta y siete cuadrados
+</p>
+</div>
+<p>El proceso de la multiplicación se puede entonces explicar de la siguiente manera:</p>
+<ol style="list-style-type: decimal">
+<li>Se tiene una fracción inicial, digamos <span class="math inline">\(9/13\)</span> que consiste en haber dividido un objeto en <span class="math inline">\(13\)</span> pedazos (tantos como el denominador) y contar con <span class="math inline">\(9\)</span> de ellos (los del numerador).</li>
+</ol>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-32-1.png" alt="$\frac{9}{13}$" width="288" />
+<p class="caption">
+<span class="math inline">\(\frac{9}{13}\)</span>
+</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Si se desea multiplicar por otra fracción, digamos <span class="math inline">\(5/7\)</span> entonces lo que se hace es que cada uno de esos <span class="math inline">\(13\)</span> pedazos se subdivide en séptimos (es decir, el total se subdivide en <span class="math inline">\(13 \times 7 = 91\)</span> cuadritos). De estos <span class="math inline">\(91\)</span> cuadritos se toman <span class="math inline">\(9 \times 5 = 45\)</span> pues para cada una de las <span class="math inline">\(9\)</span> rebanadas que sí se tenían se toman <span class="math inline">\(5\)</span> pedacos:
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-33-1.png" alt="$\frac{9}{13}$ de nuevo" width="288" />
+<p class="caption">
+<span class="math inline">\(\frac{9}{13}\)</span> de nuevo
+</p>
+</div></li>
+</ol>
+<p>Y ése es el resultado: <span class="math display">\[
+\frac{9}{13} \times \frac{5}{7} = \frac{9\times 5}{13 \times 7}  = \frac{45}{91}
+\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Nota que gráficamente podemos ver que la multiplicación es conmutativa pues primero se pudo haber dividido en séptimos para más tarde tomar <span class="math inline">\(9/13\)</span> de cada séptimo:</li>
+</ol>
+<p><img src="Fracciones_files/figure-html/unnamed-chunk-34-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>Podemos entonces plantearnos cómo se ve el caso general. Si tenemos un producto entre dos fracciones: <span class="math display">\[
+\frac{a}{b} \times \frac{c}{d} 
+\]</span></p>
+<p>Lo que tenemos es un objeto dividido en <span class="math inline">\(b\)</span> partes de las cuales tenemos <span class="math inline">\(a\)</span> de ellas:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-35-1.png" alt="$\frac{a}{b}$" width="288" />
+<p class="caption">
+<span class="math inline">\(\frac{a}{b}\)</span>
+</p>
+</div>
+<p>Cada una de esas <span class="math inline">\(b\)</span> partes es luego subdividida en <span class="math inline">\(d\)</span> pedazos más pequeños de los cuales se toman <span class="math inline">\(c\)</span>:</p>
+<div class="figure" style="text-align: center">
+<img src="Fracciones_files/figure-html/unnamed-chunk-36-1.png" alt="$\frac{a \times c}{b \times d}$" width="288" />
+<p class="caption">
+<span class="math inline">\(\frac{a \times c}{b \times d}\)</span>
+</p>
+</div>
+<p>Y por tanto se tienen <span class="math inline">\(a \times c\)</span> pedazos de tamaño <span class="math inline">\(b \times d\)</span>: <span class="math display">\[
+\frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d}
+\]</span></p>
+</div>
+<div id="ejercicios-2" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> Ejercicios</h3>
+<ol style="list-style-type: decimal">
+<li><p>Multiplica las siguientes fracciones justificando con figuras los resultados:</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\frac{3}{5} \times \frac{1}{2}\)</span></li>
+<li><span class="math inline">\(3 \times \frac{3}{4}\)</span></li>
+<li><span class="math inline">\(\frac{4}{3} \times \frac{1}{3}\)</span></li>
+<li><span class="math inline">\(\frac{4}{3} \times \frac{5}{4}\)</span></li>
+</ol></li>
+<li><p><i class="em em-pencil2"></i> Multiplica las siguientes fracciones, no justifiques:</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\frac{3}{5} \times \frac{9}{12}\)</span></li>
+<li><span class="math inline">\(\frac{1}{2} \times \frac{4}{9}\)</span></li>
+<li><span class="math inline">\(5 \times \frac{11}{12}\)</span></li>
+<li><span class="math inline">\(10 \times \frac{3}{1}\)</span></li>
+<li><span class="math inline">\(\frac{1}{3} \times \frac{2}{4} \times \frac{3}{5}\)</span></li>
+</ol></li>
+<li><p><i class="em em-thinking_face"></i> Utiliza todo lo anterior para justificar que el cuadrado de una fracción es la fracción que contiene los cuadrados; es decir: <span class="math display">\[
+\Big(\frac{a}{b}\Big)^2 =\frac{a^2}{b^2} 
+\]</span> <em>Hint</em> Explica primero cómo funciona el caso <span class="math inline">\(\Big( \frac{4}{5} \Big)^2 = \frac{16}{25}\)</span>.</p></li>
+<li><p><i class="em em-thinking_face"></i> Utiliza el resultado anterior para argumentar que la raíz de una fracción es la fracción que contiene las raíces.<br />
+<span class="math display">\[
+\sqrt{\frac{a}{b}} =\frac{\sqrt{a}}{\sqrt{b}} 
+\]</span> <em>Hint</em> Explica primero cómo funciona el caso <span class="math inline">\(\sqrt{\frac{16}{25}} = \frac{4}{5}\)</span>.</p></li>
+<li><p><i class="em em-thinking_face"></i> Justifica con dibujos que si una fracción se le multiplica por un número idéntico al denominador, el denominador se elimina; es decir: <span class="math display">\[
+b \times \frac{a}{b} = a
+\]</span> <em>Hint</em> Explica primero cómo funciona el caso <span class="math inline">\(6 \times \frac{5}{6} = 5\)</span>.</p></li>
+<li><p><i class="em em-thinking_face"></i> Justifica con dibujos que si una fracción se le multiplica por otra cuyo numerador es idéntico al denominador de la primera, el denominador se elimina; es decir: <span class="math display">\[
+\frac{b}{c} \times \frac{a}{b} = \frac{a}{c}
+\]</span> <em>Hint</em> Explica primero cómo funciona el caso <span class="math inline">\(\frac{6}{7} \times \frac{5}{6} = \frac{5}{7}\)</span>.</p></li>
+<li><p>Determina de manera rápida el valor de las siguientes multiplicaciones usando los anteriores puntos:</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\frac{4}{8} \times \frac{8}{2}\)</span></li>
+<li><span class="math inline">\(3 \times \frac{5}{3}\)</span></li>
+<li><span class="math inline">\(\frac{7}{3} \times \frac{1}{7}\)</span></li>
+<li><span class="math inline">\(\frac{4}{3} \times \frac{5}{4}\)</span></li>
+<li><span class="math inline">\(\frac{1}{6} \times 6\)</span></li>
+<li><span class="math inline">\(\frac{1}{2} \times \frac{1}{2}\)</span></li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="división-de-fracciones" class="section level2">
+<h2><span class="header-section-number">1.4</span> División de fracciones</h2>
+</div>
+<div id="conversión-entre-fracciones-y-decimales" class="section level2">
+<h2><span class="header-section-number">1.5</span> Conversión entre fracciones y decimales</h2>
+</div>
+</div>
+<div id="ejercicios-3" class="section level1">
+<h1><span class="header-section-number">2</span> Ejercicios</h1>
+</div>
+<div id="aplicaciones" class="section level1">
+<h1><span class="header-section-number">3</span> Aplicaciones</h1>
+<p>La prevalencia de VIH en la población mayor a <span class="math inline">\(15\)</span> años de México es <span class="math inline">\(0.2\%\)</span>; es decir, de toda la población se estima que <span class="math inline">\(\frac{2}{1000}\)</span> personas en el rango de edad viven con VIH (<span class="math inline">\(\frac{998}{1000}\)</span> no lo padecen). La prueba rápida de VIH detecta al 99‰ de las personas (<span class="math inline">\(\frac{99}{100}\)</span>) con la enfermedad correctamente (verdaderos positivos). Sin embargo, de aquellas personas que la prueba clasifica como personas con VIH, el <span class="math inline">\(2\%\)</span> (<span class="math inline">\(\frac{2}{100}\)</span>), en realidad son falsos positivos (personas que la prueba clasifica como si padecieran la enfermedad pero no la tienen).</p>
+<ol style="list-style-type: decimal">
+<li><p>Suponiendo que una persona de México se hace la prueba por primera vez y resulta positiva. ¿Cuál es la probabilidad de que padezca la enfermedad?</p></li>
+<li><p>Suponiendo que esa misma persona vuelve a hacerse la prueba por segunda vez y de nuevo resulta positiva. ¿Cuál es la probabilidad de que padezca la enfermedad? Suponemos, además que las pruebas no se afectan la una a la otra (es decir, el aplicar la 1a prueba no afecta el resultado de la segunda)</p></li>
+<li><p>(Problema difícil para pensarle porque tiene solución pero es compleja) Si la persona anterior resulta positiva en todas las pruebas que se realiza, ¿cuántas pruebas con resultado positivo debe realizarse para estar 99% seguro de que padece VIH?</p></li>
+<li><p>(Problema difícil para pensarle porque tiene solución pero es compleja) Suponiendo que la población cuenta con <span class="math inline">\(100\)</span> millones de habitantes mayores a <span class="math inline">\(15\)</span> años, y que cada enfermo de VIH que no fue detectado a tiempo cuesta al gobierno <span class="math inline">\(200,000\)</span> más, mientras que un falso positivo cuesta <span class="math inline">\(200\)</span> (por reaplicar la prueba). ¿Cuántas pruebas de VIH deben aplicarse para minimizar el gasto?<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
+</ol>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Si se aplican <em>demasiadas</em> pruebas acaba siendo muy caro y ese dinero se pudo utilizar en otros programas de salud.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+      <b>Contáctame</b> en <a href="mailto:rzepeda17@gmail.com?Subject=Random Math" target="_top">rzepeda17@gmail.com</a>
+    </div>
+    <div class="panel-footer"><span  xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><small><b>Guía no oficial de estudio para el examen de matemáticas del INSP</b></span> por <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Rodrigo Zepeda</span> tiene una licencia <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. </small><br /></div>
+</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

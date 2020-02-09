@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rodrigo Zepeda" />
+
+
+<title>Operaciones Aritméticas</title>
+
+<script src="OperacionesAritmeticas_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="OperacionesAritmeticas_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="OperacionesAritmeticas_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="OperacionesAritmeticas_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="OperacionesAritmeticas_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="OperacionesAritmeticas_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="OperacionesAritmeticas_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="OperacionesAritmeticas_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="OperacionesAritmeticas_files/navigation-1.1/tabsets.js"></script>
+<link href="OperacionesAritmeticas_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="OperacionesAritmeticas_files/highlightjs-9.12.0/highlight.js"></script>
+<!-- Meta characteristics -->
+<meta name="description" content="Random Math Notes">
+<meta name="keywords" content="Probability, Markov Chains, Markov Processes, Stochastic Processes">
+<meta name="author" content="Rodrigo Zepeda Tello">
+
+<!-- Add d3js -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!-- Nice mathjax format -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true, }, TeX: { equationNumbers: { autoNumber: "AMS" } } });
+</script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<!--Navigation menu-->
+<link href="css/custom.css" rel="stylesheet">
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+            <a class="navbar-brand" href="https://rodrigozepeda.github.io/GuiaINSP">Guía no oficial de estudio para el examen de matemáticas del INSP</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="https://github.com/RodrigoZepeda/GuiaINSP"><img src="images/GitHub-Mark-Light-32px.png"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Operaciones Aritméticas</h1>
+<h4 class="author">Rodrigo Zepeda</h4>
+
+</div>
+
+
+<div id="operaciones-aritméticas" class="section level1">
+<h1><span class="header-section-number">1</span> Operaciones aritméticas</h1>
+<p>Seguro en redes sociales has visto retos como este:</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+oomfies solve this <a href="https://t.co/0RO5zTJjKk">pic.twitter.com/0RO5zTJjKk</a>
+</p>
+— #em (<span class="citation">(<span class="citeproc-not-found" data-reference-id="pjmdolI"><strong>???</strong></span>)</span>) <a href="https://twitter.com/pjmdolI/status/1155598050959745026?ref_src=twsrc%5Etfw">July 28, 2019</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Han salido en <a href="https://www.news.com.au/finance/business/media/simple-maths-equation-dividing-the-internet/news-story/85071661a45c9c293700fd8daffc7d2d">noticias</a>, han generado discusiones eternas. En este caso, la gente de Internet se volvió loca decidiendo si el resultado era <span class="math inline">\(16\)</span> ó <span class="math inline">\(1\)</span>. El problema es claro: cada quien resuelve las operaciones en el orden que quiere. ¿Cuánto dirías tú que vale <span class="math inline">\(2 + 3 \times 5\)</span>?<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Estas discusiones sobre los valores resultantes de las operaciones no son nuevas sino que permearon la historia de las matemáticas durante mucho tiempo. Sin embargo, desde el siglo XVI ya están resueltas: fue en torno a esos años (aunque no se sabe bien exactamente cuándo) que los matemáticos decidieron que las operaciones siempre debían seguir cierto orden. Una vez que optaron por el orden, dejaron de haber múltiples resultados: ¡ya todo mundo estaba de acuerdo en el significado de las expresiones matemáticas y por tanto cuál debía ser su resultado!</p>
+<p>En esta sección aprenderemos el orden de las operaciones aritméticas. No es una sección particularmente retadora (en aparciencia) así que si crees que estás ya lista, lánzate a los ejercicios.</p>
+<div id="orden-de-las-operaciones" class="section level2">
+<h2><span class="header-section-number">1.1</span> Orden de las operaciones</h2>
+<p>Actualmente el orden de las operaciones es como sigue:</p>
+<ol style="list-style-type: decimal">
+<li>Paréntesis</li>
+<li>Potencias y Raíces</li>
+<li>Multiplicaciones y Divisiones</li>
+<li>Sumas y restas</li>
+</ol>
+<p>A continuación desarrollo más estos ejemplos:</p>
+<p><strong>1. Se evalúa lo que está dentro de paréntesis empezando por el más profundo</strong> Lo que está entre paréntesis se hace primero comenzando por aquellos que están más adentro.</p>
+<p>Ejemplos:</p>
+<p><span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+\text{Ej 1:} &amp; \quad 1 - ((2 + 7) + 5) = 1 - (9 + 5) = 1 - 14 = -13 \\
+\text{Ej 2:} &amp; \quad 3 \times (5 + 1) = 3 \times 6 = 30 \\
+\text{Ej 3:} &amp; \quad (5 + 9) \div (4 + 3) = 14 \div 7 = 2
+\end{aligned}
+\end{equation}\]</span></p>
+<p><strong>Nota</strong> A veces en lugar de paréntesis se utilizan corchetes. Es lo mismo:</p>
+<p><span class="math display">\[
+4 \times (5 + 2) = 4 \times [5 + 2]
+\]</span></p>
+<p><strong>2. Las potencias y raíces se evalúan en segundo lugar</strong> En particular, lo que está adentro de la raíz se evalúa primero, antes de tomar raíz. Lo mismo con una potencia dentro de paréntesis.</p>
+<p>Ejemplos:</p>
+<p><span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+\text{Ej 1:} &amp; \quad ((2 + 3)^2 + 4) = (5^2 + 4) = 29 \\
+\text{Ej 2:} &amp; \quad (2 + 2)^2 + (2 + 1)^2 = 4^2 + 3^2 = 16 + 9 = 25\\
+\text{Ej 3:} &amp; \quad \sqrt{6 + 3} = \sqrt{9} = 3\\
+\text{Ej 4:} &amp; \quad (1 + 7^2) \div (2^2 + 6) = (1 + 49) \div (4 + 6) = 50 \div 10 = 5 \\
+\text{Ej 5:} &amp; \quad (2^2)^3 = 4^3 = 64
+\end{aligned}
+\end{equation}\]</span></p>
+<p><strong>Nota</strong> Usualmente el acento circunflejo ^ se utiliza en las computadoras para significar potencia:</p>
+<p><span class="math display">\[
+4^2 = 4\text{^}2
+\]</span></p>
+<p><strong>3. Multiplicaciones y divisiones van tercero</strong> En caso de tener múltiples, siempre se hacen de izquierda a derecha, así como se lee en español. No olvides las reglas de los signos: producto de signos iguales de positivo (<span class="math inline">\(2 \times 2 = 4\)</span> lo mismo que <span class="math inline">\((-3) \times (-3) = 9\)</span>) mientras que signos distintos resultan en valores negativos (<em>e.g.</em> <span class="math inline">\(2\times (-5) = -10\)</span> y <span class="math inline">\((-6) \times 7 = -42\)</span>).</p>
+<p>Ejemplos:</p>
+<p><span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+\text{Ej 1:} &amp; \quad (5 + 2)\times(3^2 + 1) = 7 \times (9 + 1) = 7 \times 10 = 70.\\
+\text{Ej 2:} &amp; \quad 3\times\big(4 + (5 + 2)\times (3 - 2)\big) = 3 \times \big(4 + 7 \times 1\big) = 3 \times 11 = 33.\\
+\text{Ej 3:} &amp; \quad 3 + 5 \div 2 - 0.5 = 3 + 2.5 - 0.5 = 5.\\
+\text{Ej 4:} &amp; \quad 6 \div 3 \div 2 = 2 \div 2 = 1.
+\end{aligned}
+\end{equation}\]</span></p>
+<p><strong>Nota</strong> Existen varias notaciones equivalentes para multiplicaciones: dejar paréntesis pegados, colocar punto o bien usar el signo de multiplicación. Todo es lo mismo: <span class="math display">\[
+(2 + 1) \times (3 + 4) = (2 + 1) \cdot (3 + 4) = (2 + 1) (3 + 4) = 3 (3 + 4) \neq \underbrace{(2 + 1) 7}_{\text{NO HACER!}}
+\]</span> Para división sólo existe el signo de <span class="math inline">\(\div\)</span> o bien la línea de fracción: <span class="math display">\[
+20 \div 5 = \frac{20}{5}
+\]</span></p>
+<p><strong>4. Al final se hacen sumas y restas</strong> De nuevo, se leen de izquierda a derecha.</p>
+<p>Ejemplos:</p>
+<p><span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+\text{Ej 1:} &amp; \quad 5 + 3 + 2\times (7 + 2) = 5 + 3 + 2 \times 9 = 5 + 3 + 18 = 8 + 18 = 26.\\
+\text{Ej 2:} &amp; \quad (7 - 2 \times 3 + 1)\div (5 + 4\times (1 + 1) - 2^2) = (7 - 6 + 1) \div (5 + 4 \times 2 - 4) = 2 \div 9 = \frac{2}{9} \approx 0.222\\
+\text{Ej 3:} &amp; \quad \big(5 + (3 + 1)^3 \big) - \big(7 \times (2 + 5) + 1\big) = \big(5 + 4^3\big) - \big( 7 \times 7 + 1\big) = (5 + 64) - (49 + 1) = 69 - 50 = 19\\
+\end{aligned}
+\end{equation}\]</span></p>
+</div>
+</div>
+<div id="ejercicios" class="section level1">
+<h1><span class="header-section-number">2</span> Ejercicios</h1>
+<div id=" Nota0.301319765625522Cómo verificar tus resultados " class="alert alert-info">
+<b> Nota : </b> Para verificar tus resultados te recomiendo <a href = 'https://www.wolframalpha.com/input/?i=x+%2B+2+%3D+8' style='color:rgb(255,162,142);'>Wolfram Alpha</a> o bien <a href = 'https://es.symbolab.com' style='color:rgb(255,162,142);'>Symbolab</a>. Ambas cuentan con apps para el teléfono.
+</div>
+<p>Los siguientes ejercicios son <strong>SIN CALCULADORA</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><i class="em em-pencil2"></i> Evalúa las siguientes expresiones sin saltarte un solo paso:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\((3 + 2) \times 7 - 6\times 5\)</span></p></li>
+<li><p><span class="math inline">\(\Big( \big( (7 + 2) + (3 + 6) \big) - 2^2\Big)\div 2\)</span></p></li>
+<li><p><span class="math inline">\(\sqrt{4^2 + 3^2} - 4\)</span></p></li>
+<li><p><span class="math inline">\(\big( 5 \times (2 + 3) - 2^2 \times 5 + 3^2 \big)\div 4\)</span></p></li>
+<li><p><span class="math inline">\((-2)(-3)(-4) - \big( 5\times 4 \times 3 + 4 \big)\)</span></p></li>
+<li><p><span class="math inline">\(4^(2 + 1)\div 8 + 3\)</span></p></li>
+<li><p><span class="math inline">\(100\div 10\div5\times8+4\div2\)</span></p></li>
+</ol></li>
+<li><p>Califica las soluciones a los siguientes ejercicios indicando si las soluciones son correctas o incorrectas. Si son incorrectas determina dónde ocurrió el primer error y corrígelo.</p></li>
+</ol>
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.661971981404349Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 1 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+(2 + 3)^2 
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+(2 + 3)^2 = 2 + 3^2 = 2 + 9 = 11
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.069821500685066Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 2 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+\big( (4 + 3) \cdot 7  + 11\big) \cdot 10
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\big( (4 + 3) \cdot 7  + 11\big) \cdot 10 = 7 \cdot 7 + 11 \cdot 10 = 49 + 110 = 159
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.739041594788432Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 3 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+\sqrt{5^2 + 12^2} 
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\sqrt{5^2 + 12^2} = \sqrt{25 + 144} = \sqrt{25} + \sqrt{144} = 5 + 12 = 17
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.548042761627585Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 4 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+20\div 5\div 2
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+20\div 5\div 2 = 20 \div 2.5 = 8
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.144194127293304Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 5 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+(3 - 2)(3 + 2)
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+(3 - 2)(3 + 2) = 9 - 4 = 5
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.889920773915946Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 6 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+(7 + 2)\cdot ( 1 + 1) \cdot (3 + 1) \cdot (5 \times 2)
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+(7 + 2)\cdot ( 1 + 1) \cdot (3 + 1) \cdot (5 \times 2) = 
+9\cdot 2 \cdot 4 \cdot 10 = 720
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.0590054304338992Un ejercicio resuelto ¿bien? class="panel-heading">
+		<h4> Ejercicio 7 [ Un ejercicio resuelto ¿bien? ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+\big( (5 + 2)^{(1 + 1)} + 1\big) + 1\cdot 10 \cdot 5
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\big( (5 + 2)^{(1 + 1)} + 1\big) + 1\cdot 10 \cdot 5 = (7^2 + 1) + 50 = 150
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+<ol start="3" style="list-style-type: decimal">
+<li><p>Coloca paréntesis en las siguientes expresiones para obtener el resultado deseado (ver ejemplo abajo). Puede que algún ejercicio no tenga solución.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(2 \quad + \quad 5 \quad \times \quad 3 \quad - \quad 1 = 20\)</span></p></li>
+<li><p><span class="math inline">\(20 \quad \div \quad 5 \quad + \quad 4 \quad \times \quad 2 \quad - \quad 4 = 12\)</span></p></li>
+<li><p><span class="math inline">\(1 \quad + \quad 3 \quad \phantom{2}^2 \quad - \quad 6 = 10\)</span></p></li>
+<li><p><span class="math inline">\(7 \quad - \quad 2 \quad + \quad 5 \quad - \quad 9 \quad + \quad 3 \quad + \quad 2 \quad - \quad 1 = -5\)</span></p></li>
+<li><p><span class="math inline">\(2 \quad + \quad 2 \quad \phantom{2}^2 \quad + \quad 3 \quad + \quad 3 \quad \phantom{2}^2 \quad + 1 \quad 1 \quad \phantom{2}^2 = 20\)</span></p></li>
+</ol></li>
+</ol>
+
+<div class="panel panel-success">
+	<div id =  Ejemplo0.715156134217978Un ejercicio de ejemplo class="panel-heading">
+		<h4> Ejemplo 1 [ Un ejercicio de ejemplo ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver 
+\begin{equation}\nonumber
+9 \quad + \quad 2 \quad \div \quad 11 = 1
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Demostración:</b> 
+\begin{equation}\nonumber
+\big( 9  + 2 \big) \div  11 = 1
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+<ol start="4" style="list-style-type: decimal">
+<li><p><i class="em em-thinking_face"></i> Construye ejemplos donde si se evalúa de manera incorrecta (no tomando en cuenta el orden de las operaciones) se obtenga el resultado <strong>MALO</strong> mientras que de forma correcta se obtenga el <strong>BUENO</strong> (ver ejemplo abajo)</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>MALO:</strong> <span class="math inline">\(1\)</span>; <strong>BUENO:</strong> <span class="math inline">\(3\)</span>.</p></li>
+<li><p><strong>MALO:</strong> <span class="math inline">\(0\)</span>; <strong>BUENO:</strong> <span class="math inline">\(10\)</span>.</p></li>
+<li><p><strong>MALO:</strong> <span class="math inline">\(8\)</span>; <strong>BUENO:</strong> <span class="math inline">\(3\)</span>.</p></li>
+</ol></li>
+</ol>
+
+<div class="panel panel-success">
+	<div id =  Ejemplo0.724608680931851Un ejercicio de ejemplo class="panel-heading">
+		<h4> Ejemplo 2 [ Un ejercicio de ejemplo ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+<b>MALO:</b> $8$
+<b>BUENO:</b> $2$
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Demostración:</b> 
+\begin{equation}\nonumber
+10\div (2 + 3)
+\end{equation}
+pues 
+\begin{equation}\nonumber
+\begin{aligned}
+\text{MAL EVALUADO} & \quad 10\div 2 + 3 = 5 + 3 = 8 \\
+\text{BIEN EVALUADO} & \quad 10\div (2 + 3) = 10\div 5 = 2
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+<ol start="5" style="list-style-type: decimal">
+<li><p><i class="em em-thinking_face"></i> Coloca los signos necesarios (cuantos se requieran de la lista <span class="math inline">\((, +, -, ), \times, \div, \text{^}\)</span>) para obtener el resultado que se pide (ver ejemplo):</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(3 \quad 3 \quad 3 = 12\)</span></li>
+<li><span class="math inline">\(3 \quad 3 \quad 3 = 24\)</span></li>
+<li><span class="math inline">\(7 \quad 2 \quad 4 \quad 10 = 30\)</span></li>
+<li><span class="math inline">\(3 \quad 2 \quad 10 = 16\)</span></li>
+<li><span class="math inline">\(6 \quad 5 \quad 2 \quad 2= 21\)</span></li>
+</ol></li>
+</ol>
+
+<div class="panel panel-success">
+	<div id =  Ejemplo0.104905848624185Un ejercicio de ejemplo class="panel-heading">
+		<h4> Ejemplo 3 [ Un ejercicio de ejemplo ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+\begin{equation}\nonumber
+5 \quad 2 \quad 3 = 25
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Demostración:</b> 
+\begin{equation}\nonumber
+5	imes (2 + 3) = 5 	imes 5 = 25
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Si respondiste 25, necesitas leer esto.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+      <b>Contáctame</b> en <a href="mailto:rzepeda17@gmail.com?Subject=Random Math" target="_top">rzepeda17@gmail.com</a>
+    </div>
+    <div class="panel-footer"><span  xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><small><b>Guía no oficial de estudio para el examen de matemáticas del INSP</b></span> por <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Rodrigo Zepeda</span> tiene una licencia <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. </small><br /></div>
+</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

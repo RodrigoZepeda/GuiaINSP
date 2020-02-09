@@ -1,0 +1,70 @@
+#TOC {
+    margin-top: 100px;
+}
+
+.title{
+    margin-top: 100px;
+    text-align: left;
+}
+
+.author {
+    color: gray;
+    font-size: 200%;
+}
+
+/*.MathJax_Display{
+    overflow-x: scroll;
+}*/
+
+li {
+    text-align: left;
+}
+
+body{
+    text-align: justify;
+}
+
+code {
+    text-align: left;
+}
+
+/*
+svg {
+    display: block;
+    margin: 0 auto;
+}*/
+
+/*
+.outer {
+  fill: #ecf0f1;;
+  stroke: #000;
+}*/
+
+iframe {
+    text-align: center;
+    display:block;
+}
+
+strong {
+    color:#2c3e50;
+}
+
+blockquote{
+    color:#2c3e50;
+    font-size: small;
+}
+
+/*
+.inner {
+  fill: #ccc;
+  stroke: #000;
+  stroke-dasharray: 3, 4;
+}*/
+
+
+/*#myfootnote {
+    max-width: 800px;
+    margin-right: 20px;
+    margin-left: 310px;
+    line-height: 20px;
+}*/

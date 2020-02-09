@@ -1,0 +1,26 @@
+.inner{
+    fill: none;
+    stroke: red;
+}
+
+.outer{
+    fill: none;
+    stroke: blue;
+}
+
+.functionpath{
+    stroke: black;
+    stroke-width: 4;
+}
+
+.barlow{
+    fill: tomato;
+    stroke: black;
+    stroke-width: 1;
+}
+
+.barup{
+    fill: steelblue;
+    stroke: black;
+    stroke-width: 1;
+}
