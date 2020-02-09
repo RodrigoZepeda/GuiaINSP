@@ -1,4 +1,4 @@
-# GuiaINSP
+# Guía INSP
 Guía no oficial de estudios para el examen de matemáticas de la maestría en salud pública del INSP.
 
 **Temario**
