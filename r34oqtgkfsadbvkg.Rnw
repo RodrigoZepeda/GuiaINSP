@@ -1,0 +1,11 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+<<>>=
+hist(rnorm(100))
+@
+
+
+\end{document}

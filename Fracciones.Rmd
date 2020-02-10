@@ -25,7 +25,6 @@ require(knitr)
 require(kableExtra)
 require(ggplot2)
 require(reshape2)
-require(rgl)
 library(tidyverse)
 library(cowplot)
 library(rlist)
@@ -305,7 +304,6 @@ build_theorem("Propiedades",ex, proof = "", name = "Transitividad" )
 Comencemos con el ejemplo más tranquilo: cuando el denominador es el mismo. Pensemos que tenemos $\frac{3}{5}$ y $\frac{1}{5}$. Esto nos da un total de $\frac{4}{5}$. Gráficamente esto se ve así:
 
 ```{r, fig.cap="Los $\\frac{3}{5}$ unidos con el otro $\\frac{1}{5}$ nos dan un total de $\\frac{4}{5}$.", fig.width=12}
-
 frac.operation(c(3,5),"+",c(1,5),"=",c(4,5))
 ```
 
@@ -351,6 +349,7 @@ _¿Qué podemos hacer entonces?_ La idea es simple: utilizar fracciones equivale
 $$
 \dfrac{2}{3} = \dfrac{2\times 6}{3 \times 6} = \dfrac{12}{18} \quad \text{y} \quad \dfrac{1}{2} = \dfrac{1\times 9}{2 \times 9} = \dfrac{9}{18}
 $$
+
 Gráficamente podemos ver las equivalencias en $18$ avos:
 
 ```{r, fig.cap="Equivalencias a 18vos", fig.width=9, fig.height = 6}
@@ -386,6 +385,16 @@ O bien con $36$avos:
 $$
 \dfrac{2}{3} + \dfrac{1}{2} = \dfrac{2\times 12}{3\times 12} + \dfrac{1\times 18}{2\times 18} = \dfrac{24}{36} + \dfrac{18}{36} = \dfrac{42}{36} = \dfrac{7 \times 6}{6 \times 6} = \dfrac{7}{6}
 $$
+
+```{r, fig.cap="Equivalencias a 36vos", fig.width=12, fig.height = 4}
+plot_grid(frac.operation(c(2,3),"+",c(1,2)),
+          ggplot() + 
+            annotate("text",label="=",x=0,y=0, size = 10) +
+            theme_void(),
+          frac.operation(c(24,36),"+",c(18,36),"=",c(7,6)), 
+          nrow = 1,
+          rel_widths = c(3,1,5))
+```
 
 Es decir, sin importar cuál número se elija, siempre se llega al mismo resultado.  Usualmente lo que se hace para elegir el denominador para la suma es multiplicar los denominadores que se tienen. Por ejemplo, para sumar:
 
@@ -512,6 +521,25 @@ sol <- "
 build_theorem("Ejercicio",ex, proof = sol, name = "Un ejercicio resuelto ¿bien?" )
 ```
 
+```{r}
+ex <- "
+Sumar 
+\\begin{equation}\\nonumber
+\\dfrac{8}{9} + \\dfrac{4}{3} 
+\\end{equation}
+"
+
+sol <- "
+\\begin{equation}\\nonumber
+\\begin{aligned}
+\\dfrac{8}{9} + \\dfrac{4}{3}  = \\dfrac{8}{9} + \\dfrac{12}{9} = \\dfrac{20}{9}
+\\end{aligned}
+\\end{equation}
+"
+
+build_theorem("Ejercicio",ex, proof = sol, name = "Un ejercicio resuelto ¿bien?" )
+```
+
 3. <i class="em em-thinking_face"></i> Utilizando todo el desarrollo teórico que tuvimos para sumas explica claramente con dibujos y ejemplos cómo realizar restas de fracciones. En particular, utiliza los siguientes resultados como ejemplos:
 
     a. $\frac{4}{3} - \frac{2}{3} = \frac{2}{3}$ 
@@ -537,6 +565,71 @@ build_theorem("Ejercicio",ex, proof = sol, name = "Un ejercicio resuelto ¿bien?
     
     c. $8 \times \frac{10}{8}$
  
+### Fórmula para sumar fracciones
+En esta sección utilizaremos todo lo que sabemos para generar una fórmula para la suma de fracciones. Para ello vamos a pensar que tenemos dos fracciones: $\frac{a}{b}$ y $\frac{c}{d}$.
+
+Recordamos que los pasos que hicimos fueron:
+
+1. Poner todo en términos del mismo denominador. Una forma que siempre funciona es multiplicando los denominadores en este caso las transformamos:
+
+\begin{equation}\label{sumafrac1}
+\begin{aligned}
+\frac{a}{b} & = \frac{a \cdot d}{b \cdot d} & = \frac{ad}{bd} \\ \\
+\frac{c}{d} & = \frac{c \cdot b}{d \cdot b} & = \frac{bc}{bd} \\
+\end{aligned}
+\end{equation}
+
+Por ejemplo, en el caso de 
+$$
+\dfrac{3}{4} + \dfrac{1}{5}
+$$
+tenemos que $a = 3$, $b = 4$, $c = 1$ y $d = 5$. Transformamos las fracciones a tener denominador común:
+\begin{equation}\nonumber
+\begin{aligned}
+\frac{3}{4} & = \frac{3 \cdot 5}{4 \cdot 5} & = \frac{15}{20} \\ \\
+\frac{1}{5} & = \frac{1 \cdot 4}{5 \cdot 4} & = \frac{4}{20} \\
+\end{aligned}
+\end{equation}
+Visto de manera gráfica:
+```{r, fig.cap="Equivalencias a 20vos", fig.width=12, fig.height = 6}
+plot_grid(frac.operation(c(3,4),"+",c(1,5)),
+          ggplot() + annotate("text", label = "=", x = 0, y = 0, size = 10) +
+            theme_void(),
+          frac.operation(c(15,20),"+",c(4,20)), nrow = 1,
+          rel_widths = c(3,1,3))
+```
+
+2. Una vez que ambas fracciones cuentan con el mismo denominador \eqref{sumafrac1} sumamos los numeradores:
+\begin{equation}\nonumber
+\begin{aligned}
+\frac{a}{b} + \frac{c}{d} & = \frac{ad}{bd} + \frac{cd}{bd} & = \frac{ad + cd}{bd}
+\end{aligned}
+\end{equation}
+
+De donde se sigue que la fórmula para sumar dos fracciones $\frac{a}{b}$ y $\frac{c}{d}$ es:
+\begin{equation}\label{suma}
+\begin{aligned}
+\frac{a}{b} + \frac{c}{d} & = \frac{ad + cd}{bd}
+\end{aligned}
+\end{equation}
+
+En el ejemplo numérico que teníamos:
+
+$$
+\dfrac{3}{4} + \dfrac{1}{5} = \frac{15}{20} + \frac{4}{20} = \frac{15 + 4}{20}  
+$$
+lo cual está dado justamente por la fórmula:
+$$
+\frac{15 + 4}{20} = \frac{5 \cdot 3 + 4 \cdot 1}{4 \cdot 5} = \frac{ad + cd}{bd}.
+$$
+
+Que en imagen se ve como sigue:
+```{r, fig.cap="Equivalencias a 20vos", fig.width=9, fig.height = 6}
+frac.operation(c(15,20),"+",c(4,20),"=",c(19,20))
+```
+
+
+
 ## Multiplicación de fracciones
 Para explicar el producto de fracciones analizaremos dos casos por separado: la multiplicación de una fracción por un entero y la multiplicación de una fracción por otra donde una de ellas tiene numerador uno. Finalmente combinaremos la información para tratar fracciones arbitrarias y poder explicar cómo funciona todo el proceso.
 
@@ -638,7 +731,7 @@ E intentemos seguir la lógica del proceso anterior. En este caso, cada uno de l
 ```{r, fig.cap="Rectángulos subdivididos en séptimos", fig.width=9, fig.height = 2}
 plot_grid(
   plot.fraction(2,3, fill = "purple")[[1]],
-  subraction.plot(frac1 = c(2,3), frac2 = c(1,5), 
+  subfraction.plot(frac1 = c(2,3), frac2 = c(1,5), 
                   xlab = "1/5 de cada uno de esos 2/3")
 )
 ```
@@ -655,17 +748,27 @@ $$
 \frac{3}{7} \times \frac{4}{11} 
 $$
 
-En este caso vamos a tomar un objeto que está dividido en séptimos de los cuales tenemos $3$; después a cada uno de esos séptimos los dividimos en $11$avos y de cada $11$ avo de su respectivo séptimo tomamos $4$. Algo como en la figura:
+En este caso vamos a tomar un objeto que está dividido en séptimos de los cuales tenemos $3$; después a cada uno de esos séptimos los dividimos en $11$avos y de cada séptimo tomamos $4$ onceavos. Algo como en la figura:
 
 ```{r, fig.cap="Setenta y siete cuadrados", fig.width=9, fig.height = 2}
 plot_grid(
   plot.fraction(3,7, fill = "purple", xlab = "Objeto dividido en séptimos. Tenemos tres de esos séptimos.")[[1]],
-  subraction.plot(frac1 = c(3,7), frac2 = c(4,11), 
-                  xlab = "Cada uno de los séptimos se subdividió en 11 y de los 3 que se tenían se toman 4 subdivisiones")
+  subfraction.plot(frac1 = c(3,7), frac2 = c(4,11), 
+                  xlab = "Cada séptimo se subdividió en 11 y tomas 4 subdivisiones")
 )
 ```
 
+Luego:
+
+$$
+\frac{3}{7} \times \frac{4}{11} = \frac{3 \cdot 4}{7 \cdot 11} = \frac{12}{77}
+$$
+
 El proceso de la multiplicación se puede entonces explicar de la siguiente manera:
+
+$$
+\text{Resolver} \quad \frac{9}{13} \times \frac{5}{7}
+$$
 
 1. Se tiene una fracción inicial, digamos $9/13$ que consiste en haber dividido un objeto en $13$ pedazos (tantos como el denominador) y contar con $9$ de ellos (los del numerador). 
 
@@ -673,9 +776,9 @@ El proceso de la multiplicación se puede entonces explicar de la siguiente mane
 plot.fraction(9,13, fill = "purple", xlab = "9/13")[[1]]
 ```
 
-2. Si se desea multiplicar por otra fracción, digamos $5/7$ entonces lo que se hace es que cada uno de esos $13$ pedazos se subdivide en séptimos (es decir, el total se subdivide en $13 \times 7 = 91$ cuadritos). De estos $91$ cuadritos se toman $9 \times 5 = 45$ pues para cada una de las $9$ rebanadas que sí se tenían se toman $5$ pedacos: 
-```{r, fig.cap="$\\frac{9}{13}$ de nuevo", fig.width=3, fig.height = 2}
-subraction.plot(frac1 = c(9,13), frac2 = c(5,7), 
+2. Si se desea multiplicar por otra fracción, digamos $5/7$ entonces lo que se hace es que cada uno de esos $13$ pedazos se subdivide en séptimos (es decir, el total se subdivide en $13 \times 7 = 91$ cuadritos). De estos $91$ cuadritos se toman $9 \times 5 = 45$ pues para cada una de las $9$ rebanadas que sí se tenían se toman $5$ pedazos: 
+```{r, fig.cap="Ahora son $\\frac{45}{91}$", fig.width=3, fig.height = 2}
+subfraction.plot(frac1 = c(9,13), frac2 = c(5,7), 
                   xlab = "Tomas 45 de las 91 rebanadas")
 ```
 
@@ -689,12 +792,45 @@ $$
 ```{r, fig.width=9, fig.height = 2}
 plot_grid(
   plot.fraction(5,7, fill = "purple", xlab = "Objeto dividido en séptimos")[[1]],
-  subraction.plot(frac1 = c(5,7), frac2 = c(9,13), 
-                  xlab = "Cada uno de los séptimos se subdividió en 13 y de los 5 que se tenían se toman 9 subdivisiones")
+  subfraction.plot(frac1 = c(5,7), frac2 = c(9,13), 
+                  xlab = "Cada uno de los séptimos se subdividió en 13")
 )
 ```
 
-Podemos entonces plantearnos cómo se ve el caso general. Si tenemos un producto entre dos fracciones:
+### Ejercicios
+
+1. Multiplica las siguientes fracciones justificando con figuras los resultados:
+
+    a. $\frac{3}{5} \times \frac{1}{2}$
+    b. $3 \times \frac{3}{4}$
+    c. $\frac{4}{3} \times \frac{1}{3}$
+    d. $\frac{4}{3} \times \frac{5}{4}$
+
+2. <i class="em em-pencil2"></i>  Multiplica las siguientes fracciones, no justifiques con figuras:
+
+    a. $\frac{3}{5} \times \frac{9}{12}$
+    b. $\frac{1}{2} \times \frac{4}{9}$
+    c. $5 \times \frac{11}{12}$
+    d. $10 \times \frac{3}{1}$
+    e. $\frac{1}{3} \times \frac{2}{4} \times \frac{3}{5}$
+    
+3. Determina el/los números marcados con interrogación de tal manera que el producto te da la igualdad deseada. Puede haber múltiples respuestas correctas si hay más de un signo de interrogación en el enunciado. 
+
+    a. $\frac{3}{5} \times \frac{\text{?}}{2} = \frac{21}{10}$
+    
+    b. $\frac{6}{7} \times \frac{\text{?}}{\text{?}} = 1$
+    
+    c. $\frac{3}{5} \times \frac{24}{\text{?}} = \frac{6}{5}$
+    
+    d. $\frac{9}{7} \times \frac{14}{\text{?}} = 1$
+    
+    e. $\frac{3}{2} \times \frac{\text{?}}{\text{?}} = \frac{8}{9}$
+    
+_Hint_ Si no se te ocurre cómo, dibuja los problemas. 
+
+
+### Fórmula
+Podemos plantearnos cómo se ve el caso general. Si tenemos un producto entre dos fracciones:
 $$
 \frac{a}{b} \times \frac{c}{d} 
 $$
@@ -707,45 +843,228 @@ plot.simple.fraction(17,31, fill = "purple", xlab = "a/b")
 
 Cada una de esas $b$ partes es luego subdividida en $d$ pedazos más pequeños de los cuales se toman $c$:
 
-```{r, fig.cap="$\\frac{a \\times c}{b \\times d}$", fig.width=3, fig.height = 2}
-subraction.plot(frac1 = c(17,31), frac2 = c(22,30), xlab = "")
+```{r, fig.cap="Tomas $c$ de estos $a$ pedazos divididos en $d$ trozos más", fig.width=3, fig.height = 2}
+subfraction.plot(frac1 = c(17,31), frac2 = c(22,30), xlab = "")
 ```
 
-Y por tanto se tienen $a \times c$ pedazos de tamaño $b \times d$:
+Y por tanto se tienen $a \cdot c$ pedazos de tamaño $b \cdot d$:
+\begin{equation}\label{mult}
+\frac{a}{b} \times \frac{c}{d} = \frac{a c}{b  d}
+\end{equation}
+
+
+## División de fracciones
+
+Como sabes, la división es la operación contraria a multiplicar. Si por ejemplo:
 $$
-\frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d}
+4 \times 7 = 28
+$$
+
+Dividir 
+$$
+28 \div 7 = 4
+$$
+Es preguntarse por qué número hubo que multiplicar al $7$ para obtener el $4$. Escrito de otra forma, la pregunta principal es cuántos $7$s caben en $28$. La respuesta es $4$ pues:
+$$
+\underbrace{7 + 7 + 7 + 7}_{4 \text{ veces}} = 28
+$$
+
+Ésta lógica es la misma cuando hacemos la siguiente división:
+$$
+\frac{1}{2} \div \frac{1}{6}
+$$
+La pregunta es cuántos sextos caben en $\frac{1}{2}$. Es decir, de un objeto total de tamaño $1$ si se tienen sextos, con cuántos hacemos una mitad. Podemos ver gráficamente que la respuesta son $3$:
+
+
+```{r, fig.cap="$\\frac{1}{2}\\div\\frac{1}{6} = 3$", fig.width=3, fig.height = 2}
+subfraction.plot(frac1 = c(1,2), frac2 = c(3,3), 
+                 fill1 = "firebrick",
+                 fill2 = "firebrick",
+                 xlab = "Caben 3 pedazos de 1/6 para hacer 1/2")
+```
+
+Luego 
+$$
+\frac{1}{2} \div \frac{1}{6} = 3
+$$
+
+Podemos hacernos la misma pregunta, con exactamente los mismos números pero al revés: ¿cuántos medios caben en un sexto? En matemáticas la pregunta es de esta forma:
+
+$$
+\frac{1}{6}  \div \frac{1}{2}
+$$
+
+Dado que en el dibujo pasado vimos que $\frac{1}{2}$ era mayor que $\frac{1}{6}$ entonces ni siquiera todo el medio va a caber dentro del sexto, debe ser sólo un pedazo de ese medio el que acabe dentro del sexto. 
+
+```{r, fig.cap="$\\frac{1}{2}\\div\\frac{1}{6} = 3$", fig.width=3, fig.height = 2}
+frac.operation(c(1,6),"vs",c(1,2), color = "firebrick")
+```
+
+Por el diagrama, podemos que el $1/2$ en realidad lo podemos ver como tres sextos:
+```{r, fig.cap="$\\frac{1}{2}\\div\\frac{1}{6} = 3$", fig.width=3, fig.height = 2}
+frac.operation(c(1,6),"vs",c(3,6), color = "firebrick")
+```
+
+De donde se seguiría que es $1/3$ del medio el que nos genera el sexto:
+$$
+\frac{1}{6} \div \frac{1}{2} = \frac{1}{3}
+$$
+
+Verificamos que estamos bien haciendo:
+$$
+\frac{1}{2} \cdot \frac{1}{3} = \frac{1}{6}
+$$
+
+La pregunta que sigue es: en general, ¿cómo podemos hallar un método para encontrar ese $\frac{1}{3}$. Nota que lo que tuvimos que hacer, de nuevo, es poner ambos términos en la misma base, es decir, usar la equivalencia de fracciones para transformar $\frac{1}{2}\to\frac{3}{6}$.^[A partir de lo que hicimos con el producto recordarás que una forma que siempre funciona para poner las dos fracciones en términos de la misma base es multiplicar los denominadores.] Haremos eso:
+
+\begin{equation}\nonumber
+\begin{aligned}
+\frac{1}{6} & = \frac{1 \cdot 2}{6 \cdot 2} & = \frac{2}{12} \\ \\
+\frac{1}{2} & = \frac{1 \cdot 6}{2 \cdot 6} & = \frac{6}{12} 
+\end{aligned}
+\end{equation}
+
+Gráficamente esto es lo que tenemos:
+
+```{r, fig.cap="$\\frac{2}{12}\\div\\frac{6}{12}$", fig.width=3, fig.height = 2}
+frac.operation(c(2,12),"÷",c(6,12), color = "firebrick")
+```
+
+Una vez que ambos están en la misma escala, basta con ver cuánto del $6$ cabe en el $2$; es decir: $2\div 6 = \frac{2}{6} = \frac{1}{3}$. De aquí se sigue que:
+
+$$
+\frac{1}{6}\div\frac{1}{2} = \frac{1}{3}
+$$
+
+En resumen, los pasos realizados fueron:
+
+1. Poner ambas fracciones en términos de unas equivalentes para que compartan el denominador (la forma más fácil es multiplicando los denominadores).
+
+```{r, fig.cap="$\\frac{2}{12}\\div\\frac{6}{12}$", fig.width=12, fig.height = 2}
+plot_grid(
+  plot.simple.fraction(5,14, xlab = "a/b"),
+  ggplot() + annotate("text", label = "÷", x = 0, y = 0, size = 10) + theme_void(),
+  plot.simple.fraction(2,3, xlab = "c/d"),
+  ggplot() + annotate("text", label = "=", x = 0, y = 0, size = 10) + theme_void(),
+  plot.simple.fraction(15,42, xlab = "ad/bd"),
+  ggplot() + annotate("text", label = "÷", x = 0, y = 0, size = 10) + theme_void(),
+  plot.simple.fraction(28,42, xlab = "bc/bd"), nrow = 1)
+```
+
+2. Dividir los numeradores. 
+
+```{r, fig.cap="$\\frac{2}{12}\\div\\frac{6}{12}$", fig.width=3, fig.height = 2}
+plot.simple.fraction(15,28, xlab = "ad/bc")
+```
+
+Veamos otro ejemplo:
+$$
+\text{Resolver} \qquad \frac{4}{5} \div \frac{7}{3}
+$$
+
+Para ello primero ponemos ambas fracciones en términos del mismo denominador (en este caso denominador $15$):
+
+\begin{equation}\nonumber
+\begin{aligned}
+\frac{4}{5} & = \frac{4 \cdot 3}{5 \cdot 3} & = \frac{12}{15} \\ \\
+\frac{7}{3} & = \frac{7 \cdot 5}{3 \cdot 5} & = \frac{35}{15} 
+\end{aligned}
+\end{equation}
+
+Gráficamente:
+
+```{r, fig.cap="Equivalencia para $\\frac{4}{5}\\div\\frac{7}{3}$", fig.width=9, fig.height = 2}
+frac.operation(c(12,15),"÷",c(35,15), color = "firebrick")
+```
+
+Una vez que están en la misma escala sólo falta ver cuántos de esos $35$ podemos meter en los $12$: $\frac{12}{35}$.
+
+$$
+\frac{4}{5} \div \frac{7}{3} = \frac{12}{35}
 $$
 
 ### Ejercicios
+1. Justifica con dibujos por qué la multiplicación de fracciones sí es conmutativa (da igual el orden en el que se haga), es decir: $\frac{7}{3} \times \frac{2}{11} = \frac{2}{11} \times \frac{7}{3}$ pero la división de fracciones no lo es en general:
+$\frac{2}{11} \div \frac{7}{3} \neq \frac{7}{3} \div \frac{2}{11}$ (en general)
 
-1. Multiplica las siguientes fracciones justificando con figuras los resultados:
+2. <i class="em em-pencil2"></i> Realiza las siguientes divisiones: 
 
-    a. $\frac{3}{5} \times \frac{1}{2}$
-    b. $3 \times \frac{3}{4}$
-    c. $\frac{4}{3} \times \frac{1}{3}$
-    d. $\frac{4}{3} \times \frac{5}{4}$
-
-2. <i class="em em-pencil2"></i>  Multiplica las siguientes fracciones, no justifiques:
-
-    a. $\frac{3}{5} \times \frac{9}{12}$
-    b. $\frac{1}{2} \times \frac{4}{9}$
-    c. $5 \times \frac{11}{12}$
-    d. $10 \times \frac{3}{1}$
-    e. $\frac{1}{3} \times \frac{2}{4} \times \frac{3}{5}$
+    a. $\frac{3}{5} \div \frac{1}{2}$
+    b. $3 \div \frac{3}{4}$
+    c. $\frac{4}{3} \div \frac{1}{3}$
+    d. $\frac{4}{3} \div \frac{5}{4}$
+    e. $\frac{3}{5} \div \frac{9}{12}$
+    f. $\frac{1}{2} \div \frac{4}{9}$
+    g. $5 \div \frac{11}{12}$
+    h. $10 \div \frac{3}{1}$
+    i. $\frac{1}{3} \div \frac{2}{4} \div \frac{3}{5}$
     
-3. <i class="em em-thinking_face"></i> Utiliza todo lo anterior para justificar que el cuadrado de una fracción es la fracción que contiene los cuadrados; es decir:
+3. Determina el/los números marcados con interrogación de tal manera que la división te da la igualdad deseada. Puede haber múltiples respuestas correctas si hay más de un signo de interrogación en el enunciado. 
+
+    a. $\frac{3}{5} \div \frac{\text{?}}{2} = \frac{6}{35}$
+    
+    b. $\frac{6}{7} \div \frac{\text{?}}{\text{?}} = 1$
+    
+    c. $\frac{3}{5} \div \frac{24}{\text{?}} = \frac{6}{120}$
+    
+    d. $\frac{9}{7} \div \frac{14}{\text{?}} = 1$
+    
+    e. $\frac{3}{2} \div \frac{\text{?}}{\text{?}} = \frac{8}{9}$
+    
+4. Justifica por qué dividir entre un número $b$ es lo mismo que multiplicar por $\frac{1}{b}$; es decir, justifica por qué igualdades así ocurren:
+    
+    a. $14 \div 7 = 14 \times \frac{1}{7}$
+    b. $15 \div 5 = 15 \times \frac{1}{5}$
+    c. De manera general: $a \div b = a \times \frac{1}{b}$
+
+### Fórmula 
+Por último vamos a intentar encontrar una fórmula para las divisiones. Para ello consideremos dos fracciones distintas $\frac{a}{b}$ y $\frac{c}{d}$ como en los casos anteriores. Recordando los pasos: 
+
+1. Primero ponemos ambas fracciones en los mismos denominadores (como ya hicimos en \eqref{sumafrac1})
+
+\begin{equation}\nonumber
+\begin{aligned}
+\frac{a}{b} & = \frac{a \cdot d}{b \cdot d} & = \frac{ad}{bd} \\ \\
+\frac{c}{d} & = \frac{c \cdot b}{d \cdot b} & = \frac{bc}{bd} \\
+\end{aligned}
+\end{equation}
+
+2. En segundo lugar, realizamos la división de los numeradores:
+
+\begin{equation}\label{division}
+\begin{aligned}
+\frac{a}{b}\div\frac{c}{d} = \frac{ad}{bd}
+\end{aligned}
+\end{equation}
+
+De ahí obtenemos la fórmula para la división dada por \eqref{division}.
+
+# Ejercicios de la sección 
+
+Realiza las siguientes operaciones con fracciones. Puedes usar calculadora mientras no sea científica. 
+
+1. Realiza las siguientes operaciones. Reduce el resultado a su mínima expresión (es decir simplifica la fracción hasta que numerador y denominador sean lo más pequeños que pueden ser):
+
+    a. $\frac{1}{3}\cdot \Big( \frac{1}{2} - \frac{1}{7} \Big)$
+    b. $\Big( \frac{7}{2} + \frac{3}{5} \Big)^2$
+    c. $\frac{1}{3}\times\frac{1}{4}\times\frac{6}{5} + 2$
+    d. $\Big(\frac{3}{7} - \frac{2}{3} + \frac{1}{21}\Big) \div 3$
+    e. $\Big( \frac{8}{2} - 3 \Big) \cdot \Big( \frac{11}{13} + 1 \Big)$
+    f. $\Big(\frac{1}{2} + \frac{2}{3} \times \frac{4}{5} - \frac{7}{6}\Big)\div \frac{9}{10}$
+
+2. <i class="em em-thinking_f¸ace"></i> Justifica que el cuadrado de una fracción es la fracción que contiene los cuadrados; es decir:
 $$
 \Big(\frac{a}{b}\Big)^2 =\frac{a^2}{b^2} 
 $$
-_Hint_ Explica primero cómo funciona el caso $\Big( \frac{4}{5} \Big)^2 = \frac{16}{25}$. 
+_Hint_ Explica primero cómo funciona el caso $\Big( \frac{4}{5} \Big)^2 = \frac{16}{25}$ y recuerda que elevar al cuadrado es multiplicar un número por sí mismo. 
 
-4. <i class="em em-thinking_face"></i> Utiliza el resultado anterior para argumentar que la raíz de una fracción es la fracción que contiene las raíces.  
+3. <i class="em em-thinking_face"></i> Utiliza el resultado anterior para argumentar que la raíz cuadrada de una fracción es la fracción que contiene las raíces.  
 $$
 \sqrt{\frac{a}{b}} =\frac{\sqrt{a}}{\sqrt{b}} 
 $$
 _Hint_ Explica primero cómo funciona el caso $\sqrt{\frac{16}{25}} = \frac{4}{5}$. 
 
-5. <i class="em em-thinking_face"></i> Justifica con dibujos que si una fracción se le multiplica por un número idéntico al denominador, el denominador se elimina; es decir:
+4. <i class="em em-thinking_face"></i> Justifica con dibujos que si una fracción se le multiplica por un número idéntico al denominador, el denominador se elimina; es decir:
 $$
 b \times \frac{a}{b} = a
 $$
@@ -757,23 +1076,66 @@ $$
 $$
 _Hint_ Explica primero cómo funciona el caso $\frac{6}{7} \times \frac{5}{6} = \frac{5}{7}$. 
 
-6. Determina de manera rápida el valor de las siguientes multiplicaciones usando los anteriores puntos:
+6. <i class="em em-runner"></i> Utiliza los puntos anteriores para calcular rápidamente^[En menos de un minuto por fracción.]:
+
+    a. $\frac{4334432}{5} \times 5$
+    
+    b. $3032846 \times \frac{77}{3032846}$
+    
+    c. $12384 \times \frac{1}{12384}$
+    
+    d. $144 \times \frac{834679}{144}$
+    
+    e. $\frac{913247342}{663264843} \times 663264843$
+    
+    f. $\frac{1999999999999999}{2000000000000} \times 2000000000000$
+    
+
+7. <i class="em em-runner"></i>  Determina de manera rápida el valor de las siguientes multiplicaciones usando los anteriores puntos^[En menos de un minuto por fracción]:
 
     a. $\frac{4}{8} \times \frac{8}{2}$
-    b. $3 \times \frac{5}{3}$
+    
+    b. $\frac{3}{12} \times \frac{5}{3}$
+    
     c. $\frac{7}{3} \times \frac{1}{7}$
+    
     d. $\frac{4}{3} \times \frac{5}{4}$
-    e. $\frac{1}{6} \times 6$
-    f. $\frac{1}{2} \times \frac{1}{2}$
     
+    e. $\frac{12}{1} \times \frac{8}{12}$
     
-## División de fracciones
+    f. $\frac{5}{2} \times \frac{2}{5}$
+    
+        
+8. <i class="em em-thinking_face"></i>  Demuestra que una fórmula para la resta de fracciones $\frac{a}{b} - \frac{c}{d}$ es $\frac{ad - cd}{bd}$
 
-## Conversión entre fracciones y decimales
+9. <i class="em em-thinking_face"></i>  Demuestra las siguientes fórmulas:
+  a. $\frac{a}{b} \div a = \frac{1}{b}$
+  b. $\frac{a}{b} \div \frac{1}{b} = a$
+  c. $\frac{a}{b} \div \frac{a}{b} = 1$
 
-# Ejercicios
+10. <i class="em em-runner"></i>  Determina de manera rápida el valor de las siguientes divisiones usando los anteriores puntos^[En menos de un minuto por fracción]:
 
-# Aplicaciones
+  a. $\frac{347}{42535}\div 347$
+  b. $\frac{347}{42535}\div 42535$
+  c. $\frac{234834}{234564}\div \frac{234834}{234564}$
+  d. $\frac{2}{234564}\div \frac{1}{234564}$
+  e. $\frac{777777}{777777}\div 777777$
+  f. $\frac{426534769}{42535}\div \frac{1}{426534769}$
+
+11. <i class="em em-thinking_face"></i> Suponiendo que se tienen dos fracciones con términos positivos: $\frac{a}{b}$ y $\frac{c}{d}$. Deduce que 
+$$
+\frac{a}{b} > \frac{c}{d}
+$$
+Si $ad > bc$. _Hint_ Usar fracciones equivalentes para poner ambas fracciones con el mismo denominador.
+
+12. Utiliza la regla que dedujiste en el punto anterior para ordenar de mayor a menor las siguientes fracciones:
+$$
+\frac{7}{9}, \frac{177}{208}, \frac{43}{97}, \frac{14}{19}
+$$
+  
+
+
+# Ejercicio de aplicación
 
 La prevalencia de VIH en la población mayor a $15$ años de México es $0.2\%$; es decir, de toda la población se estima que $\frac{2}{1000}$ personas en el rango de edad viven con VIH ($\frac{998}{1000}$ no lo padecen). La prueba rápida de VIH detecta al 99\‰ de las personas ($\frac{99}{100}$) con la enfermedad correctamente (verdaderos positivos). Sin embargo, de aquellas personas que la prueba clasifica como personas con VIH, el $2\%$ ($\frac{2}{100}$), en realidad son falsos positivos (personas que la prueba clasifica como si padecieran la enfermedad pero no la tienen).
 
@@ -781,9 +1143,9 @@ La prevalencia de VIH en la población mayor a $15$ años de México es $0.2\%$;
     
   2. Suponiendo que esa misma persona vuelve a hacerse la prueba por segunda vez y de nuevo resulta positiva. ¿Cuál es la probabilidad de que padezca la enfermedad? Suponemos, además que las pruebas no se afectan la una a la otra (es decir, el aplicar la 1a prueba no afecta el resultado de la segunda)
     
-  3. (Problema difícil para pensarle porque tiene solución pero es compleja)  Si la persona anterior resulta positiva en todas las pruebas que se realiza, ¿cuántas pruebas con resultado positivo debe realizarse para estar 99\% seguro de que padece VIH?
+  3. <i class="em em-thinking_face"></i> (Problema difícil para pensarle porque tiene solución pero es compleja)  Si la persona anterior resulta positiva en todas las pruebas que se realiza, ¿cuántas pruebas con resultado positivo debe realizarse para estar 99\% seguro de que padece VIH?
     
-  4. (Problema difícil para pensarle porque tiene solución pero es compleja) Suponiendo que la población cuenta con $100$ millones de habitantes mayores a $15$ años, y que cada enfermo de VIH que no fue detectado a tiempo cuesta al gobierno $200,000$ más, mientras que un falso positivo cuesta $200$ (por reaplicar la prueba). ¿Cuántas pruebas de VIH deben aplicarse para minimizar el gasto?^[Si se aplican _demasiadas_ pruebas acaba siendo muy caro y ese dinero se pudo utilizar en otros programas de salud.] 
+  4. <i class="em em-thinking_face"></i> (Problema difícil para pensarle porque tiene solución pero es compleja) Suponiendo que la población cuenta con $100$ millones de habitantes mayores a $15$ años, y que cada enfermo de VIH que no fue detectado a tiempo cuesta al gobierno $200,000$ más, mientras que un falso positivo cuesta $200$ (por reaplicar la prueba). ¿Cuántas pruebas de VIH deben aplicarse para minimizar el gasto?^[Si se aplican _demasiadas_ pruebas acaba siendo muy caro y ese dinero se pudo utilizar en otros programas de salud.] 
 
 
 

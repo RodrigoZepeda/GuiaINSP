@@ -1,4 +1,4 @@
-subraction.plot <- function(frac1 = c(2,3),
+subfraction.plot <- function(frac1 = c(2,3),
                                       frac2 = c(6, 7),
                                       fill1 = "purple",
                                       fill2 = "purple",
@@ -24,7 +24,7 @@ subraction.plot <- function(frac1 = c(2,3),
     geom_tile(aes(Var2, Var1, fill = as.character(value)),
               color = line.color, 
               size = size, data = mat) +
-    scale_fill_manual(values = alpha(c("0" = "purple", "1" = "purple"), 
+    scale_fill_manual(values = alpha(c("0" = fill1, "1" = fill2), 
                                      c(0.3, 1))) +
     theme_classic() +
     theme(legend.position = "none", 
@@ -165,8 +165,12 @@ frac.operation <- function(frac1 = c(2,4),
                            frac2 = c(1,4),
                            op2   = NULL,
                            frac3 = NULL,
-                           color = rep("deepskyblue3",3),
+                           color = "deepskyblue",
                            widths = "auto"){
+  
+  if (length(color) == 1){
+    color <- rep(color, 3)
+  }
   
   if (is.null(frac3)){
     
