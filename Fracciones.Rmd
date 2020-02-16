@@ -1164,7 +1164,7 @@ _Hint_ Explica primero cómo funciona el caso $\frac{6}{7} \times \frac{5}{6} = 
     f. $\frac{5}{2} \times \frac{2}{5}$
     
         
-8. <i class="em em-thinking_face"></i>  Demuestra que una fórmula para la resta de fracciones $\frac{a}{b} - \frac{c}{d}$ es $\frac{ad - cd}{bd}$
+8. <i class="em em-thinking_face"></i>  Demuestra que una fórmula para la resta de fracciones $\frac{a}{b} - \frac{c}{d}$ es $\frac{ad - bc}{bd}$
 
 9. <i class="em em-thinking_face"></i>  Demuestra las siguientes fórmulas:
   a. $\frac{a}{b} \div a = \frac{1}{b}$
