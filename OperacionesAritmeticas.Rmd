@@ -435,7 +435,7 @@ ex <- "
 
 sol <- "
 \\begin{equation}\\nonumber
-5\times (2 + 3) = 5 \times 5 = 25
+5\\times (2 + 3) = 5 \\times 5 = 25
 \\end{equation}
 "
 
