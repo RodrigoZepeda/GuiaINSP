@@ -63,6 +63,7 @@ se supone que un objeto unidad fue dividido en $5$ partes y por ahora se tienen 
 fraction.plot(4,5)
 ```
 
+
 Los nombres de cada una de las partes, como recordarás, son:
 $$
 \dfrac{\text{Numerador}}{\text{Denominador}}
@@ -78,6 +79,8 @@ esto se interpreta como $21 \div 7 = 3$. Lo podemos ver también en el dibujo:
 fraction.plot(21,7)
 ```
 
+
+> Una fracción $\frac{12}{6}$ es lo mismo que una división $12\div 6$. El signo de $\div$ llamado óbelo fue introducido en Inglaterra por una traducción en 1659 de un libro suizo. A la Europa Continental le confundía el signo (muchos lo usaban como resta, rangos u otra cosa) pero, eventualmente, conforme creció el dominio inglés el óbelo se fue extendiendo a todo el mundo. Actualmente se recomienda usar fracciones para representar división (es decir $\frac{12}{6}$ se prefiere a $12\div 6$) porque hay varios países donde el óbelo $\div$ todavía significa otra cosa (@cajori1993history). De hecho, hay una norma [ISO](https://www.iso.org/standard/31898.html) (hay normas ISO para todo) que indica que es mejor usar fracciones al signo $\div$ ¡qué rareza!
 
 Comencemos, entonces a hacer operaciones con fracciones. 
 
@@ -224,6 +227,12 @@ sol <- "
 
 build_theorem("Ejercicio",ex, proof = sol, name = "Simplificación de fracciones" )
 ```
+
+> En cualquier círculo que se tome, si se divide la medida de la circunferencia entre el díametro se obtiene una constante. Esto, sin importar el círculo. ¡Inténtalo con un vaso, un platillo volador o tu objeto redondo preferido! Desde hace muchos años se ha intentado aproximar de distintas formas dicha constante, de hecho [Zu Chongzhi](https://en.wikipedia.org/wiki/Zu_Chongzhi) en el siglo V encontró que en todos los círculos
+$$
+\dfrac{\text{Circunferencia}}{\text{Diámetro}} \approx \dfrac{355}{113}
+$$
+Su aproximación de $\frac{355}{113}$ se aleja menos de `r format(1/3748629, digits = 10, scientific = F)` del verdadero valor de ese radio, el escurridizo número $\pi$ ¡es increíble!
 
 ### Ejercicios
 
@@ -418,6 +427,16 @@ plot_grid(frac.operation(c(2,5),"+",c(8,7)),
           nrow = 1,
           rel_widths = c(3,1,5))
 ```
+
+> Los egipcios utilizaban los siguientes jeroglíficos como números:
+<br><center> 
+![Jeroglífico](images/Hieroglyph1.gif)
+</center> <br>
+Escribiendo múltiples de estos símbolos podían hacer cualquier número. Por ejemplo, el $276$ se veía así, como una combinación de herraduras:
+<br><center>![Jeroglífico más chido](images/Hieroglyph2.gif)</center> <br>
+Si ellos querían escribir una fracción, le ponían un ojo encima para indicar que, en lugar de $5$ tenían $\frac{1}{5}$:
+<br><center>![Jeroglífico fraccionario](images/Hieroglyph3.gif)</center> <br>
+Sin embargo, ellos no podían escribir fracciones más complejas (como $\frac{2}{5}$) porque les estaba prohibido hacer copy-paste de sus símbolos para juntar el $\frac{1}{5}$ con otro $\frac{1}{5}$ en un $\frac{2}{5}$. Imagina las discusiones para dividir el terreno de la abuelita entre los $5$ tíos en las cenas familiares. ¡Seguramente eran más complicadas!
 
 ```{r}
 ex <- "
@@ -633,6 +652,8 @@ frac.operation(c(15,20),"+",c(4,20),"=",c(19,20))
 ## Multiplicación de fracciones
 Para explicar el producto de fracciones analizaremos dos casos por separado: la multiplicación de una fracción por un entero y la multiplicación de una fracción por otra donde una de ellas tiene numerador uno. Finalmente combinaremos la información para tratar fracciones arbitrarias y poder explicar cómo funciona todo el proceso.
 
+> Para los matemáticos hay dos conjuntos importantes de números: los racionales, $\mathbb{Q}$ y los irracionales $\mathbb{I}$. Los primeros se caracterizan por poderse representar como una fracción; así $4$ es racional por ser $\frac{4}{1}$, $-3$ es racional ($\frac{-3}{1}$) y $\frac{289}{27}$ es racional. Empero, la mayor parte de los números son irracionales como $\pi$, $\sqrt{2}$ ó $e$. Y los irracionales son bastante curiosos. Hay varios que pueden aproximarse tanto como se desee, así se sabe que $\pi\approx 3.141592653589793115$ que $\sqrt{2}\approx 1.414213562373095145$ o que $e\approx 2.71828182845904509079$. Sin embargo [la mayor parte de los números irracionales son incomputables](https://medium.com/cantors-paradise/uncomputable-numbers-ee528830d295), esto quiere decir que, en su mayoría, ni siquiera existe un algoritmo que permita aproximarlos con la precisión deseada. En términos humanos: se ha demostrado que la mayor parte de los números que existen ni siquiera podemos escribirlos. ¡Vaya suerte!
+
 ### Multiplicación por un número entero
 Pensemos en la siguiente multiplicación:
 
@@ -718,6 +739,23 @@ $$
 
 En resumen, la lógica del proceso consiste en dividir el entero (digamos el $8$) en tantas partes como el denominador ($7$) y luego tomar de esas partes tantas como lo requiera el numerador ($4$). Veamos ahora qué pasa cuando tenemos el producto de dos fracciones: 
 
+```{r}
+ex <- "
+Algunos profesores de matemáticas les gusta utilizar fracciones mixtas del estilo:
+\\begin{equation}\\nonumber
+5 \\frac{1}{2}
+\\end{equation}
+que se leen como $5$ enteros y $\\frac{1}{2}$. Esta notación se refiere a tener $5$ enteros completitos y $\\frac{1}{2}$ extra (es decir, $\\frac{11}{2} = 5.5$ en total). En estas notas esa notación no se utilizará ya que se confunde fácilmente con el producto:
+\\begin{equation}\\nonumber
+5 \\cdot \\frac{1}{2} = \\frac{5}{2} = 2.5
+\\end{equation}
+Sin embargo, es importante que sepas pasar de fracciones mixtas a impropias (del $5 \\frac{1}{2}$ al $\\frac{11}{2}). ¿Se te ocurre cómo hacerle?
+"
+
+
+build_theorem("Nota",ex, proof = "", name = "Fracciones mixtas" )
+```
+
 ### Multiplicación de dos fracciones entre sí
 
 Considera el siguiente ejemplo:
@@ -797,6 +835,8 @@ plot_grid(
 )
 ```
 
+
+
 ### Ejercicios
 
 1. Multiplica las siguientes fracciones justificando con figuras los resultados:
@@ -828,6 +868,13 @@ plot_grid(
     
 _Hint_ Si no se te ocurre cómo, dibuja los problemas. 
 
+4. Las siguientes son fracciones mixtas. conviértelas a impropias:
+
+    a. $5\frac{1}{3}$
+    b. $7\frac{3}{7}$
+    c. $12\frac{8}{10}$
+    d. $1\frac{2}{5}$
+    e. $2\frac{7}{9}$
 
 ### Fórmula
 Podemos plantearnos cómo se ve el caso general. Si tenemos un producto entre dos fracciones:
@@ -915,6 +962,12 @@ $$
 \frac{1}{2} \cdot \frac{1}{3} = \frac{1}{6}
 $$
 
+> Para la construcción de relojes a partir de engranes (estoy pensando en el reloj de bolsillo de cuerda y no en un _smartwatch_) se requiere la conexión de varios engranes que surgen de uno sólo, el que está conectado a la cuerda:
+<br><center>
+![Reloj](images/clock.jpg)
+</center><br>
+Se sabe que un minuto es $\frac{1}{60}$ de una hora mientras que un segundo es $\frac{1}{60}$ de minuto (¿$\frac{1}{3600}$ de hora?). Para que el reloj funcione a la perfección se debe de dividir una hora entre el número de rotaciones que realiza el engrane principal (el conectado a la cuerda), luego fraccionar el giro de la hora en minutos y finalmente el del minutos en segundos. Los relojeros deben asegurarse de que cada engrane tenga un número entero de dientes. La precisión de un reloj depende de qué tan bien pudieron hacer esas divisiones y llenar de dientes los engranes. ¿Te imaginas tener que pulir $3600$ dientes? 
+
 La pregunta que sigue es: en general, ¿cómo podemos hallar un método para encontrar ese $\frac{1}{3}$. Nota que lo que tuvimos que hacer, de nuevo, es poner ambos términos en la misma base, es decir, usar la equivalencia de fracciones para transformar $\frac{1}{2}\to\frac{3}{6}$.^[A partir de lo que hicimos con el producto recordarás que una forma que siempre funciona para poner las dos fracciones en términos de la misma base es multiplicar los denominadores.] Haremos eso:
 
 \begin{equation}\nonumber
@@ -942,19 +995,19 @@ En resumen, los pasos realizados fueron:
 
 ```{r, fig.cap="$\\frac{2}{12}\\div\\frac{6}{12}$", fig.width=12, fig.height = 2}
 plot_grid(
-  plot.simple.fraction(5,14, xlab = "a/b"),
+  plot.simple.fraction(5,14, xlab = "a/b", fill = "firebrick"),
   ggplot() + annotate("text", label = "÷", x = 0, y = 0, size = 10) + theme_void(),
-  plot.simple.fraction(2,3, xlab = "c/d"),
+  plot.simple.fraction(2,3, xlab = "c/d", fill = "firebrick"),
   ggplot() + annotate("text", label = "=", x = 0, y = 0, size = 10) + theme_void(),
-  plot.simple.fraction(15,42, xlab = "ad/bd"),
+  plot.simple.fraction(15,42, xlab = "ad/bd", fill = "firebrick"),
   ggplot() + annotate("text", label = "÷", x = 0, y = 0, size = 10) + theme_void(),
-  plot.simple.fraction(28,42, xlab = "bc/bd"), nrow = 1)
+  plot.simple.fraction(28,42, xlab = "bc/bd", fill = "firebrick"), nrow = 1)
 ```
 
 2. Dividir los numeradores. 
 
 ```{r, fig.cap="$\\frac{2}{12}\\div\\frac{6}{12}$", fig.width=3, fig.height = 2}
-plot.simple.fraction(15,28, xlab = "ad/bc")
+plot.simple.fraction(15,28, xlab = "ad/bc", fill = "firebrick")
 ```
 
 Veamos otro ejemplo:
@@ -1016,6 +1069,11 @@ $\frac{2}{11} \div \frac{7}{3} \neq \frac{7}{3} \div \frac{2}{11}$ (en general)
     a. $14 \div 7 = 14 \times \frac{1}{7}$
     b. $15 \div 5 = 15 \times \frac{1}{5}$
     c. De manera general: $a \div b = a \times \frac{1}{b}$
+
+5. Verifica que un segundo es $\frac{1}{3600}$ de hora. 
+
+    a. ¿Qué fracción del día es? ¿Y de la semana?
+    b. ¿A cuántos años de $365$ días corresponden $10000$ segundos?
 
 ### Fórmula 
 Por último vamos a intentar encontrar una fórmula para las divisiones. Para ello consideremos dos fracciones distintas $\frac{a}{b}$ y $\frac{c}{d}$ como en los casos anteriores. Recordando los pasos: 
@@ -1143,10 +1201,10 @@ La prevalencia de VIH en la población mayor a $15$ años de México es $0.2\%$;
     
   2. Suponiendo que esa misma persona vuelve a hacerse la prueba por segunda vez y de nuevo resulta positiva. ¿Cuál es la probabilidad de que padezca la enfermedad? Suponemos, además que las pruebas no se afectan la una a la otra (es decir, el aplicar la 1a prueba no afecta el resultado de la segunda)
     
-  3. <i class="em em-thinking_face"></i> (Problema difícil para pensarle porque tiene solución pero es compleja)  Si la persona anterior resulta positiva en todas las pruebas que se realiza, ¿cuántas pruebas con resultado positivo debe realizarse para estar 99\% seguro de que padece VIH?
+  3. <i class="em em-thinking_face"></i> (Problema difícil para pensarle porque tiene solución pero es compleja)  Si la persona anterior resulta positiva en todas las pruebas que se realiza, ¿cuántas pruebas con resultado positivo debe realizarse para estar 99\% seguro de que padece VIH? Esto asumiendo que la probabilidad de ser falso positivo es independiente en todas las pruebas. 
     
   4. <i class="em em-thinking_face"></i> (Problema difícil para pensarle porque tiene solución pero es compleja) Suponiendo que la población cuenta con $100$ millones de habitantes mayores a $15$ años, y que cada enfermo de VIH que no fue detectado a tiempo cuesta al gobierno $200,000$ más, mientras que un falso positivo cuesta $200$ (por reaplicar la prueba). ¿Cuántas pruebas de VIH deben aplicarse para minimizar el gasto?^[Si se aplican _demasiadas_ pruebas acaba siendo muy caro y ese dinero se pudo utilizar en otros programas de salud.] 
 
-
+# Referencias
 
 
