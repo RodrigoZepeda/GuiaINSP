@@ -70,9 +70,47 @@ Actualmente el orden de las operaciones es como sigue:
 3. Multiplicaciones y Divisiones
 4. Sumas y restas
 
-A continuación desarrollo más estos ejemplos: 
+La razón proviene de las ecuaciones algebraicas. Quizá recuerdes (y si no, créeme por ahora) que la ecuación:
+$$
+2x^2 + 3x + 5 
+$$
+representa una parábola como en la figura:
+
+```{r, fig.width=4, fig.height=4}
+x <- seq(-5,5,length.out = 100)
+y <- 2*x^2 + 3*x + 5
+ggplot(data.frame(x = x, y = y), aes(x,y)) + 
+  geom_line(color = "firebrick", size = 2) + theme_classic() +
+  ggtitle("Una parábola que enorgullecería\n a Descartes") +
+  xlab("x") + ylab("x^2 + 3x + 5 ")
+```
+
+En la notación 
+$$
+2x^2 + 3x + 5 
+$$
+se asume que lo primero que calculas es el $x^2$ luego haces la multiplicación $2 \cdot x^2$ así como el $3\cdot x$ y finalmente sumas todo $x^2 + 3x + 5$. Si este no fuera el orden, la notación sería mucho más engorrosa. La parábola se vería así:
+$$
+\Big(\big(2(x^2)\big) + (3x)\Big) + 5 
+$$
+
+¡Demasiados paréntesis! Es por esto que se establecieron las reglas, en el orden dado:
+
+1. Paréntesis
+2. Potencias y Raíces
+3. Multiplicaciones y Divisiones
+4. Sumas y restas
+
+¡De otra manera el álgebra sería aún más espantosa! Veamos entonces, estos ejemplos de orden de las operaciones desarrollados paso a paso:
 
 **1. Se evalúa lo que está dentro de paréntesis empezando por el más profundo** Lo que está entre paréntesis se hace primero comenzando por aquellos que están más adentro. 
+
+> En el Álgebra de Bombelli (allá en los 1500, cuando El Quijote aún no se escribía), se registra uno de los primeros usos de paréntesis (_brackets_). En ella, el autor escribe: $R^3[2\hat{m}R[0\hat{m}.121]]$ para indicar el orden de sus operaciones. En matemáticas actuales, lo que Bombelli quiso decir es:
+$$
+\sqrt[3]{2-\sqrt{-121}}
+$$
+¡Qué complicada notación tenían antes! (@cajori1993history)
+
 
 Ejemplos:
 
@@ -92,6 +130,8 @@ $$
 
 **2. Las potencias y raíces se evalúan en segundo lugar** En particular, lo que está adentro de la raíz se evalúa primero, antes de tomar raíz. Lo mismo con una potencia dentro de paréntesis. 
 
+
+
 Ejemplos:
 
 \begin{equation}\nonumber
@@ -104,6 +144,8 @@ Ejemplos:
 \end{aligned}
 \end{equation}
 
+> Durante mucho tiempo se pensó que el signo de raíz $\sqrt{\phantom{2}}$ provenía de una $r$ deformada ($r$ de _raíz_). Sin embargo, las nuevas investigaciones han mostrado que el $\sqrt{\phantom{2}}$ proviene de un punto, $\cdot$, que se fue deformando en una especie de mancha musical, ♩, hasta llegar al signo que hoy conocemos (@cajori1993history). ¿Qué diría tu profe de español de tan mala caligrafía?
+
 **Nota** Usualmente el acento circunflejo ^ se utiliza en las computadoras para significar potencia:
 
 $$
@@ -112,6 +154,8 @@ $$
 
 
 **3. Multiplicaciones y divisiones van tercero** En caso de tener múltiples, siempre se hacen de izquierda a derecha, así como se lee en español. No olvides las reglas de los signos: producto de signos iguales de positivo ($2 \times 2 = 4$ lo mismo que $(-3) \times (-3) = 9$) mientras que signos distintos resultan en valores negativos (_e.g._ $2\times (-5) = -10$ y $(-6) \times 7 = -42$).
+
+> En los manuscritos medievales la cruz de San Andrés ($\times$) era usado para múltiples propósitos (no sólo multiplicar). Algunos de los más raros eran: 1) para marcar en una línea algo que indicara 'miles'; así $3\times$ serían tres mil y 2) para sumar y restar fracciones (es decir, para alguien de la Edad Media $\frac{1}{2} \times \frac{3}{5}$ sería una suma de fracciones). @cajori1993history.
 
 Ejemplos:
 
@@ -145,6 +189,8 @@ Ejemplos:
 \text{Ej 3:} & \quad \big(5 + (3 + 1)^3 \big) - \big(7 \times (2 + 5) + 1\big) = \big(5 + 4^3\big) - \big( 7 \times 7 + 1\big) = (5 + 64) - (49 + 1) = 69 - 50 = 19\\
 \end{aligned}
 \end{equation}
+
+> En el [Papiro de Ahmes](https://es.wikipedia.org/wiki/Papiro_de_Ahmes) unos pies caminando hacia adelante significan suma mientras que caminando hacia atrás representan resta (@cajori1993history). Si vivías en el angituo Egipto, seguramente tus sumas se verían así: $4$ <i class="em em-walking"></i> $3 = 7$. ¡Imagina lo salvaje que se vería el álgebra!
 
 
 # Ejercicios
@@ -396,3 +442,4 @@ sol <- "
 build_theorem("Ejemplo",ex, proof = sol, name = "Un ejercicio de ejemplo" )
 ```
 
+# Referencias
