@@ -4,3 +4,4 @@ Guía no oficial de estudios para el examen de matemáticas de la maestría en s
 **Temario**
 1. [Operaciones aritméticas](https://rodrigozepeda.github.io/GuiaINSP/OperacionesAritmeticas.html)
 2. [Fracciones](https://rodrigozepeda.github.io/GuiaINSP/Fracciones.html)
+3. [Álgebra 1](https://rodrigozepeda.github.io/GuiaINSP/Algebra1.html)

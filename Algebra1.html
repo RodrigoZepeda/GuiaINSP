@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rodrigo Zepeda" />
+
+
+<title>Álgebra: Perspectiva Geométrica 1</title>
+
+<script src="Algebra1_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Algebra1_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="Algebra1_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Algebra1_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Algebra1_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="Algebra1_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="Algebra1_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="Algebra1_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="Algebra1_files/navigation-1.1/tabsets.js"></script>
+<link href="Algebra1_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Algebra1_files/highlightjs-9.12.0/highlight.js"></script>
+<!-- Meta characteristics -->
+<meta name="description" content="Random Math Notes">
+<meta name="keywords" content="Probability, Markov Chains, Markov Processes, Stochastic Processes">
+<meta name="author" content="Rodrigo Zepeda Tello">
+
+<!-- Add d3js -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!-- Nice mathjax format -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true, }, TeX: { equationNumbers: { autoNumber: "AMS" } } });
+</script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<!--Navigation menu-->
+<link href="css/custom.css" rel="stylesheet">
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+            <a class="navbar-brand" href="https://rodrigozepeda.github.io/GuiaINSP">Guía no oficial de estudio para el examen de matemáticas del INSP</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="https://github.com/RodrigoZepeda/GuiaINSP"><img src="images/GitHub-Mark-Light-32px.png"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Álgebra: Perspectiva Geométrica 1</h1>
+<h4 class="author">Rodrigo Zepeda</h4>
+
+</div>
+
+
+<p>Las notas de álgebra están arregladas como un espiral. De inicio, en estas notas, empezaremos dando resutados algebraicos a partir de análisis de figuras. El principal propósito es desarrollar una intuición geométrica de qué representan los términos algebraicos. En la siguiente sección se retomarán varios de los temas y resultados desde otro enfoque más financiero. Finalmente se axiomatizará todo y se hablará del álgebra moderna en una última sección. Esto para entender por qué el álgebra funciona de esa manera.</p>
+<div id="álgebra-desde-geometría" class="section level1">
+<h1><span class="header-section-number">1</span> Álgebra desde Geometría</h1>
+<p>Una de las preocupaciones principales de la gente que inició los cálculos algebraicos era la estimación de distancias, áreas, volúmenes para construcciones, terrenos, maquinaria, etc. Yo sospecho que en general construir terrenos o diseñar máquinas no va a ser tu objetivo; sin embargo, utilizaremos abstracciones de los problemas que se planteaban para entender un poco la intuición detrás de algunos resultados.</p>
+<div id="nota-sobre-las-imágenes" class="section level2">
+<h2><span class="header-section-number">1.1</span> Nota sobre las imágenes</h2>
+<p>A lo largo de estas notas todos los cuadritos medirán <span class="math inline">\(1\)</span>. No importa que sean más grandes o más pequeños (eso es porque no sé estandarizar el tamaño de mis gráficas). Entonces una tripa como esta:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-1-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>mide <span class="math inline">\(5\)</span> cuadritos de largo y <span class="math inline">\(1\)</span> de alto. De manera resumida diré que mide <span class="math inline">\(5\)</span> de largo y <span class="math inline">\(1\)</span> de alto (sin especificar que son “cuadritos”). Lo mismo diré que esta:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>mide <span class="math inline">\(16\)</span> de largo. Los cuadritos pueden verse <em>más pequeños</em> pero, repito, eso es por mi incapacidad de hacer cuadritos del mismo tamaño. En nuestra imaginación los cuadritos deben ser del mismo tamaño y esta tripa debe medir <span class="math inline">\(16\)</span> de largo.</p>
+<p>Interpretaremos las figuras como sigue: figuras de alto <span class="math inline">\(1\)</span> (cuadrito) interpretaremos la cantidad de cuadritos como números. Un número positivo lo interpretamos como pasos dados a partir del cero (línea negra). Por ejemplo el <span class="math inline">\(9\)</span>:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-3-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>Números negativos los represento a la izquierda del cero como pasos que di en sentido contrario:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-4-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>Podemos, por ejemplo, escribir la suma de <span class="math inline">\(5 + 3 = 8\)</span> en términos de cuadritos como sigue: <img src="Algebra1_files/figure-html/unnamed-chunk-5-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>Mientras que la resta <span class="math inline">\(5-3\)</span> reduce la cantidad de cuadrados pues se interpreta como caminar primero <span class="math inline">\(5\)</span> a la derecha y luego <span class="math inline">\(3\)</span> en sentido contrario: <img src="Algebra1_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Una forma distinta pero equivalente de ver esta resta es como <span class="math inline">\(5 + (-2) = 3\)</span>: <img src="Algebra1_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>En particular si el que está restando rebasa al sumando nos regresamos incluso antes que el <span class="math inline">\(0\)</span> como en el caso de <span class="math inline">\(3 - 6 = -3\)</span>:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Finalmente, notamos que un doble negativo es un positivo (<em>e.g.</em> <span class="math inline">\(- (-2) = 2\)</span>) esto porque se interpreta el primer menos como <em>caminar en sentido contrario</em> de <em>caminar en sentido contrario</em> (el segundo menos). Por lo que acabamos en sentido correcto. Gráficamente se ve así:</p>
+<div class="figure" style="text-align: center">
+<img src="Algebra1_files/figure-html/unnamed-chunk-9-1.png" alt="Primero tengo el 2" width="192" />
+<p class="caption">
+Primero tengo el 2
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="Algebra1_files/figure-html/unnamed-chunk-10-1.png" alt="En sentido contrario al 2 es el -2" width="192" />
+<p class="caption">
+En sentido contrario al 2 es el -2
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="Algebra1_files/figure-html/unnamed-chunk-11-1.png" alt="En sentido contrario al -2 es el -(-2):" width="192" />
+<p class="caption">
+En sentido contrario al -2 es el -(-2):
+</p>
+</div>
+<p>Lo cual me devuelve al <span class="math inline">\(2\)</span> original. Podemos aplicar este conocimiento para el caso de <span class="math inline">\(4 - (-2) = 6\)</span>:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>La multiplicación la analizaremos como un área. Si pensamos que tenemos cuadritos pequeños de tamaño 1, podemos fácilmente ver que el área (en términos de cuántos cuadritos de tamaño 1 hay). Por ejemplo en el siguiente rectángulo tenemos <span class="math inline">\(10 \times 5 = 50\)</span> rectángulos pequeños.</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>La lógica detrás del <span class="math inline">\(10 \times 5\)</span> es que los <span class="math inline">\(10\)</span> elementos de la base se repiten tanto como renglones (altura) haya. De manera general podríamos decir que en cualquier rectángulo la forma de estimar área sería: <span class="math display">\[
+\text{Área Rectángulo} = \text{base}\times\text{altura}
+\]</span> En la parte geométrica esto se vería así: <img src="Algebra1_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Por supuesto que los matemáticos somos flojos y por economía del lenguaje preferimos escribir <strong>base</strong> como <span class="math inline">\(b\)</span> y <strong>altura</strong> como <span class="math inline">\(a\)</span>. La multiplicación también nos da flojera ponerla y la escribimos como <span class="math inline">\(ab\)</span> donde <span class="math inline">\(ab = a \times b = \text{altura} \times \text{base}\)</span>. Gráficamente:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>En el caso específico en que tenemos un cuadrado la altura y la base miden exactamente lo mismo. Podemos ver su área de cualquiera de las siguientes formas:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-16-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>En cualquiera de los casos como base y altura coinciden entonces: <span class="math display">\[
+\textrm{Área} = ab = aa = a^2 \quad \text{pues } a = b
+\]</span> o bien: <span class="math display">\[
+\textrm{Área} = ab = bb = b^2 \quad \text{pues } b = a.
+\]</span> La interpretación principal, entonces, de elevar al cuadrado va a ser para nuestros propósitos geométricos que, literalmente, se está calculando el área de un cuadrado.</p>
+<p>Por supuesto que no hay ninguna razón para llamarles <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> a los lados de un rectángulo; alguien más podría llamarles <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span>: <img src="Algebra1_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>O bien <span class="math inline">\(L\)</span> (por lado) <img src="Algebra1_files/figure-html/unnamed-chunk-18-1.png" width="288" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p><strong>Ejercicio</strong> Gráficamente muestra que la fórmula del área de un triángulo rectángulo (con un lado con ángulo de 90°) es <span class="math inline">\(ab/2\)</span> donde <span class="math inline">\(a\)</span> es la altura y <span class="math inline">\(b\)</span> la base. <em>Hint</em> Es como un rompecabezas: pega dos triángulos rectángulos y usa la fórmula del rectángulo.</p>
+</blockquote>
+<div class="figure" style="text-align: center">
+<img src="Algebra1_files/figure-html/unnamed-chunk-19-1.png" alt="Un triángulo rectángulo siendo feliz" width="288" />
+<p class="caption">
+Un triángulo rectángulo siendo feliz
+</p>
+</div>
+<p>El producto de tres números <span class="math inline">\(a\cdot b \cdot c\)</span> se interpreta de manera similar como el volumen de un prisma cuadrangular:</p>
+<!--html preserve-->
+<p align="center">
+<img src="images/sumsquares1.svg" width="50%" onerror="this.src='images/sumsquares1.png'">
+</p>
+<!--/html preserve-->
+<p>La idea detrás de la fórmula es comenzar con una fila, digamos las <span class="math inline">\(a\)</span> para cubrir una cara rectangular de tamaño <span class="math inline">\(ab\)</span>:</p>
+<!--html preserve-->
+<p align="center">
+<img src="images/sumsquares2.svg" width="50%" onerror="this.src='images/sumsquares2.png'">
+</p>
+<!--/html preserve-->
+<p>Una vez que se tiene la cara rectangular de tamaño <span class="math inline">\(ab\)</span> se repite tantas veces como <span class="math inline">\(c\)</span> (la profundidad):</p>
+<!--html preserve-->
+<p align="center">
+<img src="images/sumsquares3.svg" width="50%" onerror="this.src='images/sumsquares3.png'">
+</p>
+<!--/html preserve-->
+<p>de ahí que <span class="math inline">\(abc\)</span> forme sea interpretado como un volumen.</p>
+</div>
+<div id="axiomas-de-la-sumaresta" class="section level2">
+<h2><span class="header-section-number">1.2</span> Axiomas de la suma/resta</h2>
+<p>Armados con la interpretación de las figuras anteriores podemos dar los axiomas de la suma. Mi sugerencia es que los escribas en una tarjeta y los tengas a la mano como referencia durante todos los episodios de la parte de álgebra.</p>
+<div id="asociatividad" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Asociatividad</h3>
+<p>En una suma de tres términos es lo mismo sumar el primero más el segundo más el tecero que primero sumar el segundo con el tercero y a eso el primero. Por ejemplo: <span class="math display">\[
+5 + (6 + 2) = 5 + 8 = 13 \quad \text{ es lo mismo que} \quad (5 + 6) + 2 = 11 + 2 = 13
+\]</span> O bien: <span class="math display">\[
+3 + (4 - 1) = 3 + 3 = 6 \quad \text{ es lo mismo que} \quad (3 + 4) - 1 = 7- 1 = 6
+\]</span> Hay que tener mucho cuidado con los signos para no meter la pata. Por ejemplo: <span class="math display">\[
+2 - 1 + 5 = 2 + (-1 + 5) = 2 + 4 = 6 \quad \text{ es lo mismo que} \quad (2 - 1) + 5 = 1 + 5 = 6
+\]</span> pero no es lo mismo que: <span class="math display">\[
+2 - 1 + 5 \neq 2 -(1 + 5) = 2 - 6 = -4
+\]</span> Esto porque los números negativos siempre van con su signo. Cuando escribimos: <span class="math inline">\(2 - 3 = -1\)</span> realmente lo que estamos escribiendo es: <span class="math display">\[
+2 + (-3) = 2 -3 = -1
+\]</span> Donde el <span class="math inline">\(+\)</span> del <span class="math inline">\(+ (-3)\)</span> está implícito. Esto es algo que hay que tener siempre en cuenta: sumar un número negativo es equivalente a restar. Las reglas de la suma van a aplicar para la resta sólo si consideramos la resta como sumar el negativo; es decir verlo como en el lado derecho de la igualdad <span class="math inline">\(7 - 3 = 7 + (-3)\)</span>. Podemos entonces escribir la propiedad asociativa como sigue: para tres números reales <span class="math inline">\(a,b,c\)</span> se tiene que: <span class="math display">\[
+a  + (b + c ) = (a+ b) + c
+\]</span> Con diagrama se ve como sigue:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-23-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>La interpretación es como sigue: para sumar <span class="math inline">\(a + b + c\)</span> (primer renglón) es lo mismo sumar primero <span class="math inline">\(a + b\)</span> y a eso sumarle <span class="math inline">\(c\)</span> (segundo renglón) que sumar primero <span class="math inline">\(b + c\)</span> y a eso sumarle <span class="math inline">\(a\)</span> (cuarto renglón). En notación matemática: <span class="math display">\[
+a + b + c  = (a + b) + c  = a + (b + c)
+\]</span></p>
+<p>A esta propiedad se le conoce como propiedad asociativa.</p>
+
+<div class="panel panel-default">
+	<div id =  asociatividad class="panel-heading">
+		<h4> Axioma  [ Asociatividad ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dados $a,b,c$ números reales tenemos que:
+$$
+a + (b + c) = a + (b + c)
+$$
+</i>	</div>
+</div>
+
+</div>
+<div id="conmutatividad" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Conmutatividad</h3>
+<p>La conmutatividad es una de las propiedades más intuitivas de la suma. Lo que dice es que el orden de los sumandos no altera la suma. Es decir si sumo <span class="math inline">\(5 + 2\)</span> es lo mismo que sumar <span class="math inline">\(2 + 5\)</span>. ¡El orden no importa! Lo podemos ver con figuras:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-25-1.png" width="1152" style="display: block; margin: auto;" /> O bien, escrito con símbolos: <span class="math display">\[
+a + b = b + a
+\]</span> Lo cual da pie al segundo axioma: 
+<div class="panel panel-default">
+	<div id =  conmutatividad class="panel-heading">
+		<h4> Axioma  [ Conmutatividad ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dados $a,b$ números reales tenemos que:
+$$
+a + b = b + a
+$$
+</i>	</div>
+</div>
+</p>
+</div>
+<div id="neutro-aditivo" class="section level3">
+<h3><span class="header-section-number">1.2.3</span> Neutro aditivo</h3>
+<p>Éste es el último de los axiomas exclusivos de la suma y el que, después de haber sido machacado demasiadas veces durante la primaria te debe parecer <em>obvio</em> pero ¿realmente lo es? Éste nos dice que sumarle <span class="math inline">\(0\)</span> a cualquier número sigue dando el número original. Por ejemplo, <span class="math inline">\(17 + 0 = 17\)</span>. Con símbolos: <span class="math display">\[
+a + 0 = a
+\]</span> O bien representado en diagrama (poniendo el cero como la ausencia de cuadritos): <img src="Algebra1_files/figure-html/unnamed-chunk-27-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>Lo cual puede escribirse como: 
+<div class="panel panel-default">
+	<div id =  neutroaditivo class="panel-heading">
+		<h4> Axioma  [ Neutro Aditivo ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Existe el cero ($0$) tal que para cualquier número real, $a$, se tiene que:
+$$
+a + 0 = a
+$$
+</i>	</div>
+</div>
+</p>
+</div>
+</div>
+<div id="inverso-aditivo" class="section level2">
+<h2><span class="header-section-number">1.3</span> Inverso aditivo</h2>
+<p>La interpretación <em>de a pie</em> de este axioma es como sigue: si puedes caminar tantos pasos, seguro hay una forma de volver a donde empezaste haciendo los pasos contrarios. Dejando las metáforas de lado, este axioma es el que te permite cancelar con inversos: <span class="math inline">\(5 + (-5) = 0\)</span>. El axioma del inverso aditivo establece que para cualquier número (en este caso el <span class="math inline">\(5\)</span>) existe otro número (en este caso el <span class="math inline">\(-5\)</span>) de tal forma que si los sumas da cero: <span class="math inline">\(5 + (-5) = 0\)</span>.</p>
+<p>Diagramáticamente:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-29-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Los inversos no necesariamente son negativos; de hecho el inverso de un negativo es un positivo. Por ejemplo, para invertir el <span class="math inline">\(-2\)</span> su correspondiente inverso es el <span class="math inline">\(-(-2) = 2\)</span>:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>De manera general el axioma establece que para cualquier número <span class="math inline">\(a\)</span> existe un <span class="math inline">\(-a\)</span> de tal forma que <span class="math inline">\(a + (-a) = 0\)</span>:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-31-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Podemos escribir este axioma como sigue:</p>
+
+<div class="panel panel-default">
+	<div id =  iaditivo class="panel-heading">
+		<h4> Axioma  [ Inverso aditivo ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dado $a$ número reales tenemos que existe $-a$ tal que:
+$$
+a + (-a) = 0
+$$
+En el caso del cero, $+0$ y $-0$ son lo mismo y se escriben como $0$.
+</i>	</div>
+</div>
+
+<p>Como nota, usualmente nos comemos el <span class="math inline">\(+(-a)\)</span> y escribimos solamente <span class="math inline">\(a - a\)</span>.</p>
+</div>
+<div id="axiomas-de-la-multiplicación" class="section level2">
+<h2><span class="header-section-number">1.4</span> Axiomas de la multiplicación</h2>
+<p>Para los axiomas del producto hay que recordar que una división la podemos ver como un producto. Por ejemplo, <span class="math display">\[
+9 \div 3 = 9 \times \frac{1}{3}
+\]</span> En general cualquier división la podemos ver como el producto por la fracción correspondiente; por lo cual no me preocuparé por los axiomas de la división dado que son los mismos con la fracción correspondiente: <span class="math display">\[
+a\div b = a \cdot \frac{1}{b}
+\]</span></p>
+<p>A ti te tocará deducirlos todos.</p>
+<div id="asociatividad-1" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> Asociatividad</h3>
+<p>La idea de la asociatividad es que el orden de izquierda a derecha en el que se multiplique es igual. Es decir: <span class="math display">\[
+( 5\cdot 7) \cdot 2= 70 = 5 \cdot (7 \cdot 2) 
+\]</span> Escrito con letras: <span class="math display">\[
+(a \cdot b) \cdot c = a \cdot (b \cdot c) 
+\]</span> Esto lo podemos interpretar con un prisma cuadrangular. Calcular <span class="math inline">\(abc\)</span> como quedamos previamente es calcular el volumen del prisma. En particular hacer <span class="math inline">\((a \cdot b)\)</span> es calcular una cara (rojo):</p>
+<!--html preserve-->
+<p align="center">
+<img src="images/asoc.svg" width="50%" onerror="this.src='images/asoc.png'">
+</p>
+<!--/html preserve-->
+<p>y multiplicar por <span class="math inline">\(c\)</span> es darle profundidad:</p>
+<!--html preserve-->
+<p align="center">
+<img src="images/asoc1.svg" width="50%" onerror="this.src='images/asoc1.png'">
+</p>
+<!--/html preserve-->
+<p>Por otro lado, calcular primero <span class="math inline">\((b \cdot c)\)</span> es calcular el tamaño de la tapa del prisma:</p>
+<!--html preserve-->
+<p align="center">
+<img src="images/asoc2.svg" width="50%" onerror="this.src='images/asoc2.png'">
+</p>
+<!--/html preserve-->
+<p>Multiplicar por <span class="math inline">\(a\)</span> al final es repetir la tapa <span class="math inline">\((b \cdot c)\)</span> tantas veces como <span class="math inline">\(a\)</span>:</p>
+<!--html preserve-->
+<p align="center">
+<img src="images/asoc1.svg" width="50%" onerror="this.src='images/asoc1.png'">
+</p>
+<!--/html preserve-->
+<p>Tenemos entonces que el orden de evaluación del producto no afecta el resultado. Esto lo resumimos en el siguiente axioma:</p>
+
+<div class="panel panel-default">
+	<div id =  asociatividadm class="panel-heading">
+		<h4> Axioma  [ Asociatividad ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dados $a,b,c$ números reales tenemos que:
+$$
+(a \cdot b ) \cdot c = a \cdot ( b  \cdot c )
+$$
+</i>	</div>
+</div>
+
+</div>
+<div id="conmutatividad-1" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> Conmutatividad</h3>
+<p>Ésta propiedad es la misma que en el caso de las sumas: el orden de los factores no altera el producto. Por ejemplo: <span class="math inline">\(4 \times 3 = 12 = 3 \times 4\)</span>. Gráficamente esto corresponde a calcular áreas del cuadrado con base <span class="math inline">\(b\)</span> y altura <span class="math inline">\(a\)</span> y de su versión rotada con base <span class="math inline">\(a\)</span> y altura <span class="math inline">\(b\)</span>:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-37-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>tiene la misma área que:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-38-1.png" width="192" style="display: block; margin: auto;" /></p>
+<p>Simbólicamente se tiene: <span class="math display">\[
+a\cdot b = b \cdot a
+\]</span></p>
+
+<div class="panel panel-default">
+	<div id =  conmutatividadm class="panel-heading">
+		<h4> Axioma  [ Conmutatividad ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dados $a,b$ números reales tenemos que:
+$$
+a \cdot b = b \cdot a
+$$
+</i>	</div>
+</div>
+
+</div>
+<div id="neutro-multiplicativo" class="section level3">
+<h3><span class="header-section-number">1.4.3</span> Neutro multiplicativo</h3>
+<p>Lo que establece este axioma es que multiplicar por <span class="math inline">\(1\)</span> no cambia nada al número original. Es decir, <span class="math inline">\(1 \cdot 5 = 5\)</span>, <span class="math inline">\(1 \cdot 9 = 9\)</span> y <span class="math inline">\(1 \cdot (-2) = -2\)</span>. Gráficamente lo podemos ver como calcular el área de un cuadrado de base <span class="math inline">\(b\)</span> y altura <span class="math inline">\(1\)</span>:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-40-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>De manera simbólica podemos poner el axioma como sigue:</p>
+
+<div class="panel panel-default">
+	<div id =  neutrom class="panel-heading">
+		<h4> Axioma  [ Neutro multiplicativo ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dado $b$ número real tenemos que:
+$$
+1 \cdot b = b
+$$
+</i>	</div>
+</div>
+
+</div>
+<div id="inverso-multiplicativo" class="section level3">
+<h3><span class="header-section-number">1.4.4</span> Inverso multiplicativo</h3>
+<p>La idea del inverso multiplicativo es que si uno tiene un objeto dividido en cachitos y junta los suficientes pedazos puede reconstruir el <span class="math inline">\(1\)</span>. Por poner un ejemplo numérico, si se tienen pedazos de tamaño <span class="math inline">\(\frac{1}{7}\)</span> con <span class="math inline">\(7\)</span> de ellos puedes reconstruir la unidad:</p>
+<p><span class="math display">\[
+\frac{1}{7} \cdot 7 = 1
+\]</span></p>
+<p>Con dibujos: <img src="Algebra1_files/figure-html/unnamed-chunk-42-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Análogamente si en lugar de <span class="math inline">\(7\)</span> tuviéramos <span class="math inline">\(a\)</span> la lógica sería idéntica:</p>
+<p><span class="math display">\[
+\frac{1}{a} \cdot a = 1
+\]</span></p>
+<p>O en dibujos:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-43-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>De donde se sigue el teorema: 
+<div class="panel panel-default">
+	<div id =  invmulti class="panel-heading">
+		<h4> Axioma  [ Inverso multiplicativo ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dado $a$ número real distinto del $0$ se tiene que:
+$$
+a \cdot \frac{1}{a} = 1
+$$
+En el caso del $0$ no existe inverso multiplicativo.
+</i>	</div>
+</div>
+</p>
+</div>
+</div>
+<div id="distributividad" class="section level2">
+<h2><span class="header-section-number">1.5</span> Distributividad</h2>
+<p>La distributividad es el último de los axiomas que hay que sabernos. Esta relaciona el producto con la suma. Se llama de esta forma porque distribuye un producto en una suma. Por ejemplo, en la siguiente igualdad <span class="math display">\[
+7 \times \underbrace{(2 + 3)}_{5} = 7 \times 2 + 7 \times 3 = 14 + 21 = 35 = 7 \times 5
+\]</span></p>
+<p>se tiene que una forma es hacer primero la suma y luego el producto (como en <span class="math inline">\(7 \times 5\)</span> pero una forma distinta <em>usando la propiedad distributiva</em> es distribuyendo el producto entre todos los sumandos: <span class="math inline">\(7 \times 2 + 7 \times 3\)</span>. El resultado es el mismo. Gráficamente esto lo podemos ver como tener <span class="math inline">\(2\)</span> y <span class="math inline">\(3\)</span> cuadritos y luego repetir cada uno de ellos <span class="math inline">\(7\)</span> veces y juntarlos o bien tener <span class="math inline">\(2 + 3 = 5\)</span> cuadritos y luego repetir esto <span class="math inline">\(7\)</span> veces:</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-45-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>En ambos casos es la misma área.</p>
+<p>De manera general, la propiedad distributiva nos dice que: <span class="math display">\[
+a \cdot (b + c) = ab + ac
+\]</span> la cual de manera gráfica la podemos ver como primero unir los cuadritos <span class="math inline">\(b\)</span> y <span class="math inline">\(c\)</span> en uno solo y repetirlo <span class="math inline">\(a\)</span> veces o bien como repetir <span class="math inline">\(a\)</span> veces los cuadritos <span class="math inline">\(b\)</span> y <span class="math inline">\(a\)</span> veces los <span class="math inline">\(c\)</span> cuadritos y después unirlos (<span class="math inline">\(ab + ac\)</span>):</p>
+<p><img src="Algebra1_files/figure-html/unnamed-chunk-46-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>Escrito algebraicamente el axioma es como sigue: 
+<div class="panel panel-default">
+	<div id =  distributiv class="panel-heading">
+		<h4> Axioma  [ Distributividad ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Dados $a,b,c$ números reales tenemos que:
+$$
+a \cdot (b + c) = ab + ac
+$$
+</i>	</div>
+</div>
+</p>
+</div>
+</div>
+<div id="la-igualdad" class="section level1">
+<h1><span class="header-section-number">2</span> La igualdad</h1>
+<p>La última propiedad (esto ya no es un axioma) a repasar antes de los ejercicios es <em>el significado</em> de la igualdad. La igualdad puedes imaginarlo como una balanza donde tienes objetos de dos lados. Para que la balanza esté equilibrada debes tener los mismos objetos de ambos lados aunque estén escritos diferentes. Por ejemplo, podrías tener: <span class="math display">\[
+5 = 2 + 3
+\]</span></p>
+<p>o bien: <span class="math display">\[
+5 = 9 - 4
+\]</span></p>
+<p>En ambos casos estamos expresando lo mismo. Ahora, si quisiéramos cambuiar la igualdad tenemos que cambiar <em>lo mismo</em> de ambos lados. Por ejemplo, si queremos un <span class="math inline">\(3\)</span> del lado izquierdo <em>hay que restar <span class="math inline">\(2\)</span> de ambos lados</em>:</p>
+<p><span class="math display">\[
+\underbrace{5 - 2}_{3} = 9 - 4 - 2
+\]</span> Esto sin importar qué estemos agregando. Podríamos agregar un <span class="math inline">\(7\)</span>: <span class="math display">\[
+5 + 7 = 9 - 4 + 7
+\]</span> O podríamos agregar una planta: <span class="math display">\[
+5 + \text{🌳} = 9 - 4 + \text{🌳}
+\]</span> O bien una letra:</p>
+<p><span class="math display">\[
+5 - \ell = 9 - 4 - \ell
+\]</span> El punto principal es que <strong>lo que sea que se sume o reste debe hacerse de ambos lados de la igualdad para conservarla</strong>.</p>
+<p>En el caso de la multiplicación TODO se multiplica a fin de mantener la igualdad. Por ejemplo, si empezamos con:</p>
+<p><span class="math display">\[
+5 = 9 - 4
+\]</span> podemos multiplicar por <span class="math inline">\(3\)</span> para obtener el <span class="math inline">\(15\)</span>: <span class="math display">\[
+3 \cdot 5 = 3 \cdot (9 - 4)
+\]</span> O bien podemos multiplicar por un <span class="math inline">\(-2\)</span> para tener <span class="math inline">\(-10\)</span>:</p>
+<p><span class="math display">\[
+-2 \cdot 5 = -2 \cdot (9 - 4)
+\]</span> Lo mismo pasaría si multiplicamos por una fracción:</p>
+<p><span class="math display">\[
+\frac{1}{5} \cdot 5 = \frac{1}{5} \cdot (9 - 4)
+\]</span></p>
+<p>O bien por una letra:</p>
+<p><span class="math display">\[
+a \cdot 5 = a \cdot (9 - 4)
+\]</span></p>
+<p>O por una fracción alocada con un perrito abajo: <span class="math display">\[
+\frac{1}{🐕} \cdot 5 = \frac{1}{🐕}  \cdot (9 - 4)
+\]</span></p>
+<p>Estas propiedades de la igualdad son las que nos permiten resolver problemas de álgebra básica. Por ejemplo:</p>
+
+<div class="panel panel-success">
+	<div id =  despejo1 class="panel-heading">
+		<h4> Ejercicio 1 [ Ejercicio de despejar ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Despejar el valor de $x$ si $2x = 8$
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+Tomas la ecuación inicial
+$$
+2x = 8
+$$
+Multiplicas por $\frac{1}{2}$ ambos lados para quitar el $2$:
+$$
+\frac{1}{2} \cdot 2x = \frac{1}{2} \cdot 8
+$$
+Usas la propiedad asociativa:
+$$
+\Big( \frac{1}{2} \cdot 2 \Big) x = \frac{1}{2} \cdot 8
+$$
+Usas que el inverso de $2$ es $\frac{1}{2}$:
+$$
+1 x = \frac{1}{2} \cdot 8
+$$
+Usas que multiplicar por $1$ te da la misma cosa:
+$$
+x = \frac{1}{2} \cdot 8
+$$
+Multiplicas el $8$ y la fracción:
+$$
+x = 4
+$$
+ 
+		</div>
+	</div>
+</div>
+
+<p>Un segundo ejemplo de lo mismo:</p>
+
+<div class="panel panel-success">
+	<div id =  despejo2 class="panel-heading">
+		<h4> Ejercicio 2 [ Ejercicio de despejar ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Despejar el valor de $x$ si $3x  - 1 = 8$
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+Tomas la ecuación inicial
+$$
+3x  - 1 = 8
+$$
+Sumas $1$ para quitar el que está restando:
+$$
+3x - 1 + 1 = 8 + 1
+$$
+Asocias para eliminar los unos:
+$$
+3x + (- 1 + 1) = 8 + 1
+$$
+Como $1$ es el inverso aditivo de $-1$ da cero:
+$$
+3x + 0 = 8 + 1
+$$
+Puedes usar entonces que sumar un cero no afecta la cantidad (neutro aditivo):
+$$
+3x = 8 + 1
+$$
+Y $8 + 1 = 9$:
+$$
+3x = 9
+$$
+Para quitar el $3$ se multiplica por $\frac{1}{3}$:
+$$
+\Big( \frac{1}{3} \cdot 3 \Big) x = \frac{1}{3} \cdot 9
+$$
+Como el $3$ es el inverso multiplicativo de la fracción da uno:
+$$
+1 x = \frac{1}{3} \cdot 9
+$$
+Usas que el $1$ es un neutro multiplicativo y no afecta la cantidad de la $x$:
+$$
+x = \frac{1}{3} \cdot 9
+$$
+Finalmente operas la fracción:
+$$
+x = 3
+$$
+ 
+		</div>
+	</div>
+</div>
+
+</div>
+<div id="ejercicios" class="section level1">
+<h1><span class="header-section-number">3</span> Ejercicios</h1>
+<ol style="list-style-type: decimal">
+<li><p>Da un ejemplo con números de cada uno de los axiomas vistos en las notas.</p></li>
+<li><p>Responde las siguientes preguntas:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>¿Quién es el inverso aditivo de <span class="math inline">\(113\)</span>?</p></li>
+<li><p>¿Quién es el inverso aditivo de <span class="math inline">\(\frac{12}{11}\)</span>?</p></li>
+<li><p>¿Es <span class="math inline">\(-\frac{6}{8}\)</span> el inverso aditivo de <span class="math inline">\(-\frac{3}{4}\)</span>?</p></li>
+<li><p>¿Quién es el inverso aditivo de <span class="math inline">\(-10\)</span>?</p></li>
+<li><p>¿Quién es el inverso multiplicativo de <span class="math inline">\(10\)</span>?</p></li>
+<li><p>¿Quién es el inverso multiplicativo de <span class="math inline">\(-10\)</span>?</p></li>
+<li><p>¿Quién es el inverso multiplicativo de <span class="math inline">\(\frac{12}{21}\)</span>?</p></li>
+<li><p>¿Quién es el inverso multiplicativo de <span class="math inline">\(-\frac{12}{21}\)</span>?</p></li>
+<li><p>¿Quién es el inverso multiplicativo de <span class="math inline">\(0\)</span>?</p></li>
+<li><p><i class="em em-thinking_face"></i> ¿Existe un número del que su inverso aditivo y su inverso multiplicativo sean el mismo?</p></li>
+</ol></li>
+<li><p>Argumenta mediante dibujos que para <span class="math inline">\(a,b,c,d\)</span> números reales, que las siguientes propiedades se cumplen:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(abc = bac = cba\)</span></p></li>
+<li><p><span class="math inline">\(x \cdot (w + y + z) = xw + xy + xz\)</span></p></li>
+<li><p><span class="math inline">\(a \cdot 1 = a\)</span></p></li>
+<li><p><span class="math inline">\((a + b) \cdot (c + d) = ac + ad + bc + bd\)</span></p></li>
+<li><p><span class="math inline">\(c \cdot (a - b) = ac - bc\)</span> Suponiendo que <span class="math inline">\(a\)</span> es mayor que <span class="math inline">\(b\)</span></p></li>
+<li><p><span class="math inline">\(a + b - c = a - c + b\)</span></p></li>
+<li><p><span class="math inline">\(\frac{a}{b} + \frac{c}{d} = \frac{c}{d} + \frac{a}{b}\)</span> <em>Hint</em> Dibuja las fracciones como en la sección pasada.</p></li>
+<li><p><span class="math inline">\(0 \cdot a = 0\)</span></p></li>
+</ol></li>
+<li><p>Identifica el axioma que se utilizó en cada uno de los pasos del siguiente ejercicio.</p></li>
+</ol>
+
+<div class="panel panel-default">
+	<div id =  Ejercicio 10.239161113742739Ejercicio de hallar class="panel-heading">
+		<h4> Ejercicio 1  [ Ejercicio de hallar ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Despejar el valor de $x$ si $4x  - 2 = 5$
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Demostración:</b> 
+Tomas la ecuación inicial
+$$
+4x  - 2 = 5
+$$
+Luego haces ***** para llegar a:
+$$
+4x  - 2 + 2= 5 + 2
+$$
+Siguiente haces *****
+$$
+4x  + (- 2 + 2) = 5 + 2
+$$
+A continuación sigue *****
+$$
+4x + 0 =  5 + 2
+$$
+Se utiliza que ***** para obtener:
+$$
+4x = 5 + 2
+$$
+Y $5 + 2 = 7$:
+$$
+4x = 7
+$$
+Luego se hace *****
+$$
+\Big( \frac{1}{4} \cdot 4 \Big) x = \frac{1}{4} \cdot 7
+$$
+Donde se utiliza el axioma ***** para ver que
+$$
+1 x = \frac{1}{4} \cdot 7
+$$
+luego se usa *****
+$$
+x = \frac{1}{4} \cdot 7
+$$
+Finalmente *****:
+$$
+x = \frac{7}{4}
+$$
+ 
+		</div>
+	</div>
+</div>
+
+<ol start="4" style="list-style-type: decimal">
+<li>Completa los pasos restantes (se saltaron pasos)</li>
+</ol>
+
+<div class="panel panel-default">
+	<div id =  Ejercicio210.667524469317868Ejercicio de pasos invisibles class="panel-heading">
+		<h4> Ejercicio21  [ Ejercicio de pasos invisibles ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Hallar los valores de $a$ si $a^2 + a - 2 = 0$
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Demostración:</b> 
+Tomas la ecuación inicial
+$$
+a^2 + a - 2 = 0
+$$
+Se tiene que:
+$$
+a^2 - a + 2a - 2 = 0 
+$$
+Luego:
+$$
+(a-1) \cdot a + 2 \cdot (a - 1) = 0
+$$
+A continuación 
+$$
+(a-1) \cdot (a + 2)  = 0
+$$
+Luego $a = 1$ ó $a = -2$.
+ 
+		</div>
+	</div>
+</div>
+
+<ol start="4" style="list-style-type: decimal">
+<li><p><i class="em em-pencil2"></i> Despeja el valor que se te solicita de las ecuaciones del lado derecho especificando cada uno de los pasos. No te los saltes<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(x\)</span> de <span class="math inline">\(4x - 1 = 15\)</span></p></li>
+<li><p><span class="math inline">\(y\)</span> de <span class="math inline">\(7y = 14\)</span></p></li>
+<li><p><span class="math inline">\(a\)</span> de <span class="math inline">\(3a + b = 9\)</span></p></li>
+<li><p><span class="math inline">\(y\)</span> de <span class="math inline">\(xy = 3x\)</span> si <span class="math inline">\(x \neq 0\)</span></p></li>
+<li><p><span class="math inline">\(y\)</span> de <span class="math inline">\(xy = 3x\)</span> si <span class="math inline">\(x = 0\)</span> ¡Aguas con dividir entre cero!</p></li>
+<li><p><span class="math inline">\(t\)</span> de <span class="math inline">\(4t - 1 = 3\)</span></p></li>
+<li><p><span class="math inline">\(k\)</span> de <span class="math inline">\(5k - 9 = 4k + 18\)</span></p></li>
+<li><p><span class="math inline">\(\ell\)</span> de <span class="math inline">\(3\ell + 2 = 1 - \ell\)</span></p></li>
+<li><p><span class="math inline">\(h\)</span> de <span class="math inline">\(8h - 12 + 2h - 3 = h\)</span></p></li>
+</ol></li>
+<li><p><i class="em em-pencil2"></i> Usando los axiomas y/o las propiedades del ejercicio pasado obtén a partir de la expresión del lado izquierdo, paso a paso, la expresión del lado derecho.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(7 \cdot a + 14 \cdot b - 9a + 16 b = -2a + 30b\)</span></p></li>
+<li><p><span class="math inline">\((1+b)(3 + d) = 3 + b + 3b + d\)</span></p></li>
+<li><p><span class="math inline">\((1 - a)(1 + a) = 1 - a^2\)</span></p></li>
+<li><p><span class="math inline">\((4 + s)^2 = 16 + 8s + s^2\)</span></p></li>
+<li><p><span class="math inline">\((2 - \ell)^3 = 8 - 12\ell + 6 \ell^2 - \ell^3\)</span></p></li>
+</ol></li>
+<li><p><i class="em em-unicorn_face"></i> Deduce a partir de dibujos propiedades interesantes (como las de las notas) para las siguientes expresiones:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(a\cdot(b - c) = ?\)</span></p></li>
+<li><p><span class="math inline">\(a - (b + c) = ?\)</span></p></li>
+<li><p><span class="math inline">\(a -(b - c) = ?\)</span></p></li>
+</ol></li>
+<li><p>Decide si las siguientes igualdades son correctas o no:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\frac{1}{a} \cdot \frac{1}{b} = \frac{1}{b} \cdot \frac{1}{a}\)</span></p></li>
+<li><p><span class="math inline">\((x + a)^2 = x^2 + a^2\)</span></p></li>
+<li><p><span class="math inline">\((m + n)(m - n) = m^2 - n^2\)</span></p></li>
+<li><p><span class="math inline">\(7a + 9b -12c + 2a -3b + 5c = 9a + 6b - 7c\)</span></p></li>
+<li><p><span class="math inline">\((x-1)(x+2) = x^2 + x - 2\)</span></p></li>
+</ol></li>
+</ol>
+</div>
+<div id="referencias" class="section level1">
+<h1><span class="header-section-number">4</span> Referencias</h1>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Ejercicio no sólo de paciencia sino para estar segurxs que conoces todas las propiedades vistas<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+      <b>Contáctame</b> en <a href="mailto:rzepeda17@gmail.com?Subject=Random Math" target="_top">rzepeda17@gmail.com</a>
+    </div>
+    <div class="panel-footer"><span  xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><small><b>Guía no oficial de estudio para el examen de matemáticas del INSP</b></span> por <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Rodrigo Zepeda</span> tiene una licencia <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. </small><br /></div>
+</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

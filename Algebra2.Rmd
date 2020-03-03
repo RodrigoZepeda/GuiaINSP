@@ -1,0 +1,160 @@
+---
+title: "Álgebra: Perspectiva Geométrica 1"
+author: "Rodrigo Zepeda"
+output:
+  html_document:
+    css: css/bootstrap.css
+    includes:
+      after_body: headers/footer.html
+      before_body: headers/head.html
+      in_header: headers/format.html
+    number_sections: yes
+    self_contained: no
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    number_sections: yes
+    toc: yes
+linkcolor: blue
+urlcolor: blue
+bibliography: referencias.bib
+---
+
+```{r setup, include=FALSE}
+require(knitr)
+require(kableExtra)
+require(ggplot2)
+require(reshape2)
+library(tidyverse)
+library(cowplot)
+library(shadowtext)
+library(matlib)
+library(rlist)
+library(latex2exp)
+library(rgl)
+
+#Knitr table options
+options(knitr.table.format = "html") 
+
+#Chunk options
+opts_chunk$set(echo = FALSE)
+opts_chunk$set(results = 'asis')
+opts_chunk$set(fig.width  = 3)
+opts_chunk$set(fig.height = 3)
+opts_chunk$set(warning  = FALSE)
+opts_chunk$set(message  = FALSE)
+opts_chunk$set(fig.align='center')
+
+#Knitr for rgl (3d)
+#knit_hooks$set(webgl = hook_webgl)
+
+#Function for authomatic theorem, corollary, example, counterexample, property, lemma and definition numbering
+source("Rfun/theorem_creator.R")
+
+plot.rect <- function (max.x = 10, max.y = 5,
+                       xlab = as.character(max.x), 
+                       ylab = as.character(max.y),
+                       label = "Área = base * altura"){
+  
+  x <- 1:max.x
+  y <- 1:max.y
+  rect <- data.frame(expand.grid(x,y))
+  colnames(rect) <- c("x","y")
+  
+  ggplot(rect, aes(x = x, y = y)) + 
+    geom_tile(color = "white", size = 0.25, 
+              fill = "#18bc9c") + 
+    xlab(xlab) + ylab(ylab) +
+    theme_void() +
+    theme(axis.title = element_text()) +
+    geom_shadowtext(aes(label=label, x = (max.x+1)/2, y = (max.y+1)/2), 
+                    color = "white", bg.colour='black', size=5) 
+}
+
+```
+
+
+## Teorema de Pitágoras
+Uno de los primeros teoremas que veremos con el razonamiento geométrico es el teorema de Pitágoras. Para ello vamos a observarlo gráficamente. Empezamos con un triángulo como el que sigue: con lados $a$ y $b$ e hipotenusa (el lado más largo), $c$:
+
+```{r, fig.cap="Un triángulo muy pitagoroso ¿a poco no?"}
+triangle(xlab = "a", ylab = "b", hiplab = "c")
+```
+Tomemos varios de estos triángulos y arreglémoslos en un cuadrado gigante de lado $a + b$. 
+
+```{r, fig.cap="Triángulos arreglados lindamente"}
+fill <- "#18bc9c"
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(0,0,1), y = c(0,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(0,0,1), y = c(1,2,2))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(1,2,2), y = c(0,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(1,2,2), y = c(2,2,1))) +
+  geom_polygon(aes(x = x, y = y), color = "deepskyblue4", alpha = 0, size = 2,
+               data = data.frame(x = c(0,0,2,2), y = c(0,2,2,0))) +
+  annotate("text", label = "a", x = 0.5, y = 0.1, color = "black") +
+  annotate("text", label = "a", x = 1.5, y = 0.1, color = "black") +
+  annotate("text", label = "a", x = 0.5, y = 1.9, color = "black") +
+  annotate("text", label = "a", x = 1.5, y = 1.9, color = "black") +
+  annotate("text", label = "b", x = 0.1, y = 0.5, color = "black") +
+  annotate("text", label = "b", x = 0.1, y = 1.5, color = "black") +
+  annotate("text", label = "b", x = 1.9, y = 1.5, color = "black") +
+  annotate("text", label = "b", x = 1.9, y = 0.5, color = "black") +
+  annotate("text", label = "c", x = 0.5, y = 0.6, color = "black", angle = -45) +
+  annotate("text", label = "c", x = 0.5, y = 1.4, color = "black", angle = 45) +
+  annotate("text", label = "c", x = 1.5, y = 1.4, color = "black", angle = 135) +
+  annotate("text", label = "c", x = 1.5, y = 0.6, color = "black", angle = 45) +
+  theme(axis.title = element_text()) +
+  xlab("Lado (a + b)") + ylab("")
+```
+
+Notamos que el área del cuadrado gigante (azul oscuro) es $(a + b)^2$ mientras que la de cada uno de los triángulos es $\frac{ab}{2}$. Finalmente el cuadrado del centro es un cuadrado de lado $c$ por lo que su área es $c^2$. Tenemos entonces la siguiente identidad:
+$$
+\underbrace{(a + b)^2}_{\text{Cuadrado gde}} = \underbrace{\frac{ab}{2} + \frac{ab}{2} + \frac{ab}{2} + \frac{ab}{2}}_{4 \text{ triángulos}} + \underbrace{c^2}_{\text{Cuadrado blco}}
+$$
+
+La cual está representada en la siguiente figura:
+```{r, fig.cap="Triángulos arreglados lindamente con sus áreas", warning=FALSE}
+fill <- "#18bc9c"
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(0,0,1), y = c(0,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(0,0,1), y = c(1,2,2))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(1,2,2), y = c(0,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               data = data.frame(x = c(1,2,2), y = c(2,2,1))) +
+  geom_polygon(aes(x = x, y = y), color = "deepskyblue4", alpha = 0, size = 2,
+               data = data.frame(x = c(0,0,2,2), y = c(0,2,2,0))) +
+  annotate("text", label = TeX("\\frac{ab}{2}"), x = 0.5, y = 0.25, color = "black")  +
+  annotate("text", label = TeX("\\frac{ab}{2}"), x = 0.5, y = 1.75, color = "black")  +
+  annotate("text", label = TeX("\\frac{ab}{2}"), x = 1.5, y = 1.75, color = "black")  +
+  annotate("text", label = TeX("\\frac{ab}{2}"), x = 1.5, y = 0.25, color = "black")  +
+  annotate("text", label = TeX("c^2"), x = 1, y = 1, color = "black")  +
+  theme(axis.title = element_text()) +
+  xlab(TeX("Total = (a + b)^2")) + ylab("")
+```
+
+Podemos empezar a manipular la ecuación de arriba:
+\begin{equation}\nonumber
+\begin{aligned}
+& (a + b)^2 & = \frac{ab}{2} + \frac{ab}{2} + \frac{ab}{2}  + \frac{ab}{2}  + c^2 \\
+& (a + b)^2 & = 4 \cdot \frac{ab}{2} + c^2 \\
+\Rightarrow & (a + b)^2 & = 2ab + c^2 \qquad & \text{ pues } \frac{4}{2} = 2\\
+\Rightarrow & (a + b)(a + b) & = 2ab + c^2 \qquad & \text{ porque elevar al cuadrado es multiplicar por sí mismo } \\
+\Rightarrow & a^2 + ba + ab + b^2 & = 2ab + c^2 \qquad & \text{ multipliqué todos contra todos } \\
+\Rightarrow & a^2 + 2ab + b^2 & = 2ab + c^2 \qquad & \text{ junté } ab \text{ con } ba \text{ pues el orden de las operaciones no importa} \\
+\Rightarrow & a^2 + 2ab + b^2 - 2ab & = 2ab + c^2 - 2ab \qquad & \text{ en el igual lo tengo que poner o quitar lo mismo de ambos lados} \\
+\Rightarrow & a^2  + b^2  & =c^2  \qquad & \text{ pues } 2ab - 2ab = 0 \\
+\end{aligned}
+\end{equation}
+
+De donde concluimos el teorema de pitágoras: si se tienen triángulos con lados $a$ y $b$ e hipotenusa $c$ entonces $a^2 + b^2 = c^2$. 
+
+## Suma de cuadrados
+
+
