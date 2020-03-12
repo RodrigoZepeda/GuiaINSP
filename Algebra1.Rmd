@@ -579,7 +579,7 @@ A esta propiedad se le conoce como propiedad asociativa.
 teo <- "
 Dados $a,b,c$ números reales tenemos que:
 $$
-a + (b + c) = a + (b + c)
+a + (b + c) = (a + b) + c
 $$
 "
 

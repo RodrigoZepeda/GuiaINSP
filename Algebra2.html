@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rodrigo Zepeda" />
+
+
+<title>Álgebra: Perspectiva Geométrica 2</title>
+
+<script src="Algebra2_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Algebra2_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="Algebra2_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Algebra2_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Algebra2_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="Algebra2_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="Algebra2_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="Algebra2_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="Algebra2_files/navigation-1.1/tabsets.js"></script>
+<link href="Algebra2_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Algebra2_files/highlightjs-9.12.0/highlight.js"></script>
+<!-- Meta characteristics -->
+<meta name="description" content="Random Math Notes">
+<meta name="keywords" content="Probability, Markov Chains, Markov Processes, Stochastic Processes">
+<meta name="author" content="Rodrigo Zepeda Tello">
+
+<!-- Add d3js -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!-- Nice mathjax format -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true, }, TeX: { equationNumbers: { autoNumber: "AMS" } } });
+</script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<!--Navigation menu-->
+<link href="css/custom.css" rel="stylesheet">
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+            <a class="navbar-brand" href="https://rodrigozepeda.github.io/GuiaINSP">Guía no oficial de estudio para el examen de matemáticas del INSP</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="https://github.com/RodrigoZepeda/GuiaINSP"><img src="images/GitHub-Mark-Light-32px.png"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Álgebra: Perspectiva Geométrica 2</h1>
+<h4 class="author">Rodrigo Zepeda</h4>
+
+</div>
+
+
+<!--
+# Preliminares 
+
+## Teorema de Pitágoras
+De los pocos teoremas que necesitaremos pero son ajenos a nuestro propósito final algebraico es el teorema de Pitágoras. Para ello vamos a observarlo gráficamente. Empezamos con un triángulo como el que sigue: con lados $\textrm{Cateto 1}$ ($c_1$) y $\textrm{Cateto 2}$ ($c_1$) e hipotenusa (el lado más largo), ($\textrm{hip})$:
+
+<div class="figure" style="text-align: center">
+<img src="Algebra2_files/figure-html/unnamed-chunk-1-1.png" alt="Un triángulo muy pitagoroso ¿a poco no?" width="288" />
+<p class="caption">Un triángulo muy pitagoroso ¿a poco no?</p>
+</div>
+Tomemos varios de estos triángulos y arreglémoslos en un cuadrado gigante de lado $c_1 + c_2$. 
+
+<div class="figure" style="text-align: center">
+<img src="Algebra2_files/figure-html/unnamed-chunk-2-1.png" alt="Triángulos arreglados lindamente" width="768" />
+<p class="caption">Triángulos arreglados lindamente</p>
+</div>
+
+Notamos que el área del cuadrado gigante (azul oscuro) es $(c_1 + c_2)^2$ mientras que la de cada uno de los triángulos es $\frac{c1 \cdot c_2}{2}$. Finalmente el cuadrado del centro es un cuadrado de lado $\text{hip}$ por lo que su área es $\text{hip}^2$. Tenemos entonces la siguiente identidad:
+$$
+\underbrace{(c_1 + c_2)^2}_{\text{Cuadrado gde}} = \underbrace{\frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2}}_{4 \text{ triángulos}} + \underbrace{\text{hip}^2}_{\text{Cuadrado blco}}
+$$
+
+La cual está representada en la siguiente figura:
+<div class="figure" style="text-align: center">
+<img src="Algebra2_files/figure-html/unnamed-chunk-3-1.png" alt="Triángulos arreglados lindamente con sus áreas" width="768" />
+<p class="caption">Triángulos arreglados lindamente con sus áreas</p>
+</div>
+
+Podemos empezar a manipular la ecuación dada por:
+$$
+(c_1 + c_2)^2 = \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \text{hip}^2
+$$
+
+Como sigue:
+$$
+(c_1 + c_2)^2 = \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2}  + \frac{c_1 \cdot c_2}{2}  + \text{hip}^2
+$$
+
+Agrupamos los cuatro términos iguales:
+$$
+(c_1 + c_2)^2 = 4 \cdot \frac{c_1 \cdot c_2}{2} + \text{hip}^2
+$$
+
+Dividimos $4 \div 2$:
+$$
+(c_1 + c_2)^2 = 2c_1 \cdot c_2 + \text{hip}^2
+$$
+
+El cuadrado es multiplicar por sí mismo:
+$$
+(c_1 + c_2)(c_1 + c_2)  = 2c_1 \cdot c_2 + \text{hip}^2 
+$$
+
+La distributividad resulta en:
+$$
+c_1^2 + c_2\cdot c_1 + c_1 \cdot c_2 + c_2^2  = 2c_1 \cdot c_2 + \text{hip}^2 
+$$
+
+Mientras que la conmutatividad nos permite agrupar $c_1\cdot c_2$ con $c_2 \cdot c_1$:
+$$ 
+c_1^2 + 2c_1 \cdot c_2 + c_2^2  = 2c_1 \cdot c_2 + \text{hip}^2 
+$$
+
+Resto de ambos lados $2c_1 \cdot c_2$:
+$$
+c_1^2 + 2c_1 \cdot c_2 + c_2^2 - 2c_1 \cdot c_2  = 2c_1 \cdot c_2 + \text{hip}^2 - 2c_1 \cdot c_2 
+$$
+
+De donde se obtiene que la suma del cuadrado de los catetos es el cuadrado de la hipotenusa:
+$$
+c_1^2  + c_2^2   =\text{hip}^2 
+$$
+
+De donde concluimos el teorema de pitágoras: si se tienen triángulos con lados $c_1$ y $c_2$ e hipotenusa $\text{hip}$ entonces $c_1^2 + c_2^2 = \text{hip}^2$. 
+
+> **Nota** El teorema de Pitágoras es algo específico de los triángulos. No intentes generalizar a que es una cosa de todos los números. Lo que dice es que si tienes un triángulo entonces sus lados son de esa forma. 
+-->
+<div id="productos-notables" class="section level1">
+<h1><span class="header-section-number">1</span> Productos notables</h1>
+<p>A continuación presentaremos algunas multiplicaciones de las cuales la gente ha obtenido fórmulas para hacer cálculos rápidos. La mayor parte de estos obtienen su nombre de cuando interesaba que la gente supiera <em>computar</em> (<em>i.e.</em> calcular rápido) y no <em>pensar</em> . No es necesario que te aprendas ninguna de las fórmulas porque salen a partir de los axiomas. Si conoces los axiomas no requieres ninguna fórmula.</p>
+<p>Como segunda nota hay dos actividades principales que puedes tener en un ejercicio de álgebra: <em>expandir</em> y <em>factorizar</em>. Usualmente, para quienes plantean ejercicios, expandir consiste en dejar la menor cantidad de multiplicaciones posibles. Por ejemplo si <strong>expandimos</strong>:</p>
+<p><span class="math display">\[
+8 \cdot (a + x) + 9 \cdot (x + a) + a
+\]</span></p>
+<p>Obtenemos (usando distributividad): <span class="math display">\[
+8 a + 8 x + 9 x + 9a + a = 18 a + 17x
+\]</span></p>
+<p>Mientras que si factorizamos el propósito es escribir todo como una multiplicación, <span class="math display">\[
+x^2 + 9x + 14
+\]</span> se transforma en<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>: <span class="math display">\[
+(x + 2)\cdot(x + 7)
+\]</span> ¡Verifícalo!</p>
+<div id="binomio-cuadrado" class="section level2">
+<h2><span class="header-section-number">1.1</span> Binomio cuadrado</h2>
+<p>El primer resultado que verificaremos es el siguiente:</p>
+<p><span class="math display">\[
+(a + b)^2 = a^2 + 2ab + b^2
+\]</span></p>
+<p>El lado derecho de la ecuación se conoce como el <em>trinomio cuadrado perfecto</em> pero nadie es tan perfecto como tú, bb.</p>
+<p>Esto lo podemos ver geométricamente como el área de un cuadrado de lado <span class="math inline">\(a + b\)</span>:</p>
+<p><img src="Algebra2_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>De donde se sigue que <span class="math inline">\((a + b)^2\)</span> lo podemos ver como <span class="math inline">\(a^2 + ab + ab+ b^2 = a^2 + 2ab + b^2\)</span></p>
+<p>Algebraicamente (usamos los axiomas) tenemos lo siguiente:</p>
+<p><span class="math display">\[
+(a + b)^2 = (a + b)(a + b)
+\]</span></p>
+<p>Usamos distributividad: <span class="math display">\[
+(a + b)(a + b) = (a + b)a + (a + b)b
+\]</span> Volvemos a aplicar distributividad: <span class="math display">\[
+(a + b)a + (a + b)b = a^2 + ba + ab + b^2
+\]</span> Conmutamos <span class="math inline">\(ba\)</span> para que sea <span class="math inline">\(ab\)</span>: <span class="math display">\[
+a^2 + ba + ab + b^2 = a^2 + ab + ab + b^2
+\]</span> y los sumamos: <span class="math display">\[
+a^2 + ab + ab + b^2 = a^2 + 2ab + b^2
+\]</span></p>
+<p>Concluimos entonces: <span class="math display">\[
+(a + b)^2 =  a^2 + 2ab + b^2
+\]</span></p>
+<p>De manera resumida: <span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+(a + b)^2 &amp; = (a + b)(a + b) \\
+&amp; = (a + b)a + (a + b)b \\
+&amp; = a^2 + ba + ab + b^2 \\
+&amp; = a^2 + ab + ab + b^2 \\
+&amp; = a^2 + 2ab + b^2
+\end{aligned}
+\end{equation}\]</span></p>
+</div>
+<div id="factor-común" class="section level2">
+<h2><span class="header-section-number">1.2</span> Factor común:</h2>
+<p>El factor común es un <em>renombramiento</em> de la propiedad distributiva:</p>
+<p><span class="math display">\[
+k\cdot a + k \cdot b + k \cdot c = k (a + b + c) 
+\]</span></p>
+<p>Lo podemos ver gráficamente:</p>
+<p><img src="Algebra2_files/figure-html/unnamed-chunk-5-1.png" width="336" style="display: block; margin: auto;" /> donde podemos descomponer el rectángulo con área <span class="math inline">\(k(a + b + c)\)</span> dada por la base <span class="math inline">\(a + b +c\)</span> y la altura <span class="math inline">\(k\)</span> en la suma de los rectángulos de misma altura con áreas <span class="math inline">\(ka\)</span>, <span class="math inline">\(kb\)</span> y <span class="math inline">\(kc\)</span>. Notamos que: <span class="math display">\[
+k\cdot a + k \cdot b + k \cdot c = k (a + b + c) 
+\]</span></p>
+<p>Algebraicamente esto lo podemos demostrar con una doble aplicación de la propiedad distributiva: <span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+k (a + b + c) &amp; = k \big(a + (b + c) \big) \\
+&amp; = ka + k(b+c) \\
+&amp; = ka + kb + kc
+\end{aligned}
+\end{equation}\]</span> Lo cual demuestra el resultado.</p>
+</div>
+<div id="producto-de-binomios-con-un-término-común" class="section level2">
+<h2><span class="header-section-number">1.3</span> Producto de binomios con un término común</h2>
+<p>Este producto es una generalización de el binomio cuadrado (<em>¿por qué?</em>). Lo que queremos demostrar es:</p>
+<p><span class="math display">\[
+(x + a) \cdot (x + b) = x^2 + (a + b) x + ab
+\]</span></p>
+<p>Esto lo podemos hacer mediante una doble aplicación de la propiedad distributiva: <span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+(x + a) \cdot (x + b) &amp; = 
+(x + a) \cdot x + (x + a) \cdot b \\
+&amp; = x \cdot x + a \cdot x + b \cdot x + a \cdot b \\
+&amp; = x^2 + (a + b) x + ab
+\end{aligned}
+\end{equation}\]</span> donde $ a x + b x = (a + b)x$ lo obtuve a partir de una agrupación por factor común.</p>
+<p>Otra forma de verlo puede ser a través de un rectángulo con base <span class="math inline">\(x + a\)</span> y altura <span class="math inline">\(x + b\)</span> (área total <span class="math inline">\((x+a)(x+b)\)</span>) el cual podemos subdividir en los cuadrados de área <span class="math inline">\(x^2\)</span>, <span class="math inline">\(ab\)</span>, <span class="math inline">\(ax\)</span> y <span class="math inline">\(bx\)</span> como sigue:</p>
+<p><img src="Algebra2_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="binomios-conjugados" class="section level2">
+<h2><span class="header-section-number">1.4</span> Binomios conjugados</h2>
+<p>Los binomios conjugados, o diferencia de cuadrados es más fácil verlo algebraicamente que con geometría; empero, haremos las dos para demostrar la expresión: <span class="math display">\[
+(a + b)\cdot (a - b) = a^2 - b^2
+\]</span> Para ello utilizamos la propiedad distributiva dos veces como hicimos en el ejemplo anterior: <span class="math display">\[\begin{equation}\nonumber
+\begin{aligned}
+(a + b) \cdot (a - b) &amp; = (a + b) a + (a + b) (-b) \\
+&amp; = a^2 + ba + a(-b) + b(-b) \\
+&amp; = a^2 + ab - ab - b^2 \\
+&amp; = a^2 - b^2
+\end{aligned}
+\end{equation}\]</span> Geométricamente lo que tendríamos que analizar es un rectángulo con lados <span class="math inline">\(a+b\)</span> y <span class="math inline">\(a-b\)</span>. En primer lugar tomamos un cuadrado de lado <span class="math inline">\(a\)</span>:</p>
+<p><img src="Algebra2_files/figure-html/unnamed-chunk-7-1.png" width="288" style="display: block; margin: auto;" /></p>
+<p>Al cual le pegamos un rectángulo de base <span class="math inline">\(b\)</span> y altura <span class="math inline">\(a\)</span>: <img src="Algebra2_files/figure-html/unnamed-chunk-8-1.png" width="360" style="display: block; margin: auto;" /></p>
+<p>Finalmente encogemos el rectángulo removiéndole <span class="math inline">\(b\)</span> de altura (las partes que quedan en blanco).</p>
+<p><img src="Algebra2_files/figure-html/unnamed-chunk-9-1.png" width="360" style="display: block; margin: auto;" /></p>
+<p>Notamos que el área del cuadrito donde se intersectan los de área <span class="math inline">\(ba\)</span> y <span class="math inline">\(ab\)</span> es <span class="math inline">\(b^2\)</span>: <img src="Algebra2_files/figure-html/unnamed-chunk-10-1.png" width="360" style="display: block; margin: auto;" /></p>
+<p>Tenemos entonces que el rectángulo dado por <span class="math inline">\((a + b)(a - b)\)</span> lo podemos escribir como: <span class="math display">\[
+(a+b)(a-b) = a^2 - ab + ba - b^2
+\]</span> donde el término <span class="math inline">\(b^2\)</span> está restando porque fue incluido dos veces (uno por cada <span class="math inline">\(ab\)</span>). Y luego se obtiene: <span class="math display">\[
+(a+b)(a-b) = a^2  - b^2
+\]</span></p>
+</div>
+<div id="adición-y-diferencia-de-cubos" class="section level2">
+<h2><span class="header-section-number">1.5</span> Adición y diferencia de cubos</h2>
+<p>2 La adición de cubos está dada por: <span class="math display">\[
+a^3 + b^3 = (a + b)(a^2 - ab + b^2)
+\]</span></p>
+<p>Mientras que la diferencia: <span class="math display">\[
+a^3 - b^3 = (a - b)(a^2 + ab + b^2)
+\]</span></p>
+<p>Ambos los demostraremos algebraicamente. Para el primero, expandimos el producto mediante la propiedad distributiva: <span class="math display">\[
+(a + b)(a^2 - ab + b^2) = a(a^2 - ab + b^2) + b(a^2 - ab + b^2) 
+\]</span> de donde se sigue que: <span class="math display">\[
+(a + b)(a^2 - ab + b^2) = a(a^2 - ab + b^2) + b(a^2 - ab + b^2)  = a^3 - a^2b + ab^2 + a^2b-ab² + b^3
+\]</span> y podemos eliminar los términos con distinto signo: <span class="math display">\[
+(a + b)(a^2 - ab + b^2) = a(a^2 - ab + b^2) + b(a^2 - ab + b^2)  = a^3 - a^2b + ab^2 + a^2b-ab² + b^3 = a^3 + b^3
+\]</span> Ahora te toca a ti demostrar el otro caso. ¡Adelante!</p>
+</div>
+</div>
+<div id="ejercicios" class="section level1">
+<h1><span class="header-section-number">2</span> Ejercicios</h1>
+<ol style="list-style-type: decimal">
+<li><p>Demuestra (sin revisar las notas) los productos notables muy similares a los que se obtuvieron en estas notas:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\((u - v)^2 = v^2 - 2uv + u^2\)</span></p></li>
+<li><p><span class="math inline">\((x + a)(x - b) = x^2 + (a - b)x - ab\)</span></p></li>
+<li><p><span class="math inline">\((x + y)(x - y)(x^2 + y^2) = x^4 - y^4\)</span></p></li>
+<li><p><span class="math inline">\(a\cdot a + a \cdot b + a \cdot c = a (a + b + c)\)</span></p></li>
+</ol></li>
+<li><p>Utiliza un dibujo para demostrar:</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\((a + b + c)^2 = a^2 + b^2 + c^2 + 2ab + 2ac + 2bc\)</span></li>
+</ol></li>
+</ol>
+<p><em>Hint</em> Utiliza las siguientes figuras:</p>
+<p><img src="Algebra2_files/figure-html/unnamed-chunk-11-1.png" width="720" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\sqrt{x} \cdot \sqrt{x} = x\)</span></li>
+</ol>
+<p><em>Hint</em> Utiliza las siguientes figuras:</p>
+<p><img src="Algebra2_files/figure-html/unnamed-chunk-12-1.png" width="192" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Demuestra usando la técnica que quieras que:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(ax + by + ay + bx = (a + b)(x + y)\)</span></p></li>
+<li><p><span class="math inline">\((x + a)(x - b) = x^2 + (a-b)x - ab\)</span></p></li>
+<li><p><span class="math inline">\(ax + bx + (c + d)x = x \cdot (a + b + c + d)\)</span></p></li>
+<li><p><span class="math inline">\(x(x+1)(x+2)(x+3) + 1 = (x^2 + 3x + 1)^2\)</span></p></li>
+</ol></li>
+<li><p>Demuestra las siguientes identidades <em>algebraicamente</em> :</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(a^3 = \Bigg( \frac{a(a+1)}{2} \Bigg)^2 - \Bigg( \frac{a(a-1)}{2} \Bigg)^2\)</span></p></li>
+<li><p><span class="math inline">\((z^2 + z + 1) \cdot (z^2 -z + 1) = z^4 + z^2 + 1\)</span></p></li>
+<li><p><span class="math inline">\((w + u)^3 = w^3 + u^3 + 3uw(w + u)\)</span></p></li>
+<li><p><span class="math inline">\((a + b + c + d)^2 = a^2 + b^2 + c^2 + d^2 + 2(ab + ac + ad + bc + bd + cd)\)</span></p></li>
+<li><p><span class="math inline">\((d- a + b + c)(d - a - b - c) = (d-a)^2 - (b-c)^2\)</span></p></li>
+<li><p><span class="math inline">\(a^3 + b^3 + c^3 - 3abc = \frac{1}{2}(a + b + c)\Big[ (a-b)^2 + (b-c)^2 + (a-c)^2 \Big]\)</span></p></li>
+<li><p>Si <span class="math inline">\(a = b+c\)</span> entonces <span class="math inline">\(a^4 + b^4 + c^4 = 2b^2c^2 + 2c^2a^2 + 2a^2b^2\)</span></p></li>
+</ol></li>
+<li><p>Expande las siguientes expresiones<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\big(w + x - (y + z) \big)^3\)</span></p></li>
+<li><p><span class="math inline">\((g - f)^5\)</span></p></li>
+<li><p><span class="math inline">\((a - b)(a^9 + a^8b + a^7b^2 + a^6b^3 + a^5b^4 + a^4b^5 + a^3b^6 + a^2 b^7 + a b^8 + b^9)\)</span></p></li>
+<li><p><span class="math inline">\(1 \cdot \dfrac{x-2}{1-2} \cdot \dfrac{x-3}{1-3} + 4 \cdot \dfrac{x-1}{2-1} \cdot \dfrac{x-3}{2-3} + 9 \dfrac{x-1}{3-1}\cdot \dfrac{x-2}{3-2}\)</span></p></li>
+<li><p><span class="math inline">\((x + a)(x + b)(x + c)\)</span></p></li>
+</ol></li>
+</ol>
+<!--
+5. Simplifica las siguientes expresiones:
+
+    a. $\frac{(a+b)^3 + a^3}{(a+b)^3+ b^3}$
+-->
+<ol start="5" style="list-style-type: decimal">
+<li><p>Demuestra que si <span class="math display">\[
+x = \dfrac{-b + \sqrt{b^2 - 4ac}}{2a}
+\]</span> entonces: <span class="math display">\[
+a x^2 + bx + c = 0
+\]</span> ¿Ocurre lo mismo si ahora se tiene <span class="math display">\[
+x = \dfrac{-b - \sqrt{b^2 - 4ac}}{2a} \quad\text{?}
+\]</span></p></li>
+<li><p>Identifica el/los errores en los siguientes ejercicios y corrígelos.</p></li>
+</ol>
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.0311532546766102Identifica el error class="panel-heading">
+		<h4> Ejercicio 1 [ Identifica el error ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Simplificar 
+\begin{equation}\nonumber
+\dfrac{bx(a^2 x^2 + 2a^2 y^2 + b^2 y^2) + ay(a^2 x^2 + 2b^2x^2 + b^2 y^2)}{bx + ay}
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{bx(a^2 x^2 + 2a^2 y^2 + b^2 y^2) + ay(a^2 x^2 + 2b^2x^2 + b^2 y^2)}{bx + ay} & = \dfrac{bx(ax + by)^2+ay(ax + by)^2}{bx+ay} \\
+& = \dfrac{(bx+ay)(ax+by)^2}{bx + ay} \\
+& = (ax + by)^2
+\end{aligned}
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.528657777933404Identifica el error class="panel-heading">
+		<h4> Ejercicio 2 [ Identifica el error ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resolver para $x$: 
+\begin{equation}\nonumber
+\sqrt{x} + \sqrt{x-a} = 2
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+Para esto notamos que:
+\begin{equation}\nonumber
+\begin{aligned}
+\dfrac{\sqrt{x}-\sqrt{x-a}}{\sqrt{x}-\sqrt{x-a}} = 1 
+\end{aligned}
+\end{equation}
+Es decir, es el neutro multiplicativo. Luego:
+\begin{equation}\nonumber
+\begin{aligned}
+2 & = \sqrt{x} + \sqrt{x-a} 
+\\ & = \Bigg( \sqrt{x} + \sqrt{x-a} \Bigg) \cdot 1
+\\ & = \Bigg( \sqrt{x} + \sqrt{x-a} \Bigg) \cdot \dfrac{\sqrt{x}-\sqrt{x-a}}{\sqrt{x}-\sqrt{x-a}} 
+\\ & =  \dfrac{x - (x-a)}{\sqrt{x}-\sqrt{x-a}} 
+\\ & =  \dfrac{a}{\sqrt{x}-\sqrt{x-a}} 
+\end{aligned}
+\end{equation}
+De donde se sigue que:
+\begin{equation}\nonumber
+\begin{aligned}
+\sqrt{x}-\sqrt{x-a} & = \dfrac{a}{2} 
+\end{aligned}
+\end{equation}
+Si sumamos $\sqrt{x} + \sqrt{x-a} = 2$ con $\sqrt{x}-\sqrt{x-a}  = \dfrac{a}{2}$ obtenemos:
+\begin{equation}\nonumber
+\begin{aligned}
+\sqrt{x}-\sqrt{x-a} + \sqrt{x} + \sqrt{x-a}  & = \dfrac{a}{2} + 2
+\end{aligned}
+\end{equation}
+Luego:
+\begin{equation}\nonumber
+\begin{aligned}
+2 \sqrt{x} & = \dfrac{a}{2} + 2
+\end{aligned}
+\end{equation}
+Lo cual implica:
+\begin{equation}\nonumber
+\begin{aligned}
+\sqrt{x} & = \dfrac{1}{2}\Bigg( \dfrac{a}{2} + 2 \Bigg)
+\end{aligned}
+\end{equation}
+Por tanto:
+\begin{equation}\nonumber
+\begin{aligned}
+x & = \dfrac{1}{4}\Bigg( \dfrac{a}{2} + 2 \Bigg)^2
+\end{aligned}
+\end{equation}
+En el caso particular de $a = 8$ se tiene que:
+\begin{equation}\nonumber
+\begin{aligned}
+x & = \dfrac{1}{4}\Bigg( \dfrac{8}{2} + 2 \Bigg)^2 = 9
+\end{aligned}
+\end{equation}
+Pero 
+\begin{equation}\nonumber
+\sqrt{x} + \sqrt{x-a} = \sqrt{9} + \sqrt{9-8} = 3 + 1 = 4 \neq 2 
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-success">
+	<div id =  Ejercicio0.60672296048142Identifica el error class="panel-heading">
+		<h4> Ejercicio 3 [ Identifica el error ] </h4>
+	</div>
+	<div class="panel-body">
+		<i>
+Resuelve para $x$: 
+\begin{equation}\nonumber
+\dfrac{5(2x-6)}{7} = \dfrac{3(4x-12)}{2}
+\end{equation}
+</i>
+		<div class="well" style = "margin-top: 10px;">
+			 <b>Solución:</b> 
+Podemos factorizar usando la distributiva:
+\begin{equation}\nonumber
+\dfrac{5(2x-6)}{7} = \dfrac{3(4x-12)}{2} \Rightarrow \dfrac{10(x-3)}{7} = \dfrac{12(x-3)}{2} 
+\end{equation}
+Usamos el inverso aditivo:
+\begin{equation}\nonumber 
+\dfrac{1}{x-3}\dfrac{10(x-3)}{7} = \dfrac{1}{x-3}\dfrac{12(x-3)}{2} 
+\end{equation}
+Lo que implica:
+\begin{equation}\nonumber 
+\dfrac{10}{7} = \dfrac{12}{2} 
+\end{equation}
+Lo cual es un error. Sin embargo, la ecuación sí tiene una solución para $x$: sustituyendo $x = 3$:
+\begin{equation}\nonumber
+\dfrac{5(2x-6)}{7} = \dfrac{3(4x-12)}{2} \Rightarrow \dfrac{10(3-3)}{7} = \dfrac{12(3-3)}{2} \Rightarrow 0 = 0
+\end{equation}
+ 
+		</div>
+	</div>
+</div>
+
+<ol start="9" style="list-style-type: decimal">
+<li><p>Para una cierta enfermedad se siguieron pacientes hasta que se recuperaron (nadie murió durante este estudio). Sea <span class="math inline">\(\bar{D}\)</span> el número promedio de días que una persona está enferma con dicha enfermedad (duración promedio de la enfermedad). Sea <span class="math inline">\(I = \frac{A}{T}\)</span> donde <span class="math inline">\(A\)</span> es el número de enfermos que se siguieron durante <span class="math inline">\(T\)</span> días. Se define la siguiente igualdad: <span class="math display">\[
+\dfrac{P}{1-P} = I \bar{D}
+\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Demuestra que <span class="math inline">\(P = \frac{I \bar{D}}{I \bar{D}+ 1}\)</span>.</p></li>
+<li><p>Interpreta <span class="math inline">\(P\)</span>. ¿Por qué se dice que <span class="math inline">\(P\)</span> mide la carga de la enfermedad en una población?</p></li>
+</ol></li>
+<li><p>Para un grupo de individuos y una enfermedad, se define la fracción atribuible (AF) como: <span class="math display">\[
+\textrm{AF} = \dfrac{RD}{R_1}
+\]</span> donde <span class="math inline">\(RD\)</span> se conoce como la <em>diferencia de riesgo</em> dada por <span class="math inline">\(RD = R_E - R_N\)</span> donde <span class="math inline">\(R_E\)</span> es el riesgo de los expuestos de padecer la enfermedad y <span class="math inline">\(R_N\)</span> el de los no expuestos. El riesgo se define como: <span class="math display">\[
+R_E = \dfrac{\textrm{Probabilidad de enfermar dado que estuviste expuesto}}{\textrm{Probabilidad de enfermar}}
+\]</span> mientras que: <span class="math display">\[
+R_N = \dfrac{\textrm{Probabilidad de enfermar dado que NO estuviste expuesto}}{\textrm{Probabilidad de enfermar}}
+\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Se define la razón de riesgo como <span class="math inline">\(RR = \dfrac{R_E}{R_N}\)</span>. ¿Qué significa en términos de probabilidades?</p></li>
+<li><p>Demuestra que <span class="math display">\[
+\textrm{AF} = \dfrac{RR-1}{RR}
+\]</span></p></li>
+<li><p>Para una población con fumadores y no fumadores se define la razón de riesgo de los fumadores como <span class="math inline">\(RR_F = \dfrac{R_{E,F}}{R_{N,F}}\)</span> donde <span class="math inline">\(R_{E,F}\)</span> es el riesgo de los expuestos que son fumadores y <span class="math inline">\(R_{N,F}\)</span> el riesgo de los no expuestos que son fumadores Análogamente, <span class="math inline">\(RR_{\neg F} = \dfrac{R_{E,\neg F}}{R_{N,\neg F}}\)</span> es la razón de riesgo de los no fumadores con <span class="math inline">\(R_{E,\neg F}\)</span> y <span class="math inline">\(R_{E,\neg F}\)</span> los riesgos para no fumadores expuestos y no expuestos. Supongamos que hay una proporción <span class="math inline">\(\pi_F\)</span> de fumadores y <span class="math inline">\(\pi_{\neg F} = 1 - \pi_F\)</span> de no fumadores. Definimos la fracción atribuible total como: <span class="math display">\[
+AF = \pi_F AF_F + \pi_{\neg F} A_{\neg F}
+\]</span> Escribe la fracción atribuible total en términos de <span class="math inline">\(f_E, f_N, n_E\)</span> y <span class="math inline">\(n_N\)</span> dados por la tabla:</p></li>
+</ol></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Fumadores</strong></th>
+<th><strong>No fumadores</strong></th>
+<th><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Expuestos</strong></td>
+<td><span class="math inline">\(f_E\)</span></td>
+<td><span class="math inline">\(n_E\)</span></td>
+<td><span class="math inline">\(f_E + n_E\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>No expuestos</strong></td>
+<td><span class="math inline">\(f_N\)</span></td>
+<td><span class="math inline">\(n_N\)</span></td>
+<td><span class="math inline">\(f_N + n_N\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><span class="math inline">\(f_E + f_N\)</span></td>
+<td><span class="math inline">\(n_E + n_N\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol start="11" style="list-style-type: decimal">
+<li>En una muestra aleatoria simple sin reemplazo de una población de tamaño <span class="math inline">\(N\)</span> se busca estimar la media poblacional <span class="math inline">\(\mu\)</span> a partir de la media muestral <span class="math inline">\(\bar{x}\)</span>. Si se consideran intervalos APROXIMADOS de confianza de normalidad asintótica (empíricamente lo “más fácil” pero peorcito para hacer pues son aproximados) se tiene que para que la probabilidad de que <span class="math inline">\(\mu\)</span> no se desvíe de <span class="math inline">\(\bar{x}\)</span> más allá de una cantidad <span class="math inline">\(c\)</span> sea <span class="math inline">\(1-\alpha\)</span> debe ocurrir que: <span class="math display">\[
+ c = Z_{\alpha/2} \sqrt{\Big( 1 - \frac{n}{N}\Big)\frac{\sigma^2}{n}}
+\]</span> donde <span class="math inline">\(Z_{1-\alpha/2}\)</span> usualmente se toma como <span class="math inline">\(1.96\)</span> (para un intervalo de confianza del <span class="math inline">\(95\%\)</span> <em>i.e.</em> <span class="math inline">\(\alpha = 0.05\)</span>), <span class="math inline">\(n\)</span> es el tamaño de muestra y <span class="math inline">\((1-\alpha)\times100\%\)</span> representa el nivel de confianza. El valor <span class="math inline">\(\sigma^2\)</span> representa la varianza poblacional. Es decir, para que: <span class="math display">\[
+\mathbb{P}\Big( |\bar{x} - \mu| \leq c \Big) = 1 - \alpha
+\]</span> <span class="math inline">\(c\)</span> debe estar dado por la ecuación anterior. Si se desea estimar el tamaño de muestra para una media <span class="math inline">\(\bar{x}\)</span>, se fija la precisión <span class="math inline">\(c\)</span> y el nivel de confianza <span class="math inline">\((1-\alpha)\times100\%\)</span> y se despeja <span class="math inline">\(n\)</span>, el tamaño de muestra, de la ecuación: <span class="math display">\[
+c = Z_{\alpha/2} \sqrt{\Big( 1 - \frac{n}{N}\Big)\frac{\sigma^2}{n}}
+\]</span>
+<ol style="list-style-type: lower-alpha">
+<li>Obtén el tamaño de muestra para una población de tamaño <span class="math inline">\(N = 1000\)</span> donde <span class="math inline">\(\sigma = 10\)</span>, <span class="math inline">\(c = 1.96\)</span> y <span class="math inline">\(\alpha = 0.05\)</span>.</li>
+<li>Obtén una fórmula general para <span class="math inline">\(n\)</span> en términos de <span class="math inline">\(c,N,Z_{1-\alpha/2}\)</span>. ´</li>
+</ol></li>
+</ol>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Eventualmente aprenderemos a factorizar. Por ahora créeme.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Estos son ejercicios de paciencia/práctica de no tener errores. Son aburridos, lo sé, pero es sólo para estar seguros que sin importar cuántas letras no se te va a perder ninguna ni ningún signo.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+      <b>Contáctame</b> en <a href="mailto:rzepeda17@gmail.com?Subject=Random Math" target="_top">rzepeda17@gmail.com</a>
+    </div>
+    <div class="panel-footer"><span  xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><small><b>Guía no oficial de estudio para el examen de matemáticas del INSP</b></span> por <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Rodrigo Zepeda</span> tiene una licencia <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. </small><br /></div>
+</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

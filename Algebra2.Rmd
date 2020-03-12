@@ -1,5 +1,5 @@
 ---
-title: "Álgebra: Perspectiva Geométrica 1"
+title: "Álgebra: Perspectiva Geométrica 2"
 author: "Rodrigo Zepeda"
 output:
   html_document:
@@ -33,7 +33,7 @@ library(rlist)
 library(latex2exp)
 library(rgl)
 
-#Knitr table options
+#Knitr tc_1 \cdot c_2le options
 options(knitr.table.format = "html") 
 
 #Chunk options
@@ -68,21 +68,30 @@ plot.rect <- function (max.x = 10, max.y = 5,
     theme_void() +
     theme(axis.title = element_text()) +
     geom_shadowtext(aes(label=label, x = (max.x+1)/2, y = (max.y+1)/2), 
-                    color = "white", bg.colour='black', size=5) 
+                    color = "white", bg.colour='white', size=5) 
 }
 
 ```
-
+<!--
+# Preliminares 
 
 ## Teorema de Pitágoras
-Uno de los primeros teoremas que veremos con el razonamiento geométrico es el teorema de Pitágoras. Para ello vamos a observarlo gráficamente. Empezamos con un triángulo como el que sigue: con lados $a$ y $b$ e hipotenusa (el lado más largo), $c$:
+De los pocos teoremas que necesitaremos pero son ajenos a nuestro propósito final algebraico es el teorema de Pitágoras. Para ello vamos a observarlo gráficamente. Empezamos con un triángulo como el que sigue: con lados $\textrm{Cateto 1}$ ($c_1$) y $\textrm{Cateto 2}$ ($c_1$) e hipotenusa (el lado más largo), ($\textrm{hip})$:
 
-```{r, fig.cap="Un triángulo muy pitagoroso ¿a poco no?"}
-triangle(xlab = "a", ylab = "b", hiplab = "c")
+```{r, fig.cap="Un triángulo muy pitagoroso ¿a poco no?", fig.width=3, fig.height=3}
+triangle <- function(x = c(0,0,1), y = c(0,1,0), fill = "#18bc9c",
+                     xlab = "", ylab = "", hiplab = ""){
+  ggplot() + 
+  geom_polygon(aes(x = x, y = y), fill = fill) +
+  theme_void() + xlab(xlab) + ylab(ylab) + theme(axis.title = element_text()) +
+  annotate("text",label = hiplab, x = 1.1*(x[3] - x[2])/2, 
+           y =  1.1*(y[2] - y[3])/2, angle = -45)
+}
+triangle(xlab = "Cateto 1 (c1)", ylab = "Cateto 2 (c2)", hiplab = "Hipotenusa (hip)")
 ```
-Tomemos varios de estos triángulos y arreglémoslos en un cuadrado gigante de lado $a + b$. 
+Tomemos varios de estos triángulos y arreglémoslos en un cuadrado gigante de lado $c_1 + c_2$. 
 
-```{r, fig.cap="Triángulos arreglados lindamente"}
+```{r, fig.cap="Triángulos arreglados lindamente", fig.width=8, fig.height=8}
 fill <- "#18bc9c"
 ggplot() + theme_void() + 
   geom_polygon(aes(x = x, y = y), fill = fill, 
@@ -95,29 +104,29 @@ ggplot() + theme_void() +
                data = data.frame(x = c(1,2,2), y = c(2,2,1))) +
   geom_polygon(aes(x = x, y = y), color = "deepskyblue4", alpha = 0, size = 2,
                data = data.frame(x = c(0,0,2,2), y = c(0,2,2,0))) +
-  annotate("text", label = "a", x = 0.5, y = 0.1, color = "black") +
-  annotate("text", label = "a", x = 1.5, y = 0.1, color = "black") +
-  annotate("text", label = "a", x = 0.5, y = 1.9, color = "black") +
-  annotate("text", label = "a", x = 1.5, y = 1.9, color = "black") +
-  annotate("text", label = "b", x = 0.1, y = 0.5, color = "black") +
-  annotate("text", label = "b", x = 0.1, y = 1.5, color = "black") +
-  annotate("text", label = "b", x = 1.9, y = 1.5, color = "black") +
-  annotate("text", label = "b", x = 1.9, y = 0.5, color = "black") +
-  annotate("text", label = "c", x = 0.5, y = 0.6, color = "black", angle = -45) +
-  annotate("text", label = "c", x = 0.5, y = 1.4, color = "black", angle = 45) +
-  annotate("text", label = "c", x = 1.5, y = 1.4, color = "black", angle = 135) +
-  annotate("text", label = "c", x = 1.5, y = 0.6, color = "black", angle = 45) +
+  annotate("text", label = "c1", x = 0.5, y = 0.1, color = "white") +
+  annotate("text", label = "c2", x = 1.5, y = 0.1, color = "white") +
+  annotate("text", label = "c2", x = 0.5, y = 1.9, color = "white") +
+  annotate("text", label = "c1", x = 1.5, y = 1.9, color = "white") +
+  annotate("text", label = "c2", x = 0.1, y = 0.5, color = "white") +
+  annotate("text", label = "c1", x = 0.1, y = 1.5, color = "white") +
+  annotate("text", label = "c2", x = 1.9, y = 1.5, color = "white") +
+  annotate("text", label = "c1", x = 1.9, y = 0.5, color = "white") +
+  annotate("text", label = "hip", x = 0.5, y = 0.6, color = "white", angle = -45) +
+  annotate("text", label = "hip", x = 0.5, y = 1.4, color = "white", angle = 45) +
+  annotate("text", label = "hip", x = 1.5, y = 1.4, color = "white", angle = -45) +
+  annotate("text", label = "hip", x = 1.5, y = 0.6, color = "white", angle = 45) +
   theme(axis.title = element_text()) +
-  xlab("Lado (a + b)") + ylab("")
+  xlab("Lado (c_1 + c_2)") + ylab("")
 ```
 
-Notamos que el área del cuadrado gigante (azul oscuro) es $(a + b)^2$ mientras que la de cada uno de los triángulos es $\frac{ab}{2}$. Finalmente el cuadrado del centro es un cuadrado de lado $c$ por lo que su área es $c^2$. Tenemos entonces la siguiente identidad:
+Notamos que el área del cuadrado gigante (azul oscuro) es $(c_1 + c_2)^2$ mientras que la de cada uno de los triángulos es $\frac{c1 \cdot c_2}{2}$. Finalmente el cuadrado del centro es un cuadrado de lado $\text{hip}$ por lo que su área es $\text{hip}^2$. Tenemos entonces la siguiente identidad:
 $$
-\underbrace{(a + b)^2}_{\text{Cuadrado gde}} = \underbrace{\frac{ab}{2} + \frac{ab}{2} + \frac{ab}{2} + \frac{ab}{2}}_{4 \text{ triángulos}} + \underbrace{c^2}_{\text{Cuadrado blco}}
+\underbrace{(c_1 + c_2)^2}_{\text{Cuadrado gde}} = \underbrace{\frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2}}_{4 \text{ triángulos}} + \underbrace{\text{hip}^2}_{\text{Cuadrado blco}}
 $$
 
 La cual está representada en la siguiente figura:
-```{r, fig.cap="Triángulos arreglados lindamente con sus áreas", warning=FALSE}
+```{r, fig.cap="Triángulos arreglados lindamente con sus áreas", warning=FALSE, fig.width=8, fig.height=8}
 fill <- "#18bc9c"
 ggplot() + theme_void() + 
   geom_polygon(aes(x = x, y = y), fill = fill, 
@@ -130,31 +139,704 @@ ggplot() + theme_void() +
                data = data.frame(x = c(1,2,2), y = c(2,2,1))) +
   geom_polygon(aes(x = x, y = y), color = "deepskyblue4", alpha = 0, size = 2,
                data = data.frame(x = c(0,0,2,2), y = c(0,2,2,0))) +
-  annotate("text", label = TeX("\\frac{ab}{2}"), x = 0.5, y = 0.25, color = "black")  +
-  annotate("text", label = TeX("\\frac{ab}{2}"), x = 0.5, y = 1.75, color = "black")  +
-  annotate("text", label = TeX("\\frac{ab}{2}"), x = 1.5, y = 1.75, color = "black")  +
-  annotate("text", label = TeX("\\frac{ab}{2}"), x = 1.5, y = 0.25, color = "black")  +
-  annotate("text", label = TeX("c^2"), x = 1, y = 1, color = "black")  +
+  annotate("text", label = TeX("\\frac{c_1 c_2}{2}"), x = 0.5, y = 0.25, color = "white")  +
+  annotate("text", label = TeX("\\frac{c_1 c_2}{2}"), x = 0.5, y = 1.75, color = "white")  +
+  annotate("text", label = TeX("\\frac{c_1 c_2}{2}"), x = 1.5, y = 1.75, color = "white")  +
+  annotate("text", label = TeX("\\frac{c_1 c_2}{2}"), x = 1.5, y = 0.25, color = "white")  +
+  annotate("text", label = TeX("hip^2"), x = 1, y = 1, color = "white")  +
+  theme(axis.title = element_text()) +
+  xlab(TeX("Total = (c_1 + c_2)^2")) + ylab("")
+```
+
+Podemos empezar a manipular la ecuación dada por:
+$$
+(c_1 + c_2)^2 = \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \text{hip}^2
+$$
+
+Como sigue:
+$$
+(c_1 + c_2)^2 = \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2} + \frac{c_1 \cdot c_2}{2}  + \frac{c_1 \cdot c_2}{2}  + \text{hip}^2
+$$
+
+Agrupamos los cuatro términos iguales:
+$$
+(c_1 + c_2)^2 = 4 \cdot \frac{c_1 \cdot c_2}{2} + \text{hip}^2
+$$
+
+Dividimos $4 \div 2$:
+$$
+(c_1 + c_2)^2 = 2c_1 \cdot c_2 + \text{hip}^2
+$$
+
+El cuadrado es multiplicar por sí mismo:
+$$
+(c_1 + c_2)(c_1 + c_2)  = 2c_1 \cdot c_2 + \text{hip}^2 
+$$
+
+La distributividad resulta en:
+$$
+c_1^2 + c_2\cdot c_1 + c_1 \cdot c_2 + c_2^2  = 2c_1 \cdot c_2 + \text{hip}^2 
+$$
+
+Mientras que la conmutatividad nos permite agrupar $c_1\cdot c_2$ con $c_2 \cdot c_1$:
+$$ 
+c_1^2 + 2c_1 \cdot c_2 + c_2^2  = 2c_1 \cdot c_2 + \text{hip}^2 
+$$
+
+Resto de ambos lados $2c_1 \cdot c_2$:
+$$
+c_1^2 + 2c_1 \cdot c_2 + c_2^2 - 2c_1 \cdot c_2  = 2c_1 \cdot c_2 + \text{hip}^2 - 2c_1 \cdot c_2 
+$$
+
+De donde se obtiene que la suma del cuadrado de los catetos es el cuadrado de la hipotenusa:
+$$
+c_1^2  + c_2^2   =\text{hip}^2 
+$$
+
+De donde concluimos el teorema de pitágoras: si se tienen triángulos con lados $c_1$ y $c_2$ e hipotenusa $\text{hip}$ entonces $c_1^2 + c_2^2 = \text{hip}^2$. 
+
+> **Nota** El teorema de Pitágoras es algo específico de los triángulos. No intentes generalizar a que es una cosa de todos los números. Lo que dice es que si tienes un triángulo entonces sus lados son de esa forma. 
+-->
+# Productos notables
+
+A continuación presentaremos algunas multiplicaciones de las cuales la gente ha obtenido fórmulas para hacer cálculos rápidos. La mayor parte de estos obtienen su nombre de cuando interesaba que la gente supiera _computar_ (_i.e._ calcular rápido) y no _pensar_ . No es necesario que te aprendas ninguna de las fórmulas porque salen a partir de los axiomas. Si conoces los axiomas no requieres ninguna fórmula. 
+
+Como segunda nota hay dos actividades principales que puedes tener en un ejercicio de álgebra: _expandir_ y _factorizar_. Usualmente, para quienes plantean ejercicios, expandir consiste en dejar la menor cantidad de multiplicaciones posibles. Por ejemplo si **expandimos**:
+
+$$
+8 \cdot (a + x) + 9 \cdot (x + a) + a
+$$
+
+Obtenemos (usando distributividad):
+$$
+8 a + 8 x + 9 x + 9a + a = 18 a + 17x
+$$
+
+Mientras que si factorizamos el propósito es escribir todo como una multiplicación,
+$$
+x^2 + 9x + 14
+$$
+se transforma en^[Eventualmente aprenderemos a factorizar. Por ahora créeme.]:
+$$
+(x + 2)\cdot(x + 7)
+$$
+¡Verifícalo!
+
+## Binomio cuadrado 
+El primer resultado que verificaremos es el siguiente:
+
+$$
+(a + b)^2 = a^2 + 2ab + b^2
+$$
+
+El lado derecho de la ecuación se conoce como el _trinomio cuadrado perfecto_ pero nadie es tan perfecto como tú, bb. 
+
+Esto lo podemos ver geométricamente como el área de un cuadrado de lado $a + b$:
+
+```{r, fig.width=5, fig.height=5, warning=FALSE}
+fill  <- "#2c3e50"
+fill2 <- "orange"
+fill3 <- "#e74c3c"
+fill4 <- "deepskyblue"
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2,
+               data = data.frame(x = c(1,1,3,3), y = c(1,3,3,1))) +
+  geom_polygon(aes(x = x, y = y), fill = fill3, 
+               color = "white", size = 2,
+               data = data.frame(x = c(0,0,1,1), y = c(1,3,3,1))) +
+  geom_polygon(aes(x = x, y = y), fill = fill3, 
+               color = "white", size = 2,
+               data = data.frame(x = c(1,1,3,3), y = c(0,1,1,0))) +
+  annotate("text", label = TeX("a^2"), x = 0.5, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("b^2"), x = 2, y = 2, color = "white")  +
+  annotate("text", label = TeX("ab"), x = 2, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("ab"), x = 0.5, y = 2, color = "white")  +
   theme(axis.title = element_text()) +
   xlab(TeX("Total = (a + b)^2")) + ylab("")
 ```
 
-Podemos empezar a manipular la ecuación de arriba:
+De donde se sigue que $(a + b)^2$ lo podemos ver como $a^2  + ab + ab+ b^2 = a^2 + 2ab + b^2$
+
+Algebraicamente (usamos los axiomas) tenemos lo siguiente:
+
+$$
+(a + b)^2 = (a + b)(a + b)
+$$
+
+Usamos distributividad:
+$$
+(a + b)(a + b) = (a + b)a + (a + b)b
+$$
+Volvemos a aplicar distributividad:
+$$
+(a + b)a + (a + b)b = a^2 + ba + ab + b^2
+$$
+Conmutamos $ba$ para que sea $ab$:
+$$
+a^2 + ba + ab + b^2 = a^2 + ab + ab + b^2
+$$
+y los sumamos:
+$$
+a^2 + ab + ab + b^2 = a^2 + 2ab + b^2
+$$
+
+Concluimos entonces:
+$$
+(a + b)^2 =  a^2 + 2ab + b^2
+$$
+
+De manera resumida:
 \begin{equation}\nonumber
 \begin{aligned}
-& (a + b)^2 & = \frac{ab}{2} + \frac{ab}{2} + \frac{ab}{2}  + \frac{ab}{2}  + c^2 \\
-& (a + b)^2 & = 4 \cdot \frac{ab}{2} + c^2 \\
-\Rightarrow & (a + b)^2 & = 2ab + c^2 \qquad & \text{ pues } \frac{4}{2} = 2\\
-\Rightarrow & (a + b)(a + b) & = 2ab + c^2 \qquad & \text{ porque elevar al cuadrado es multiplicar por sí mismo } \\
-\Rightarrow & a^2 + ba + ab + b^2 & = 2ab + c^2 \qquad & \text{ multipliqué todos contra todos } \\
-\Rightarrow & a^2 + 2ab + b^2 & = 2ab + c^2 \qquad & \text{ junté } ab \text{ con } ba \text{ pues el orden de las operaciones no importa} \\
-\Rightarrow & a^2 + 2ab + b^2 - 2ab & = 2ab + c^2 - 2ab \qquad & \text{ en el igual lo tengo que poner o quitar lo mismo de ambos lados} \\
-\Rightarrow & a^2  + b^2  & =c^2  \qquad & \text{ pues } 2ab - 2ab = 0 \\
+(a + b)^2 & = (a + b)(a + b) \\
+& = (a + b)a + (a + b)b \\
+& = a^2 + ba + ab + b^2 \\
+& = a^2 + ab + ab + b^2 \\
+& = a^2 + 2ab + b^2
 \end{aligned}
 \end{equation}
 
-De donde concluimos el teorema de pitágoras: si se tienen triángulos con lados $a$ y $b$ e hipotenusa $c$ entonces $a^2 + b^2 = c^2$. 
+## Factor común:
 
-## Suma de cuadrados
+El factor común es un _renombramiento_ de la propiedad distributiva:
+
+$$
+k\cdot a + k \cdot b + k \cdot c = k (a + b + c) 
+$$
+
+Lo podemos ver gráficamente:
+
+```{r, fig.width=3.5, fig.height=4, warning=FALSE}
 
 
+fill3 <- "tomato3"
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2,
+               data = data.frame(x = c(0,0,1,1), y = c(0,4,4,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2,
+               data = data.frame(x = c(1,1,3,3), y = c(0,4,4,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill3, 
+               color = "white", size = 2,
+               data = data.frame(x = c(3,3,3.5,3.5), y = c(0,4,4,0))) +
+  annotate("text", label = TeX("a"), x = 0.5, y = -0.15, color = "white")  +
+  annotate("text", label = TeX("b"), x = 2, y = -0.15, color = "white")  +
+  annotate("text", label = TeX("c"), x = 3.25, y = -0.15, color = "white")  +
+  annotate("text", label = TeX("ka"), x = 0.5, y = 2, color = "white")  +
+  annotate("text", label = TeX("kb"), x = 2, y = 2, color = "white")  +
+  annotate("text", label = TeX("kc"), x = 3.25, y = 2, color = "white")  +
+  theme(axis.title = element_text()) +
+  xlab(TeX("Base = (a + b + c)")) + ylab("k")
+```
+donde podemos descomponer el rectángulo con área $k(a + b + c)$ dada por la base $a + b +c$ y la altura $k$ en la suma de los rectángulos de misma altura con áreas $ka$, $kb$ y $kc$. Notamos que:
+$$
+k\cdot a + k \cdot b + k \cdot c = k (a + b + c) 
+$$
+
+Algebraicamente esto lo podemos demostrar con una doble aplicación de la propiedad distributiva:
+\begin{equation}\nonumber
+\begin{aligned}
+k (a + b + c) & = k \big(a + (b + c) \big) \\
+& = ka + k(b+c) \\
+& = ka + kb + kc
+\end{aligned}
+\end{equation}
+Lo cual demuestra el resultado. 
+
+## Producto de binomios con un término común
+
+Este producto es una generalización de el binomio cuadrado (_¿por qué?_). Lo que queremos demostrar es:
+
+$$
+(x + a) \cdot (x + b) = x^2 + (a + b) x + ab
+$$
+
+Esto lo podemos hacer mediante una doble aplicación de la propiedad distributiva:
+\begin{equation}\nonumber
+\begin{aligned}
+(x + a) \cdot (x + b) & = 
+(x + a) \cdot x + (x + a) \cdot b \\
+& = x \cdot x + a \cdot x + b \cdot x + a \cdot b \\
+& = x^2 + (a + b) x + ab
+\end{aligned}
+\end{equation}
+donde $ a \cdot x + b \cdot x = (a + b)x$ lo obtuve a partir de una agrupación por factor común. 
+
+Otra forma de verlo puede ser a través de un rectángulo con base $x + a$ y altura $x + b$ (área total $(x+a)(x+b)$) el cual podemos subdividir en los cuadrados de área $x^2$, $ab$, $ax$ y $bx$ como sigue:
+
+```{r, fig.width=5, fig.height=3, warning=FALSE}
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2,
+               data = data.frame(x = c(1,1,5,5), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill3, 
+               color = "white", size = 2,
+               data = data.frame(x = c(0,0,1,1), y = c(1,3,3,1))) +
+  geom_polygon(aes(x = x, y = y), fill = fill4, 
+               color = "white", size = 2,
+               data = data.frame(x = c(1,1,5,5), y = c(1,3,3,1))) +
+  annotate("text", label = TeX("x^2"), x = 0.5, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("ab"), x = 3, y = 2, color = "white")  +
+  annotate("text", label = TeX("ax"), x = 3, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("bx"), x = 0.5, y = 2, color = "white")  +
+  annotate("text", label = TeX("a"), x = 3, y = -0.15, color = "white")  +
+  annotate("text", label = TeX("x"), x = 0.5, y = -0.15, color = "white")  +
+  annotate("text", label = TeX("b"), x = 5.15, y = 2, color = "white")  +
+  annotate("text", label = TeX("x"), x = 5.15, y = 0.5, color = "white")  +
+  theme(axis.title = element_text()) +
+  xlab("x + a") + ylab("x + b")
+```
+
+
+## Binomios conjugados
+
+Los binomios conjugados, o diferencia de cuadrados es más fácil verlo algebraicamente que con geometría; empero, haremos las dos para demostrar la expresión:
+$$
+(a + b)\cdot (a - b) = a^2 - b^2
+$$
+Para ello utilizamos la propiedad distributiva dos veces como hicimos en el ejemplo anterior:
+\begin{equation}\nonumber
+\begin{aligned}
+(a + b) \cdot (a - b) & = (a + b) a + (a + b) (-b) \\
+& = a^2 + ba + a(-b) + b(-b) \\
+& = a^2 + ab - ab - b^2 \\
+& = a^2 - b^2
+\end{aligned}
+\end{equation}
+Geométricamente lo que tendríamos que analizar es un rectángulo con lados $a+b$ y $a-b$. En primer lugar tomamos un cuadrado de lado $a$:
+
+```{r, fig.width=3, fig.height=3, warning=FALSE}
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+  annotate("text", label = TeX("a^2"), x = 0.5, y = 0.5, color = "white")  +
+  theme(axis.title = element_text()) +
+  xlab("a") + ylab("a")
+```
+
+Al cual le pegamos un rectángulo de base $b$ y altura $a$:
+```{r, fig.width=3.75, fig.height=3, warning=FALSE}
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+   geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(0,0,-0.25,-0.25), y = c(0,1,1,0))) +
+  annotate("text", label = TeX("a^2"), x = 0.5, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("a"), x = 0.5, y = -0.05, color = "white")  +
+  annotate("text", label = TeX("b"), x = -0.125, y = -0.05, color = "white")  +
+  annotate("text", label = TeX("ab"), x = -0.125, y = 0.5, color = "white")  +
+  theme(axis.title = element_text()) +
+  xlab("a + b") + ylab("a")
+```
+
+Finalmente encogemos el rectángulo removiéndole $b$ de altura (las partes que quedan en blanco). 
+
+```{r, fig.width=3.75, fig.height=3, warning=FALSE}
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+   geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(0,0,-0.25,-0.25), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = "gray", 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(-0.25,-0.25,1,1), y = c(0.75,1,1,0.75))) +
+  annotate("text", label = TeX("ab"), x = 0.375, y = 0.875, color = "white")  +
+  annotate("text", label = TeX("b"), x = 1.05, y = 0.875, color = "white")  +
+  annotate("text", label = TeX("a"), x = 1.05, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("a"), x = 0.5, y = -0.05, color = "white")  +
+  annotate("text", label = TeX("b"), x = -0.125, y = -0.05, color = "white")  +
+  #annotate("text", label = TeX("b^2"), x = -0.125, y = 0.875, color = "white")  +
+  theme(axis.title = element_text()) +
+  xlab("a + b") + ylab("a - b")
+```
+
+Notamos que el área del cuadrito donde se intersectan los de área $ba$ y $ab$ es $b^2$:
+```{r, fig.width=3.75, fig.height=3, warning=FALSE}
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+   geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(0,0,-0.25,-0.25), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = "gray", 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(-0.25,-0.25,1,1), y = c(0.75,1,1,0.75))) +
+  geom_polygon(aes(x = x, y = y), fill = fill4, 
+               color = "white", size = 2, alpha = 1,
+               data = data.frame(x = c(-0.25,-0.25,0,0), y = c(0.75,1,1,0.75))) +
+  #annotate("text", label = TeX("ab"), x = 0.375, y = 0.875, color = "white")  +
+  annotate("text", label = TeX("b"), x = 1.05, y = 0.875, color = "white")  +
+  annotate("text", label = TeX("a"), x = 1.05, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("a"), x = 0.5, y = -0.05, color = "white")  +
+  annotate("text", label = TeX("b"), x = -0.125, y = -0.05, color = "white")  +
+  annotate("text", label = TeX("b^2"), x = -0.125, y = 0.875, color = "white")  +
+  theme(axis.title = element_text()) +
+  xlab("a + b") + ylab("a - b")
+```  
+
+
+Tenemos entonces que el rectángulo dado por $(a + b)(a - b)$ lo podemos escribir como:
+$$
+(a+b)(a-b) = a^2 - ab + ba - b^2
+$$
+donde el término $b^2$ está restando porque fue incluido dos veces (uno por cada $ab$). Y luego se obtiene:
+$$
+(a+b)(a-b) = a^2  - b^2
+$$
+
+## Adición y diferencia de cubos
+2
+La adición de cubos está dada por:
+$$
+a^3 + b^3 = (a + b)(a^2 - ab + b^2)
+$$
+
+Mientras que la diferencia:
+$$
+a^3 - b^3 = (a - b)(a^2 + ab + b^2)
+$$
+
+Ambos los demostraremos algebraicamente. Para el primero, expandimos el producto mediante la propiedad distributiva:
+$$
+(a + b)(a^2 - ab + b^2) = a(a^2 - ab + b^2) + b(a^2 - ab + b^2) 
+$$
+de donde se sigue que:
+$$
+(a + b)(a^2 - ab + b^2) = a(a^2 - ab + b^2) + b(a^2 - ab + b^2)  = a^3 - a^2b + ab^2 + a^2b-ab² + b^3
+$$
+y podemos eliminar los términos con distinto signo:
+$$
+(a + b)(a^2 - ab + b^2) = a(a^2 - ab + b^2) + b(a^2 - ab + b^2)  = a^3 - a^2b + ab^2 + a^2b-ab² + b^3 = a^3 + b^3
+$$
+Ahora te toca a ti demostrar el otro caso. ¡Adelante!
+
+# Ejercicios
+
+1. Demuestra (sin revisar las notas) los productos notables muy similares a los que se obtuvieron en estas notas:
+
+    a. $(u - v)^2 = v^2 - 2uv + u^2$
+    
+    b. $(x + a)(x - b) = x^2 + (a - b)x - ab$
+    
+    c. $(x + y)(x - y)(x^2 + y^2) = x^4 - y^4$ 
+    
+    d. $a\cdot a + a \cdot b + a \cdot c = a (a + b + c)$ 
+
+2. Utiliza un dibujo para demostrar:
+
+    a. $(a + b + c)^2 = a^2 + b^2 + c^2 + 2ab + 2ac + 2bc$
+
+_Hint_ Utiliza las siguientes figuras:
+
+```{r, fig.width=7.5, fig.height=2, warning=FALSE}
+
+
+fill3 <- "tomato3"
+fill3 <- "tomato3"
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2,
+               data = data.frame(x = c(1,1,3,3), y = c(0,2,2,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill3, 
+               color = "white", size = 2,
+               data = data.frame(x = c(3,3,3.5,3.5), y = c(0,0.5,0.5,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill3, 
+               color = "white", size = 2,
+               data = data.frame(x = c(3.5,3.5,4,4), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2,
+               data = data.frame(x = c(4,4,5,5), y = c(0,2,2,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2,
+               data = data.frame(x = c(5,5,5.5,5.5), y = c(0,2,2,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill3, 
+               color = "white", size = 2,
+               data = data.frame(x = c(5.5,5.5,6,6), y = c(0,1,1,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2,
+               data = data.frame(x = c(6,6,7,7), y = c(0,2,2,0))) +
+  geom_polygon(aes(x = x, y = y), fill = fill2, 
+               color = "white", size = 2,
+               data = data.frame(x = c(7,7,7.5,7.5), y = c(0,2,2,0))) +
+  annotate("text", label = TeX("a^2"), x = 0.5, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("b^2"), x = 2, y = 1, color = "white")  +
+  annotate("text", label = TeX("c^2"), x = 3.25, y = 0.25, color = "white")  +
+  annotate("text", label = TeX("ca"), x = 3.75, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("ab"), x = 4.5, y = 1, color = "white")  +
+  annotate("text", label = TeX("cb"), x = 5.25, y = 1, color = "white") +
+  annotate("text", label = TeX("ca"), x = 5.75, y = 0.5, color = "white")  +
+  annotate("text", label = TeX("ab"), x = 6.5, y = 1, color = "white")  +
+  annotate("text", label = TeX("cb"), x = 7.25, y = 1, color = "white")  
+```
+
+  b. $\sqrt{x} \cdot \sqrt{x} = x$
+
+_Hint_ Utiliza las siguientes figuras:
+
+```{r, fig.width=2, fig.height=2, warning=FALSE}
+fill  <- "orange"
+ggplot() + theme_void() + 
+  geom_polygon(aes(x = x, y = y), fill = fill, 
+               color = "white", size = 2,
+               data = data.frame(x = c(0,0,1,1), y = c(0,1,1,0))) +
+  annotate("text", label = TeX("x"), x = 0.5, y = 0.5, color = "white") 
+```
+
+3. Demuestra usando la técnica que quieras que:
+
+    a. $ax + by + ay + bx = (a + b)(x + y)$
+    
+    b. $(x + a)(x - b) = x^2 + (a-b)x - ab$
+    
+    c. $ax + bx + (c + d)x = x \cdot (a + b + c + d)$
+    
+    d. $x(x+1)(x+2)(x+3) + 1 = (x^2 + 3x + 1)^2$
+
+
+3. Demuestra las siguientes identidades _algebraicamente_ :
+
+    a. $a^3 = \Bigg( \frac{a(a+1)}{2} \Bigg)^2 - \Bigg( \frac{a(a-1)}{2} \Bigg)^2$
+    
+    b. $(z^2 + z + 1) \cdot (z^2 -z + 1) = z^4 + z^2 + 1$
+    
+    c. $(w + u)^3 = w^3 + u^3 + 3uw(w + u)$
+    
+    d. $(a + b + c + d)^2 = a^2 + b^2 + c^2 + d^2 + 2(ab + ac + ad + bc + bd + cd)$
+    
+    e. $(d- a + b + c)(d - a - b - c) = (d-a)^2 - (b-c)^2$
+    
+    f. $a^3 + b^3 + c^3 - 3abc = \frac{1}{2}(a + b + c)\Big[ (a-b)^2 + (b-c)^2 + (a-c)^2 \Big]$
+    
+    g. Si $a = b+c$ entonces $a^4 + b^4 + c^4 = 2b^2c^2 + 2c^2a^2 + 2a^2b^2$
+    
+    
+4. Expande las siguientes expresiones^[Estos son ejercicios de paciencia/práctica de no tener errores. Son aburridos, lo sé, pero es sólo para estar seguros que sin importar cuántas letras no se te va a perder ninguna ni ningún signo.]:
+
+    a. $\big(w + x - (y + z) \big)^3$
+    
+    b. $(g - f)^5$
+    
+    c. $(a - b)(a^9 + a^8b + a^7b^2 + a^6b^3 + a^5b^4 + a^4b^5 + a^3b^6 + a^2 b^7 + a b^8 + b^9)$
+    
+    d. $1 \cdot \dfrac{x-2}{1-2} \cdot \dfrac{x-3}{1-3} + 4 \cdot \dfrac{x-1}{2-1} \cdot \dfrac{x-3}{2-3} + 9 \dfrac{x-1}{3-1}\cdot \dfrac{x-2}{3-2}$
+    
+    e. $(x + a)(x + b)(x + c)$
+
+<!--
+5. Simplifica las siguientes expresiones:
+
+    a. $\frac{(a+b)^3 + a^3}{(a+b)^3+ b^3}$
+-->
+
+5. Demuestra que si
+$$
+x = \dfrac{-b + \sqrt{b^2 - 4ac}}{2a}
+$$
+entonces:
+$$
+a x^2 + bx + c = 0
+$$
+¿Ocurre lo mismo si ahora se tiene 
+$$
+x = \dfrac{-b - \sqrt{b^2 - 4ac}}{2a} \quad\text{?}
+$$
+
+5. Identifica el/los errores en los siguientes ejercicios y corrígelos. 
+
+```{r}
+ex <- "
+Simplificar 
+\\begin{equation}\\nonumber
+\\dfrac{bx(a^2 x^2 + 2a^2 y^2 + b^2 y^2) + ay(a^2 x^2 + 2b^2x^2 + b^2 y^2)}{bx + ay}
+\\end{equation}
+"
+
+sol <- "
+\\begin{equation}\\nonumber
+\\begin{aligned}
+\\dfrac{bx(a^2 x^2 + 2a^2 y^2 + b^2 y^2) + ay(a^2 x^2 + 2b^2x^2 + b^2 y^2)}{bx + ay} & = \\dfrac{bx(ax + by)^2+ay(ax + by)^2}{bx+ay} \\\\
+& = \\dfrac{(bx+ay)(ax+by)^2}{bx + ay} \\\\
+& = (ax + by)^2
+\\end{aligned}
+\\end{equation}
+"
+
+build_theorem("Ejercicio",ex, proof = sol, name = "Identifica el error" )
+```
+
+```{r}
+ex <- "
+Resolver para $x$: 
+\\begin{equation}\\nonumber
+\\sqrt{x} + \\sqrt{x-a} = 2
+\\end{equation}
+"
+
+sol <- "
+Para esto notamos que:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+\\dfrac{\\sqrt{x}-\\sqrt{x-a}}{\\sqrt{x}-\\sqrt{x-a}} = 1 
+\\end{aligned}
+\\end{equation}
+Es decir, es el neutro multiplicativo. Luego:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+2 & = \\sqrt{x} + \\sqrt{x-a} 
+\\\\ & = \\Bigg( \\sqrt{x} + \\sqrt{x-a} \\Bigg) \\cdot 1
+\\\\ & = \\Bigg( \\sqrt{x} + \\sqrt{x-a} \\Bigg) \\cdot \\dfrac{\\sqrt{x}-\\sqrt{x-a}}{\\sqrt{x}-\\sqrt{x-a}} 
+\\\\ & =  \\dfrac{x - (x-a)}{\\sqrt{x}-\\sqrt{x-a}} 
+\\\\ & =  \\dfrac{a}{\\sqrt{x}-\\sqrt{x-a}} 
+\\end{aligned}
+\\end{equation}
+De donde se sigue que:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+\\sqrt{x}-\\sqrt{x-a} & = \\dfrac{a}{2} 
+\\end{aligned}
+\\end{equation}
+Si sumamos $\\sqrt{x} + \\sqrt{x-a} = 2$ con $\\sqrt{x}-\\sqrt{x-a}  = \\dfrac{a}{2}$ obtenemos:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+\\sqrt{x}-\\sqrt{x-a} + \\sqrt{x} + \\sqrt{x-a}  & = \\dfrac{a}{2} + 2
+\\end{aligned}
+\\end{equation}
+Luego:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+2 \\sqrt{x} & = \\dfrac{a}{2} + 2
+\\end{aligned}
+\\end{equation}
+Lo cual implica:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+\\sqrt{x} & = \\dfrac{1}{2}\\Bigg( \\dfrac{a}{2} + 2 \\Bigg)
+\\end{aligned}
+\\end{equation}
+Por tanto:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+x & = \\dfrac{1}{4}\\Bigg( \\dfrac{a}{2} + 2 \\Bigg)^2
+\\end{aligned}
+\\end{equation}
+En el caso particular de $a = 8$ se tiene que:
+\\begin{equation}\\nonumber
+\\begin{aligned}
+x & = \\dfrac{1}{4}\\Bigg( \\dfrac{8}{2} + 2 \\Bigg)^2 = 9
+\\end{aligned}
+\\end{equation}
+Pero 
+\\begin{equation}\\nonumber
+\\sqrt{x} + \\sqrt{x-a} = \\sqrt{9} + \\sqrt{9-8} = 3 + 1 = 4 \\neq 2 
+\\end{equation}
+"
+
+build_theorem("Ejercicio",ex, proof = sol, name = "Identifica el error" )
+```    
+    
+```{r}
+ex <- "
+Resuelve para $x$: 
+\\begin{equation}\\nonumber
+\\dfrac{5(2x-6)}{7} = \\dfrac{3(4x-12)}{2}
+\\end{equation}
+"
+
+sol <- "
+Podemos factorizar usando la distributiva:
+\\begin{equation}\\nonumber
+\\dfrac{5(2x-6)}{7} = \\dfrac{3(4x-12)}{2} \\Rightarrow \\dfrac{10(x-3)}{7} = \\dfrac{12(x-3)}{2} 
+\\end{equation}
+Usamos el inverso aditivo:
+\\begin{equation}\\nonumber 
+\\dfrac{1}{x-3}\\dfrac{10(x-3)}{7} = \\dfrac{1}{x-3}\\dfrac{12(x-3)}{2} 
+\\end{equation}
+Lo que implica:
+\\begin{equation}\\nonumber 
+\\dfrac{10}{7} = \\dfrac{12}{2} 
+\\end{equation}
+Lo cual es un error. Sin embargo, la ecuación sí tiene una solución para $x$: sustituyendo $x = 3$:
+\\begin{equation}\\nonumber
+\\dfrac{5(2x-6)}{7} = \\dfrac{3(4x-12)}{2} \\Rightarrow \\dfrac{10(3-3)}{7} = \\dfrac{12(3-3)}{2} \\Rightarrow 0 = 0
+\\end{equation}
+"
+
+build_theorem("Ejercicio",ex, proof = sol, name = "Identifica el error" )
+```
+
+9. Para una cierta enfermedad se siguieron pacientes hasta que se recuperaron (nadie murió durante este estudio). Sea $\bar{D}$ el número promedio de días que una persona está enferma con dicha enfermedad (duración promedio de la enfermedad). Sea $I = \frac{A}{T}$ donde $A$ es el número de enfermos que se siguieron durante $T$ días. Se define la siguiente igualdad:
+$$
+\dfrac{P}{1-P} = I \bar{D}
+$$
+
+    a. Demuestra que $P =  \frac{I \bar{D}}{I \bar{D}+ 1}$. 
+    
+    b. Interpreta $P$. ¿Por qué se dice que $P$ mide la carga de la enfermedad en una población?
+    
+10. Para un grupo de individuos y una enfermedad, se define la fracción atribuible (AF) como:
+$$
+\textrm{AF} = \dfrac{RD}{R_1}
+$$
+donde $RD$ se conoce como la _diferencia de riesgo_ dada por $RD = R_E - R_N$ donde $R_E$ es el riesgo de los expuestos de padecer la enfermedad y $R_N$ el de los no expuestos. El riesgo se define como:
+$$
+R_E = \dfrac{\textrm{Probabilidad de enfermar dado que estuviste expuesto}}{\textrm{Probabilidad de enfermar}}
+$$
+mientras que:
+$$
+R_N = \dfrac{\textrm{Probabilidad de enfermar dado que NO estuviste expuesto}}{\textrm{Probabilidad de enfermar}}
+$$
+
+    a. Se define la razón de riesgo como $RR = \dfrac{R_E}{R_N}$. ¿Qué significa en términos de probabilidades?
+    
+    b. Demuestra que 
+    $$
+    \textrm{AF} = \dfrac{RR-1}{RR}
+    $$
+    
+    c. Para una población con fumadores y no fumadores se define  la razón de riesgo de los fumadores como $RR_F = \dfrac{R_{E,F}}{R_{N,F}}$ donde $R_{E,F}$ es el riesgo de los expuestos que son fumadores y $R_{N,F}$ el riesgo de los no expuestos que son fumadores Análogamente, $RR_{\neg F} = \dfrac{R_{E,\neg F}}{R_{N,\neg F}}$ es la razón de riesgo de los no fumadores con $R_{E,\neg F}$ y $R_{E,\neg F}$ los riesgos para no fumadores expuestos y no expuestos. Supongamos que hay una proporción $\pi_F$ de fumadores y $\pi_{\neg F} = 1 - \pi_F$ de no fumadores. Definimos la fracción atribuible total como:
+    $$
+    AF = \pi_F AF_F + \pi_{\neg F} A_{\neg F}
+    $$
+Escribe la fracción atribuible total en términos de $f_E, f_N, n_E$ y $n_N$ dados por la tabla: 
+
+|              	    |**Fumadores**  |**No fumadores**  | **Total**    |
+|--------------	    |-----------	  |--------------	   |-----------	  |
+| **Expuestos**    	| $f_E$       	| $n_E$          	 | $f_E + n_E$ 	|
+| **No expuestos** 	| $f_N$       	| $n_N$          	 | $f_N + n_N$ 	|
+| **Total**        	| $f_E + f_N$ 	| $n_E + n_N$    	 |           	  |
+    
+11. En una muestra aleatoria simple sin reemplazo de una población de tamaño $N$ se busca estimar la media poblacional $\mu$ a partir de la media muestral $\bar{x}$. Si se consideran intervalos APROXIMADOS de confianza de normalidad asintótica (empíricamente lo "más fácil" pero peorcito para hacer pues son aproximados) se tiene que para que la probabilidad de que $\mu$ no se desvíe de $\bar{x}$ más allá de una cantidad $c$ sea $1-\alpha$ debe ocurrir que:
+$$
+ c = Z_{\alpha/2} \sqrt{\Big( 1 - \frac{n}{N}\Big)\frac{\sigma^2}{n}}
+$$
+donde $Z_{1-\alpha/2}$ usualmente se toma como $1.96$ (para un intervalo de confianza del $95\%$ _i.e._ $\alpha = 0.05$), $n$ es el tamaño de muestra y $(1-\alpha)\times100\%$ representa el nivel de confianza. El valor $\sigma^2$ representa la varianza poblacional. Es decir, para que:
+$$
+\mathbb{P}\Big( |\bar{x} - \mu| \leq c \Big) = 1 - \alpha
+$$
+$c$ debe estar dado por la ecuación anterior. Si se desea estimar el tamaño de muestra para una media $\bar{x}$, se fija la precisión $c$ y el nivel de confianza $(1-\alpha)\times100\%$ y se despeja $n$, el tamaño de muestra, de la ecuación:
+$$
+c = Z_{\alpha/2} \sqrt{\Big( 1 - \frac{n}{N}\Big)\frac{\sigma^2}{n}}
+$$
+      a. Obtén el tamaño de muestra para una población de tamaño $N = 1000$ donde $\sigma = 10$, $c = 1.96$ y $\alpha = 0.05$. 
+      b. Obtén una fórmula general para $n$ en términos de $c,N,Z_{1-\alpha/2}$. ´
+    
+    
+    
+    
